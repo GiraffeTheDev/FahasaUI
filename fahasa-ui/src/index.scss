@@ -4,3 +4,16 @@
 :root {
   font-family: "Roboto", sans-serif;
 }
+img {
+  overflow-clip-margin: content-box;
+  overflow: clip;
+}
+.custom-line {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Hiển thị tối đa 2 dòng */
+  -webkit-box-orient: vertical;
+  line-height: 1.5; /* Điều chỉnh khoảng cách giữa các dòng */
+}

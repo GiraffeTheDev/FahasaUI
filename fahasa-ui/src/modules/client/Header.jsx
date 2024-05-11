@@ -1,20 +1,35 @@
 import MenuIcon from "@mui/icons-material/Menu";
-
-import { Box, CardMedia } from "@mui/material";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import React from "react";
+import { Link } from "react-router-dom";
 import Search from "../../components/input/Search";
 const Header = () => {
   return (
-    <Box className="flex items-center justify-between bg-gray-500">
-      <CardMedia
-        width={200}
-        height={140}
-        component={"img"}
-        image="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/fahasa-logo.png"
-      ></CardMedia>
+    <div className="flex items-center py-2 bg-white gap-x-5">
+      <Link to={"/"}>
+        <img
+          src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/fahasa-logo.png"
+          alt="logo"
+          className="w-[300px] h-14"
+        />
+      </Link>
       <MenuIcon></MenuIcon>
       <Search></Search>
-    </Box>
+      <div className="flex flex-col items-center">
+        <NotificationsNoneIcon></NotificationsNoneIcon>
+        <span>Thông báo</span>
+      </div>
+      <div className="flex flex-col items-center">
+        <ShoppingCartCheckoutIcon></ShoppingCartCheckoutIcon>
+        <span>Giỏ hàng</span>
+      </div>
+      <div className="flex flex-col items-center">
+        <PersonOutlineIcon></PersonOutlineIcon>
+        <span>Tài khoản</span>
+      </div>
+    </div>
   );
 };
 
