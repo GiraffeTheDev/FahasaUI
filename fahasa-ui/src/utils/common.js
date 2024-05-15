@@ -94,4 +94,35 @@ const cates = [
     url: "https://cdn0.fahasa.com/media/wysiwyg/tuan-test-css/thuong-resize.jpg",
   },
 ];
-export { bannerSmall, banners, cates };
+const suppliers = [
+  {
+    id: 1,
+    url: "https://cdn0.fahasa.com/media/wysiwyg/Logo-NCC/vnpost1.png",
+  },
+  {
+    id: 2,
+    url: "https://cdn0.fahasa.com/media/wysiwyg/Logo-NCC/ahamove_logo3.png",
+  },
+  {
+    id: 3,
+    url: "https://cdn0.fahasa.com/media/wysiwyg/Logo-NCC/icon_snappy1.png",
+  },
+  {
+    id: 4,
+    url: "https://cdn0.fahasa.com/media/wysiwyg/Logo-NCC/Logo_ninjavan.png",
+  },
+  {
+    id: 5,
+    url: "https://cdn0.fahasa.com/media//wysiwyg/Logo-NCC/vnpay_logo.png",
+  },
+  {
+    id: 6,
+    url: "https://cdn0.fahasa.com/media//wysiwyg/Logo-NCC/ZaloPay-logo-130x83.png",
+  },
+  { id: 7, url: "https://cdn0.fahasa.com/media//wysiwyg/Logo-NCC/momopay.png" },
+  {
+    id: 8,
+    url: "https://cdn0.fahasa.com/media//wysiwyg/Logo-NCC/shopeepay_logo.png",
+  },
+];
+export { bannerSmall, banners, cates, suppliers };

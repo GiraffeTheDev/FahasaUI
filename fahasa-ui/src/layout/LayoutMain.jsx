@@ -1,9 +1,10 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
+import Footer from "../modules/client/Footer";
 import Header from "../modules/client/Header";
 const LayoutMain = () => {
   return (
-    <>
+    <div className="h-full bg-gray1">
       <div className="h-[60px] w-full ">
         <img
           src="https://cdn0.fahasa.com/media/wysiwyg/Thang-05-2024/Diamond_0524_Ver2_LeMayHeader_1263x60.jpg"
@@ -11,11 +12,14 @@ const LayoutMain = () => {
           alt="banner"
         />
       </div>
+      <Header></Header>
       <div className="w-[1250px] mx-auto">
-        <Header></Header>
         <Outlet></Outlet>
       </div>
-    </>
+      <div className="w-[1250px] mx-auto mt-5">
+        <Footer></Footer>
+      </div>
+    </div>
   );
 };
 
