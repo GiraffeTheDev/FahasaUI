@@ -1,14 +1,13 @@
 import React from "react";
 
-const ChangeCount = () => {
+const ChangeCount = ({ count = 1, handleIncrement, handleDecrement }) => {
   return (
     <>
-      <div className="relative flex items-center max-w-[8rem]">
+      <div className="relative flex items-center max-w-[8rem] border border-gray-400 rounded-lg py-2 px-2">
         <button
           type="button"
-          id="decrement-button"
-          data-input-counter-decrement="quantity-input"
-          className="p-3 bg-gray-100 border border-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 rounded-s-lg h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
+          className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 rounded-s-lg"
+          onClick={handleDecrement}
         >
           <svg
             className="w-3 h-3 text-gray-900 dark:text-white"
@@ -29,17 +28,16 @@ const ChangeCount = () => {
         <input
           type="text"
           id="quantity-input"
-          data-input-counter
-          aria-describedby="helper-text-explanation"
-          className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder={999}
+          className="block w-full text-sm text-center text-gray-900 border-gray-300 border-none outline-none bg-gray-50 border-x-0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white "
+          placeholder={count}
           required
         />
         <button
           type="button"
           id="increment-button"
           data-input-counter-increment="quantity-input"
-          className="p-3 bg-gray-100 border border-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 rounded-e-lg h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none"
+          className=" dark:bg-gray-700 rounded-e-lg"
+          onClick={handleDecrement}
         >
           <svg
             className="w-3 h-3 text-gray-900 dark:text-white"
@@ -58,12 +56,6 @@ const ChangeCount = () => {
           </svg>
         </button>
       </div>
-      <p
-        id="helper-text-explanation"
-        className="mt-2 text-sm text-gray-500 dark:text-gray-400"
-      >
-        Please select a 5 digit number from 0 to 9.
-      </p>
     </>
   );
 };
