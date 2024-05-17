@@ -1,5 +1,5 @@
-import classNames from "components/classname/className";
 import React from "react";
+import classNames from "../classname/className";
 
 const Checkbox = ({
   checked = false,

@@ -13,6 +13,7 @@ const Input = (props) => {
     children,
     error = "",
     placeholder = "",
+    maxLength = 6,
     ...rest
   } = props;
   const { field } = useController({ name, control, defaultValue: "" });
@@ -27,6 +28,7 @@ const Input = (props) => {
           error.length > 0 ? "border-error" : "border-strock",
           children ? "pr-16" : ""
         )}
+        maxLength={maxLength}
         placeholder={`${error.length <= 0 ? placeholder : ""}`}
         {...field}
         {...rest}

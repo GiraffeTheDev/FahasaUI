@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Button from "../components/button/Button";
+import Checkbox from "../components/checkbox/Checkbox";
 
 const CartPage = () => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   return (
     <div className="mt-5">
       <h1 className="text-xl uppercase">Giỏ hàng ({count} sản phẩm)</h1>
@@ -23,7 +24,20 @@ const CartPage = () => {
           </Button>
         </div>
       ) : (
-        ""
+        <div className="flex items-start gap-x-5">
+          <div className="flex-[50%] bg-white rounded-lg">
+            <Checkbox>Chọn tất cả ({count} sản phẩm)</Checkbox>
+            <div>
+              <div>
+                <span>Số lượng</span>
+              </div>
+              <div>
+                <span>Thành tiền</span>
+              </div>
+            </div>
+          </div>
+          <div className="flex-1 bg-white rounded-lg">30%</div>
+        </div>
       )}
     </div>
   );

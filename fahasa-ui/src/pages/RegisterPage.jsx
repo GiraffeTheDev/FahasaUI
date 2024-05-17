@@ -34,6 +34,7 @@ const RegisterPage = () => {
               control={control}
               name={"otp"}
               placeholder={"6 kí tự"}
+              maxLength={6}
             ></Input>
           </FormGroup>
           <FormGroup>
