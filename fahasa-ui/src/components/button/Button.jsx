@@ -11,7 +11,7 @@ const Button = ({
   ...rest
 }) => {
   let classNameButton =
-    "flex items-center justify-center rounded-xl  font-semibold px-4 py-2 rounded-[10px]";
+    "flex items-center justify-center rounded-xl px-4 py-2 rounded-[10px] font-base";
   switch (rest.kind) {
     case "primary":
       classNameButton += " bg-primary text-white";
@@ -20,7 +20,11 @@ const Button = ({
       classNameButton += " bg-gray text-black ";
       break;
     case "ghost":
-      classNameButton += " bg-secondary text-secondary bg-opacity-20";
+      classNameButton += " bg-blue1 text-white ";
+      break;
+    case "semi":
+      classNameButton +=
+        " bg-white text-primary font-semibold border border-primary ";
       break;
     default:
       break;

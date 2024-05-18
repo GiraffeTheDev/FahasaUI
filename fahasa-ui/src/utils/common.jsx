@@ -190,4 +190,46 @@ const headerIcons = [
     to: "login",
   },
 ];
-export { bannerSmall, banners, cates, headerIcons, suppliers };
+const cateFlashSale = [
+  {
+    id: 1,
+    title: "Tất cả",
+    url: "https://cdn0.fahasa.com/media/wysiwyg/icon-menu/ico_flashsale@3x.png",
+  },
+  {
+    id: 2,
+    title: "Thiếu nhi",
+    url: "https://cdn0.fahasa.com/media/wysiwyg/icon-menu/Icon_SachThieuNhi_120x120.png",
+  },
+  {
+    id: 3,
+    title: "Manga-Comic",
+    url: "https://cdn0.fahasa.com/media/fahasa_web_image/FlashSale_Default.png",
+  },
+  {
+    id: 4,
+    title: "Văn học",
+    url: "https://cdn0.fahasa.com/media/wysiwyg/icon-menu/Icon_VanHoc_120x120.png",
+  },
+  {
+    id: 5,
+    title: "Tâm lý - Kỹ năng sống",
+    url: "https://cdn0.fahasa.com/media/wysiwyg/icon-menu/Icon_TamLyKyNang_120x120.png",
+  },
+  {
+    id: 6,
+    title: "Sách học ngoại ngữ",
+    url: "https://cdn0.fahasa.com/media/fahasa_web_image/FlashSale_Default.png",
+  },
+  {
+    id: 7,
+    title: "Đam mỹ",
+    url: "https://cdn0.fahasa.com/media/fahasa_web_image/FlashSale_Default.png",
+  },
+  {
+    id: 8,
+    title: "Xem thêm",
+    url: "https://cdn0.fahasa.com/media/fahasa_web_image/icon_XemThem.png",
+  },
+];
+export { bannerSmall, banners, cateFlashSale, cates, headerIcons, suppliers };

@@ -20,3 +20,10 @@ img {
 .active {
   color: #c40c0c;
 }
+.text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  padding: 0px 8px;
+}

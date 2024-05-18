@@ -5,7 +5,7 @@ import Checkbox from "../components/checkbox/Checkbox";
 import ChangeCount from "../components/input/ChangeCount";
 import useToggleValue from "../hooks/useToggleValue";
 const CartPage = () => {
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(0);
   const { control, watch, handleSubmit } = useForm({
     mode: "onSubmit",
   });
@@ -16,7 +16,7 @@ const CartPage = () => {
   console.log("check", check);
   return (
     <div className="mt-5">
-      <h1 className="text-xl uppercase">Giỏ hàng ({count} sản phẩm)</h1>
+      <h1 className="mb-5 text-xl uppercase">Giỏ hàng ({count} sản phẩm)</h1>
       {count === 0 ? (
         <div className="flex flex-col items-center justify-center w-full px-5 py-5 mt-5 bg-white rounded-lg gap-x-5">
           <img
@@ -35,9 +35,9 @@ const CartPage = () => {
         </div>
       ) : (
         <form action="" onSubmit={handleSubmit(handleCart)}>
-          <div className="flex items-center gap-x-5">
-            <div className="flex-[50%]">
-              <div className="flex items-center justify-between py-2 pl-5 bg-white rounded-lg pr-[100px] mt-5">
+          <div className="flex items-start gap-x-5">
+            <div className="max-w-[63%] flex-grow">
+              <div className="flex items-center justify-between py-2 pl-5 bg-white rounded-lg pr-[100px] ">
                 <Checkbox name="all" checked={check} onClick={handleCheck}>
                   Chọn tất cả ({count} sản phẩm)
                 </Checkbox>
@@ -93,7 +93,89 @@ const CartPage = () => {
                 </div>
               </div>
             </div>
-            <div className="flex-1 bg-white rounded-lg">30%</div>
+            <div className="flex-1 ">
+              <div className="bg-white rounded-lg ">
+                <div className="flex items-center justify-between px-5 py-3 text-blue1 ">
+                  <div className="flex items-center gap-x-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
+                      />
+                    </svg>
+                    <span className="uppercase">Khuyến mãi</span>
+                  </div>
+                  <span>Xem thêm</span>
+                </div>
+                {Array(4)
+                  .fill(0)
+                  .map((item) => (
+                    <div className="flex flex-col w-full px-5" key={item}>
+                      <div className="w-full h-[1px] bg-gray1"></div>
+                      <div className="flex flex-col mt-5">
+                        <div className="flex items-center justify-between">
+                          <span className="">
+                            Mã giảm 50% - Đơn hàng từ 500K
+                          </span>
+                          <span className="underline text-blue1">Chi tiết</span>
+                        </div>
+                        <h3>
+                          Không áp dụng cho phiếu quà tặng, Sách giáo khoa và
+                          Giấy Photo
+                        </h3>
+                        <div className="flex items-center w-full gap-x-10">
+                          <div className="flex flex-col w-full py-3 ">
+                            <div className="relative h-2 mt-2 text-center bg-blue-200 rounded-full dark:bg-gray-700">
+                              <div
+                                className="absolute inset-0 h-full bg-blue-500 rounded-full z-5"
+                                style={{ width: "10%" }}
+                              />
+                            </div>
+                            <div className="flex items-center justify-between text-xs">
+                              <span>Mua thêm 500.000 đ để nhận mã </span>
+                              <span>500.000 đ</span>
+                            </div>
+                          </div>
+                          <Button
+                            type="button"
+                            kind={"ghost"}
+                            className="flex-shrink-0 !px-2 !py-1"
+                          >
+                            Mua thêm
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+              <div className="px-5 py-3 mt-5 bg-white rounded-lg max-h-fit">
+                <div className="flex items-center justify-between pb-3">
+                  <span>Thành tiền</span>
+                  <span>0 đ</span>
+                </div>
+                <div className="w-full h-[1px] bg-gray1"></div>
+                <div className="flex items-center justify-between mt-2">
+                  <span className="text-lg font-medium">
+                    Tổng số tiền (gồm VAT)
+                  </span>
+                  <span>0 đ</span>
+                </div>
+                <Button className="!w-full mt-2" type="submit" kind={"primary"}>
+                  Thanh toán
+                </Button>
+                <p className="mt-2 text-sm text-primary">
+                  Giá trên web chỉ áp dụng cho giá bán lẻ
+                </p>
+              </div>
+            </div>
           </div>
         </form>
       )}

@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import LayoutMain from "./layout/LayoutMain";
+import BookDetailPage from "./pages/BookDetailPage";
 import CartPage from "./pages/CartPage";
 import FlashSalePage from "./pages/FlashSalePage";
 import HomePage from "./pages/HomePage";
@@ -21,6 +22,10 @@ function App() {
           <Route
             path="/flash-sale"
             element={<FlashSalePage></FlashSalePage>}
+          ></Route>
+          <Route
+            path="/detail-book"
+            element={<BookDetailPage></BookDetailPage>}
           ></Route>
         </Route>
       </Routes>
