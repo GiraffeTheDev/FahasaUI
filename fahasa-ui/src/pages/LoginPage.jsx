@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import Button from "../components/button/Button";
 import GapRow from "../components/common/GapRow";
 import FormGroup from "../components/form/FormGroup";
@@ -35,9 +36,14 @@ const LoginPage = () => {
               placeholder={"Nhập mật khẩu"}
             ></Input>
           </FormGroup>
+          <div className="flex items-center justify-end">
+            <Link to={"/forget-password"} className="text-right text-primary">
+              Quên mật khẩu
+            </Link>
+          </div>
           <GapRow></GapRow>
           <Button type="submit" kind={"primary"} className="w-full">
-            Đăng kí
+            Đăng nhập
           </Button>
         </form>
       </div>

@@ -13,7 +13,7 @@ const Input = (props) => {
     children,
     error = "",
     placeholder = "",
-    maxLength = 6,
+    maxLength,
     ...rest
   } = props;
   const { field } = useController({ name, control, defaultValue: "" });

@@ -43,18 +43,28 @@ const HomePage = () => {
           ))}
       </div>
       <div
-        className="flex items-center p-5 mt-5 gap-x-5"
         style={{
           backgroundImage:
             'url("https://cdn0.fahasa.com/media/fahasa_web_image/flash_sale_background_image.jpg")',
         }}
+        className="p-5 "
       >
-        {Array(5)
-          .fill(0)
-          .map((item) => (
-            <BookCard key={item}></BookCard>
-          ))}
+        <div className="flex justify-between px-2 py-5 bg-white rounded-lg">
+          <img
+            src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/flashsale/label-flashsale.svg?q="
+            alt=""
+            className="w-[150px] object-cover"
+          />
+        </div>
+        <div className="flex items-center mt-5 gap-x-5">
+          {Array(5)
+            .fill(0)
+            .map((item) => (
+              <BookCard key={item}></BookCard>
+            ))}
+        </div>
       </div>
+
       <div>
         <CategoryProduct></CategoryProduct>
       </div>

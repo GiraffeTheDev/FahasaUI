@@ -7,9 +7,8 @@ import LargeGap from "../components/common/LargeGap";
 import FormGroup from "../components/form/FormGroup";
 import Input from "../components/input/Input";
 import { Label } from "../components/label";
-import NavigationBar from "../modules/client/NavigationBar";
 
-const RegisterPage = () => {
+const ForgetPasswordPage = () => {
   const [step, setStep] = useState(1);
   const { control, handleSubmit, watch } = useForm({
     mode: "onSubmit",
@@ -59,7 +58,9 @@ const RegisterPage = () => {
   return (
     <div className="w-full py-10 mt-5 bg-white rounded-lg">
       <div className="max-w-[400px] mx-auto">
-        <NavigationBar></NavigationBar>
+        <h3 className="mb-5 text-xl font-semibold text-center">
+          Khôi phục mật khẩu
+        </h3>
         <form
           onSubmit={handleSubmit(
             step === 1
@@ -104,10 +105,18 @@ const RegisterPage = () => {
             className={`w-full ${buttonDisabled ? "opacity-[0.5]" : ""}`}
             disabled={buttonDisabled}
           >
-            Đăng kí
+            Xác nhận
           </Button>
           <Button type="submit" kind={"primary"} className="w-full mt-5">
             Gửi OTP
+          </Button>
+          <Button
+            type="button"
+            href={"/login"}
+            kind={"primary"}
+            className="w-full mt-5"
+          >
+            Trở về
           </Button>
           <LargeGap></LargeGap>
           <div className="flex justify-center">
@@ -123,4 +132,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default ForgetPasswordPage;

@@ -1,71 +1,195 @@
 import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { v4 as uuidv4 } from "uuid";
+import BookCard from "../components/bookcard/BookCard";
+import Button from "../components/button/Button";
 import ChangeCount from "../components/input/ChangeCount";
 const BookDetailPage = () => {
   return (
-    <div className="flex px-5 py-3 mt-5 bg-white rounded-lg gap-x-[80px]">
-      <div className="h-[400px] w-[400px]">
-        <img
-          src="https://cdn0.fahasa.com/media/catalog/product/p/h/ph_c-h_a-ch_n-dung-k_-ph_m-t_i.jpg"
-          alt=""
-          className="w-full h-[390px] object-cover"
-        />
+    <>
+      <div className="flex px-5 py-3 mt-5 bg-white rounded-lg gap-x-[80px]">
+        <div className=" w-[400px]">
+          <img
+            src="https://cdn0.fahasa.com/media/catalog/product/p/h/ph_c-h_a-ch_n-dung-k_-ph_m-t_i.jpg"
+            alt=""
+            className="w-full h-[390px] object-cover"
+          />
+          <div className="flex items-center mt-5 gap-x-5">
+            <Button type="button" kind={"semi"}>
+              Thêm vào giỏ hàng
+            </Button>
+            <Button type="button" kind={"primary"} className="flex-1">
+              Mua ngay
+            </Button>
+          </div>
+        </div>
+        <div className="flex-1">
+          <h3 className="text-xl font-base">
+            Tâm Lý Học Tội Phạm - Phác Họa Chân Dung Kẻ Phạm Tội
+          </h3>
+          <div className="flex items-center justify-between max-w-[70%] mt-5">
+            <span>
+              Nhà cung cấp:<span className="text-blue1">AZ Việt Nam</span>
+            </span>
+            <span>
+              Tác giả:<span className="font-semibold">Diệp Hồng Vũ</span>
+            </span>
+          </div>
+          <div className="flex items-center justify-between max-w-[70%] mt-2">
+            <span>
+              Nhà xuất bản:<span className="font-semibold">NXB Thanh Niên</span>
+            </span>
+            <span>
+              Hình thức bìa: <span className="font-semibold">Bìa Mềm</span>
+            </span>
+          </div>
+          <div className="flex items-center mt-2 gap-x-1">
+            {Array(5)
+              .fill(0)
+              .map(() => (
+                <span key={uuidv4()}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-4 h-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
+                    />
+                  </svg>
+                </span>
+              ))}
+          </div>
+          <div className="flex items-center mt-5 gap-x-3">
+            <span className="text-4xl font-bold text-primary">69.000 đ</span>
+            <span className="line-through">99.000 đ</span>
+            <span className="px-2 py-1 text-white rounded-lg bg-primary">
+              -30%
+            </span>
+          </div>
+          <div className="flex items-center mt-2 gap-x-3">
+            <span className="text-lg font-base">Số lượng :</span>
+            <ChangeCount></ChangeCount>
+          </div>
+        </div>
       </div>
-      <div className="flex-1">
-        <h3 className="text-xl font-base">
-          Tâm Lý Học Tội Phạm - Phác Họa Chân Dung Kẻ Phạm Tội
-        </h3>
-        <div className="flex items-center justify-between max-w-[70%]">
-          <span>
-            Nhà cung cấp:<span className="text-blue1">AZ Việt Nam</span>
-          </span>
-          <span>
-            Tác giả:<span className="font-semibold">Diệp Hồng Vũ</span>
-          </span>
-        </div>
-        <div className="flex items-center justify-between max-w-[70%]">
-          <span>
-            Nhà xuất bản:<span className="font-semibold">NXB Thanh Niên</span>
-          </span>
-          <span>
-            Hình thức bìa: <span className="font-semibold">Bìa Mềm</span>
-          </span>
-        </div>
-        <div className="flex items-center gap-x-1">
-          {Array(5)
+      <div className="px-5 py-5 mt-5 bg-white rounded-lg">
+        <h3 className="mb-5 text-xl font-semibold">Fahasa giới thiệu</h3>
+        <Swiper
+          spaceBetween={50}
+          slidesPerView={4}
+          autoplay
+          className="w-full h-full"
+        >
+          {Array(8)
             .fill(0)
-            .map(() => (
-              <span key={uuidv4()}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
-                  />
-                </svg>
-              </span>
+            .map((item) => (
+              <SwiperSlide key={item.id} className="w-full h-full rounded-xl">
+                <BookCard></BookCard>
+              </SwiperSlide>
             ))}
-        </div>
-        <div className="flex items-center gap-x-3">
-          <span className="text-4xl font-bold text-primary">69.000 đ</span>
-          <span className="line-through">99.000 đ</span>
-          <span className="px-2 py-1 text-white rounded-lg bg-primary">
-            -30%
+        </Swiper>
+      </div>
+      <div className="px-5 py-5 mt-5 bg-white rounded-lg">
+        <h3 className="mb-5 text-xl font-semibold">Thông tin sản phẩm</h3>
+        <div className="">
+          <div className="relative overflow-x-auto">
+            <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" className="px-6 py-3 rounded-s-lg">
+                    Mã hàng
+                  </th>
+                  <td scope="col" className="px-6 py-3">
+                    8935212351621
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="bg-white dark:bg-gray-800">
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    Tên nhà cung cấp
+                  </th>
+                  <td className="px-6 py-4"> Đinh Tị</td>
+                </tr>
+                <tr className="bg-white dark:bg-gray-800">
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    Tác giả
+                  </th>
+                  <td className="px-6 py-4">Clint Emerson</td>
+                </tr>
+                <tr className="bg-white dark:bg-gray-800">
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    NXB
+                  </th>
+                  <td className="px-6 py-4"> NXB Thanh Niên</td>
+                </tr>
+                <tr className="bg-white dark:bg-gray-800">
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    Trọng lượng
+                  </th>
+                  <td className="px-6 py-4"> 300</td>
+                </tr>
+                <tr className="bg-white dark:bg-gray-800">
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    Kích Thước Bao Bì
+                  </th>
+                  <td className="px-6 py-4"> 24 x 16 x 0.5 cm</td>
+                </tr>
+                <tr className="bg-white dark:bg-gray-800">
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    Số trang
+                  </th>
+                  <td className="px-6 py-4"> 272</td>
+                </tr>
+                <tr className="bg-white dark:bg-gray-800">
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    Hình thức
+                  </th>
+                  <td className="px-6 py-4"> Bìa mềm</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Giá sản phẩm trên Fahasa.com đã bao gồm thuế theo luật hiện hành.
+            Bên cạnh đó, tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng
+            mà có thể phát sinh thêm chi phí khác như Phụ phí đóng gói, phí vận
+            chuyển, phụ phí hàng cồng kềnh,...
+          </p>
+          <span className="text-primary">
+            Chính sách khuyến mãi trên Fahasa.com không áp dụng cho Hệ thống Nhà
+            sách Fahasa trên toàn quốc
           </span>
         </div>
-        <div className="flex items-center gap-x-3">
-          <span className="text-lg font-base">Số lượng :</span>
-          <ChangeCount></ChangeCount>
-        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,7 +1,12 @@
 import React from "react";
 import Button from "../button/Button";
 
-const BookCard = ({ sale = false, className = "", isCard = false }) => {
+const BookCard = ({
+  sale = false,
+  className = "",
+  isCard = false,
+  stock = false,
+}) => {
   return (
     <div
       className={`flex flex-col justify-center p-2 bg-white rounded-lg ${className}`}
@@ -27,15 +32,19 @@ const BookCard = ({ sale = false, className = "", isCard = false }) => {
         )}
       </div>
       <h3 className="text-sm line-through ">115.000 đ</h3>
-      <div className="relative h-4 mt-2 text-center bg-red-200 rounded-full dark:bg-gray-700">
-        <div
-          className="absolute inset-0 h-full bg-red-500 rounded-full z-5"
-          style={{ width: "45%" }}
-        />{" "}
-        <h3 className="absolute w-full text-sm text-center text-white z-9">
-          Đã bán 5
-        </h3>
-      </div>
+      {stock ? (
+        <div className="relative h-4 mt-2 text-center bg-red-200 rounded-full dark:bg-gray-700">
+          <div
+            className="absolute inset-0 h-full bg-red-500 rounded-full z-5"
+            style={{ width: "45%" }}
+          />{" "}
+          <h3 className="absolute w-full text-sm text-center text-white z-9">
+            Đã bán 5
+          </h3>
+        </div>
+      ) : (
+        ""
+      )}
       {isCard ? (
         <Button type="button" kind={"semi"} className="mt-5">
           Thêm giỏ hàng

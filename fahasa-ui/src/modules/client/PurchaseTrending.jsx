@@ -4,7 +4,7 @@ import BookCard from "../../components/bookcard/BookCard";
 
 const PurchaseTrending = () => {
   return (
-    <div className="mt-5">
+    <div className="mt-5 bg-white">
       <div className="flex items-center p-2 bg-red-300 rounded-tl-lg rounded-tr-lg gap-x-5">
         <div className="p-2 bg-red-500 rounded-lg">
           <svg

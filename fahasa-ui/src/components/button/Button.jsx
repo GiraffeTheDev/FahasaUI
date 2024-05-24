@@ -7,7 +7,9 @@ const Button = ({
   children,
   className = "",
   type = "button",
+  disabled = false,
   isLoading = false,
+
   ...rest
 }) => {
   let classNameButton =
@@ -50,6 +52,7 @@ const Button = ({
         className
       )}
       {...rest}
+      disabled={disabled}
     >
       {child}
     </button>

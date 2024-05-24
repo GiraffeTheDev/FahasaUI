@@ -13,7 +13,6 @@ import App from "./App.jsx";
 import "./index.scss";
 import { persistor, store } from "./redux/configureStore.jsx";
 import theme from "./theme/theme.js";
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <BrowserRouter>

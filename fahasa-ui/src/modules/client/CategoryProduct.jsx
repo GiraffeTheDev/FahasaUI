@@ -3,7 +3,7 @@ import { cates } from "../../utils/common";
 
 const CategoryProduct = () => {
   return (
-    <div className="p-5 mt-10 bg-gray-500 rounded-lg">
+    <div className="p-5 mt-10 bg-white bg-gray-500 rounded-lg">
       <div className="flex items-center pb-5 gap-x-5">
         <svg
           xmlns="http://www.w3.org/2000/svg"
