@@ -11,6 +11,7 @@ import ManageOrder from "./modules/admin/order/ManageOrder";
 import ManageSupplier from "./modules/admin/supplier/ManageSupplier";
 import ManageUser from "./modules/admin/user/ManageUser";
 import ManageVoucher from "./modules/admin/voucher/ManageVoucher";
+import AccountClientPage from "./pages/AccountClientPage";
 import BookDetailPage from "./pages/BookDetailPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
@@ -35,6 +36,10 @@ function App() {
           <Route
             path="/forget-password"
             element={<ForgetPasswordPage></ForgetPasswordPage>}
+          ></Route>
+          <Route
+            path="/account-client"
+            element={<AccountClientPage></AccountClientPage>}
           ></Route>
           <Route path="/cart" element={<CartPage></CartPage>}></Route>
           <Route

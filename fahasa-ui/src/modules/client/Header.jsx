@@ -1,10 +1,13 @@
 import MenuIcon from "@mui/icons-material/Menu";
 
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Search from "../../components/input/Search";
-import { headerIcons } from "../../utils/common";
+import { headerIconUser, headerIcons } from "../../utils/common";
 const Header = () => {
+  const { user } = useSelector((state) => state.auth);
+  const menu = user ? headerIconUser : headerIcons;
   return (
     <div className="w-full bg-white">
       <div className="w-[1250px] mx-auto flex items-center py-2 bg-white gap-x-5">
@@ -17,7 +20,7 @@ const Header = () => {
         </Link>
         <MenuIcon></MenuIcon>
         <Search></Search>
-        {headerIcons.map((item) => (
+        {menu.map((item) => (
           <Link key={item.id} to={item.to}>
             <div className="flex flex-col items-center">
               {item.icon}

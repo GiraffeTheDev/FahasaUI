@@ -6,6 +6,7 @@ import GapRow from "../components/common/GapRow";
 import LargeGap from "../components/common/LargeGap";
 import FormGroup from "../components/form/FormGroup";
 import Input from "../components/input/Input";
+import InputPassword from "../components/input/InputPassword";
 import { Label } from "../components/label";
 
 const ForgetPasswordPage = () => {
@@ -40,15 +41,11 @@ const ForgetPasswordPage = () => {
   const handleCreateAccount = async (values) => {
     try {
       console.log(values);
-      const response = await createAccount(values);
-      console.log("ress", response);
+      await createAccount(values);
     } catch (error) {
       console.log(error);
     }
   };
-
-  console.log("step", step);
-  console.log("button", buttonDisabled);
   useEffect(() => {
     if (watchOTP && watchOTP.length === 6) {
       handleSubmit(handleVerifyOTP)({ watchOTP });
@@ -73,11 +70,9 @@ const ForgetPasswordPage = () => {
         >
           <FormGroup>
             <Label htmlFor="email">Email</Label>
-            <Input
-              control={control}
-              name={"email"}
-              placeholder="Nhập email"
-            ></Input>
+            <Input control={control} name={"email"} placeholder="Nhập email">
+              <Button type="submit">Gửi OTP</Button>
+            </Input>
           </FormGroup>
           <FormGroup>
             <Label htmlFor="otp">Mã xác nhận OTP</Label>
@@ -91,12 +86,11 @@ const ForgetPasswordPage = () => {
           </FormGroup>
           <FormGroup>
             <Label htmlFor="password">Mật khẩu</Label>
-            <Input
-              control={control}
-              name={"password"}
-              placeholder={"Nhập mật khẩu"}
+            <InputPassword
               disabled={passwordDisabled}
-            ></Input>
+              name={"password"}
+              control={control}
+            ></InputPassword>
           </FormGroup>
           <GapRow></GapRow>
           <Button
@@ -107,9 +101,7 @@ const ForgetPasswordPage = () => {
           >
             Xác nhận
           </Button>
-          <Button type="submit" kind={"primary"} className="w-full mt-5">
-            Gửi OTP
-          </Button>
+
           <Button
             type="button"
             href={"/login"}

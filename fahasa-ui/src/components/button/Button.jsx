@@ -60,7 +60,7 @@ const Button = ({
 };
 Button.propTypes = {
   type: PropTypes.string.isRequired,
-  kind: PropTypes.oneOf(["primary", "secondary", "ghost"]).isRequired,
+  kind: PropTypes.oneOf(["primary", "secondary", "ghost"]),
   children: PropTypes.node,
   className: PropTypes.string,
   isLoading: PropTypes.bool,

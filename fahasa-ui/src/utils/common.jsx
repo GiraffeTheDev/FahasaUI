@@ -187,7 +187,72 @@ const headerIcons = [
       </svg>
     ),
     title: "Tài khoản",
-    to: "login",
+    to: "/login",
+  },
+];
+const headerIconUser = [
+  {
+    id: 1,
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth="1.5"
+        stroke="currentColor"
+        className="w-6 h-6"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
+        />
+      </svg>
+    ),
+    title: "Thông báo",
+    to: "/notification",
+  },
+  {
+    id: 2,
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth="1.5"
+        stroke="currentColor"
+        className="w-6 h-6"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"
+        />
+      </svg>
+    ),
+    title: "Giỏ hàng",
+    to: "/cart",
+  },
+  {
+    id: 3,
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth="1.5"
+        stroke="currentColor"
+        className="w-6 h-6"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+        />
+      </svg>
+    ),
+    title: "Tài khoản",
+    to: "/account-client",
   },
 ];
 const cateFlashSale = [
@@ -232,4 +297,40 @@ const cateFlashSale = [
     url: "https://cdn0.fahasa.com/media/fahasa_web_image/icon_XemThem.png",
   },
 ];
-export { bannerSmall, banners, cateFlashSale, cates, headerIcons, suppliers };
+const sidebarAccount = [
+  {
+    id: 1,
+    title: "Bảng điều khiển tài khoản",
+    to: "/account-client",
+  },
+  {
+    id: 2,
+    title: "Thông tin tài khoản",
+    to: "/account-information",
+  },
+  {
+    id: 3,
+    title: "Sổ địa chỉ",
+    to: "/account-address",
+  },
+  {
+    id: 4,
+    title: "Đơn hàng của tôi",
+    to: "/account-order",
+  },
+  {
+    id: 5,
+    title: "Thông báo",
+    to: "/account-notification",
+  },
+];
+export {
+  bannerSmall,
+  banners,
+  cateFlashSale,
+  cates,
+  headerIconUser,
+  headerIcons,
+  sidebarAccount,
+  suppliers,
+};

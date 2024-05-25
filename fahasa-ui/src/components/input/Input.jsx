@@ -14,6 +14,7 @@ const Input = (props) => {
     error = "",
     placeholder = "",
     maxLength,
+    className = "",
     ...rest
   } = props;
   const { field } = useController({ name, control, defaultValue: "" });
@@ -25,11 +26,12 @@ const Input = (props) => {
         type={type}
         className={classNames(
           "w-full border-gray1 px-3 py-2 text-sm font-medium transition-all border rounded-lg outline-none bg-transparent placeholder:text-text4 dark:border-darkStroke dark:placeholder:text-text2 dark:text-white",
+          className,
           error.length > 0 ? "border-error" : "border-strock",
           children ? "pr-16" : ""
         )}
         maxLength={maxLength}
-        placeholder={`${error.length <= 0 ? placeholder : ""}`}
+        placeholder={placeholder}
         {...field}
         {...rest}
       />
@@ -39,7 +41,7 @@ const Input = (props) => {
         </span>
       )}
       {children && (
-        <div className="absolute cursor-pointer select-none top-2/4 -translate-y-2/4 right-6">
+        <div className="absolute text-sm cursor-pointer select-none text-blue1 top-2/4 -translate-y-2/4 right-2">
           {children}
         </div>
       )}
@@ -52,6 +54,7 @@ Input.propTypes = {
   name: PropTypes.string,
   type: PropTypes.string,
   error: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default withErrorBoundary(Input, {

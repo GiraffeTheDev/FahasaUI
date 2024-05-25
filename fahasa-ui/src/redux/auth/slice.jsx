@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { handleLogin, handleLogout, handleRegister } from "./handlers";
+import { handleLoginRedux, handleLogout, handleRegister } from "./handlers";
 
 const authSlice = createSlice({
   name: "auth",
@@ -19,11 +19,11 @@ const authSlice = createSlice({
       .addCase(handleRegister.fulfilled, (state) => {
         state.loading = false;
       })
-      .addCase(handleLogin.pending, (state) => {
+      .addCase(handleLoginRedux.pending, (state) => {
         state.loading = true;
       })
-      .addCase(handleLogin.fulfilled, (state, action) => {
-        state.user = action.payload.user;
+      .addCase(handleLoginRedux.fulfilled, (state, action) => {
+        state.user = action.payload.data;
         state.loading = false;
         state.token = action.payload.access_token;
         state.isLogin = true;

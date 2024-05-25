@@ -11,9 +11,10 @@ export const handleRegister = createAsyncThunk(
     return response.data;
   }
 );
-export const handleLogin = createAsyncThunk("loginAuth", async (value) => {
+export const handleLoginRedux = createAsyncThunk("loginAuth", async (value) => {
   const response = await login(value);
-  if (response) {
+  console.log("resss", response);
+  if (response.data.data) {
     toast(response.data.message);
   }
   return response.data;

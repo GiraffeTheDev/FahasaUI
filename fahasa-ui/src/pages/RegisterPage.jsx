@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { createAccount, register, verifyOTP } from "../api/auth";
 import Button from "../components/button/Button";
 import GapRow from "../components/common/GapRow";
 import LargeGap from "../components/common/LargeGap";
 import FormGroup from "../components/form/FormGroup";
 import Input from "../components/input/Input";
+import InputPassword from "../components/input/InputPassword";
 import { Label } from "../components/label";
 import NavigationBar from "../modules/client/NavigationBar";
 
@@ -30,7 +32,7 @@ const RegisterPage = () => {
   };
   const handleVerifyOTP = async (values) => {
     try {
-      const response = await verifyOTP(values);
+      await verifyOTP(values);
       setStep(3);
       setButtonDisabled(false);
       setPasswordDisabled(false);
@@ -40,16 +42,17 @@ const RegisterPage = () => {
   };
   const handleCreateAccount = async (values) => {
     try {
-      console.log(values);
       const response = await createAccount(values);
-      console.log("ress", response);
+      if (response.data.data) {
+        toast(response.data.message);
+      } else {
+        toast("Register Failed");
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log("step", step);
-  console.log("button", buttonDisabled);
   useEffect(() => {
     if (watchOTP && watchOTP.length === 6) {
       handleSubmit(handleVerifyOTP)({ watchOTP });
@@ -72,11 +75,9 @@ const RegisterPage = () => {
         >
           <FormGroup>
             <Label htmlFor="email">Email</Label>
-            <Input
-              control={control}
-              name={"email"}
-              placeholder="Nhập email"
-            ></Input>
+            <Input control={control} name={"email"} placeholder="Nhập email">
+              <Button type="submit">Gửi OTP</Button>
+            </Input>
           </FormGroup>
           <FormGroup>
             <Label htmlFor="otp">Mã xác nhận OTP</Label>
@@ -86,16 +87,17 @@ const RegisterPage = () => {
               placeholder={"6 kí tự"}
               maxLength={6}
               disabled={otpDisabled}
+              className={`${otpDisabled ? "!bg-gray" : ""} `}
             ></Input>
           </FormGroup>
           <FormGroup>
             <Label htmlFor="password">Mật khẩu</Label>
-            <Input
-              control={control}
+            <InputPassword
               name={"password"}
-              placeholder={"Nhập mật khẩu"}
               disabled={passwordDisabled}
-            ></Input>
+              control={control}
+              className={`${passwordDisabled ? "!bg-gray" : ""} `}
+            ></InputPassword>
           </FormGroup>
           <GapRow></GapRow>
           <Button
@@ -106,9 +108,7 @@ const RegisterPage = () => {
           >
             Đăng kí
           </Button>
-          <Button type="submit" kind={"primary"} className="w-full mt-5">
-            Gửi OTP
-          </Button>
+
           <LargeGap></LargeGap>
           <div className="flex justify-center">
             <p className="text-xs max-w-[300px] text-center leading-5">
