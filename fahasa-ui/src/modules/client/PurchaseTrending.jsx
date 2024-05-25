@@ -4,7 +4,7 @@ import BookCard from "../../components/bookcard/BookCard";
 
 const PurchaseTrending = () => {
   return (
-    <div className="mt-5 bg-white">
+    <div className="pb-5 mt-5 bg-white rounded-bl-lg rounded-br-lg">
       <div className="flex items-center p-2 bg-red-300 rounded-tl-lg rounded-tr-lg gap-x-5">
         <div className="p-2 bg-red-500 rounded-lg">
           <svg
@@ -24,11 +24,11 @@ const PurchaseTrending = () => {
         </div>
         <span className="text-xl font-semibold">Xu hướng mua sắm</span>
       </div>
-      <div className="flex items-center py-3 gap-x-3">
+      <div className="flex items-center py-3 pl-5 gap-x-3">
         {Array(3)
           .fill(0)
           .map((item) => (
-            <Link to={"/treding"} key={item}>
+            <Link to={"/trending"} key={item}>
               Xu hướng theo ngày
             </Link>
           ))}
@@ -39,7 +39,7 @@ const PurchaseTrending = () => {
           .map((item) => (
             <BookCard
               key={item}
-              className="transition-all hover:border border-1-black"
+              className="transition-all hover:shadow-lg"
             ></BookCard>
           ))}
       </div>

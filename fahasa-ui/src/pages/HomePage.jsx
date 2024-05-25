@@ -2,9 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import BookCard from "../components/bookcard/BookCard";
 import BannerSwipper from "../modules/client/BannerSwipper";
+import BrandHightlight from "../modules/client/BrandHightlight";
 import CategoryProduct from "../modules/client/CategoryProduct";
 import PurchaseTrending from "../modules/client/PurchaseTrending";
 import { bannerSmall } from "../utils/common";
+import ForeignBook from "./ForeignBook";
 
 const HomePage = () => {
   return (
@@ -47,7 +49,7 @@ const HomePage = () => {
           backgroundImage:
             'url("https://cdn0.fahasa.com/media/fahasa_web_image/flash_sale_background_image.jpg")',
         }}
-        className="p-5 "
+        className="p-5 mt-5 rounded-xl"
       >
         <div className="flex justify-between px-2 py-5 bg-white rounded-lg">
           <img
@@ -70,6 +72,18 @@ const HomePage = () => {
       </div>
       <div>
         <PurchaseTrending></PurchaseTrending>
+      </div>
+      <div>
+        <BrandHightlight header={true}></BrandHightlight>
+      </div>
+      <div>
+        <BrandHightlight header={false}></BrandHightlight>
+      </div>
+      <div>
+        <BrandHightlight header={false}></BrandHightlight>
+      </div>
+      <div>
+        <ForeignBook></ForeignBook>
       </div>
     </div>
   );

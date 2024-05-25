@@ -24,7 +24,10 @@ const CategoryProduct = () => {
       <div className="grid grid-cols-10 p-4">
         {cates.length > 0 &&
           cates.map((item) => (
-            <div key={item.id} className="flex flex-col items-center gap-y-3">
+            <div
+              key={item.id}
+              className="flex flex-col items-center text-center gap-y-3"
+            >
               <div>
                 <img src={item.url} alt={item.title} />
               </div>

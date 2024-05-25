@@ -1,5 +1,16 @@
 import { Route, Routes } from "react-router-dom";
+import LayoutAdmin from "./layout/LayoutAdmin";
 import LayoutMain from "./layout/LayoutMain";
+import Dashboard from "./modules/admin/Dashboard";
+import ManageAuthor from "./modules/admin/author/ManageAuthor";
+import ManageBook from "./modules/admin/book/ManageBook";
+import ManageCategory from "./modules/admin/category/ManageCategory";
+import ManageComment from "./modules/admin/comment/ManageComment";
+import ManageGenres from "./modules/admin/genres/ManageGenres";
+import ManageOrder from "./modules/admin/order/ManageOrder";
+import ManageSupplier from "./modules/admin/supplier/ManageSupplier";
+import ManageUser from "./modules/admin/user/ManageUser";
+import ManageVoucher from "./modules/admin/voucher/ManageVoucher";
 import BookDetailPage from "./pages/BookDetailPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
@@ -42,6 +53,45 @@ function App() {
             path="/checkout"
             element={<CheckoutPage></CheckoutPage>}
           ></Route>
+        </Route>
+        <Route element={<LayoutAdmin></LayoutAdmin>}>
+          <Route
+            element={<ManageBook></ManageBook>}
+            path="/manage/book"
+          ></Route>
+          <Route
+            element={<ManageSupplier></ManageSupplier>}
+            path="/manage/supplier"
+          ></Route>
+          <Route
+            element={<ManageVoucher></ManageVoucher>}
+            path="/manage/voucher"
+          ></Route>
+          <Route
+            element={<ManageUser></ManageUser>}
+            path="/manage/users"
+          ></Route>
+          <Route
+            element={<ManageGenres></ManageGenres>}
+            path="/manage/genres"
+          ></Route>
+          <Route
+            element={<ManageOrder></ManageOrder>}
+            path="/manage/order"
+          ></Route>
+          <Route
+            element={<ManageAuthor></ManageAuthor>}
+            path="/manage/author"
+          ></Route>
+          <Route
+            element={<ManageCategory></ManageCategory>}
+            path="/manage/category"
+          ></Route>
+          <Route
+            element={<ManageComment></ManageComment>}
+            path="/manage/comment"
+          ></Route>
+          <Route element={<Dashboard></Dashboard>} path="/dashboard"></Route>
         </Route>
       </Routes>
     </>
