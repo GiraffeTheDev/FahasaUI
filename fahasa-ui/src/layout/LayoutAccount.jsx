@@ -11,18 +11,35 @@ const LayoutAccount = () => {
           Tài khoản
         </h1>
         <div className="flex flex-col px-2 mt-5 gap-y-2">
-          {sidebarAccount.map((item) => (
-            <NavLink
-              key={item.id}
-              to={item.to}
-              className={classNames(
-                ({ isActive }) => (isActive ? "active" : "border-black"),
-                "border rounded-lg px-5 py-2  text-black"
-              )}
-            >
-              {item.title}
-            </NavLink>
-          ))}
+          {sidebarAccount.length > 0 &&
+            sidebarAccount.map((item) => {
+              if (item.to === "/logout") {
+                return (
+                  <button
+                    onClick={() => {
+                      console.log("logout");
+                    }}
+                    key={item.id}
+                    className="flex items-center px-4 py-3 text-gray-900 rounded-lg dark:text-white gap-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  >
+                    <span> {item.title}</span>
+                  </button>
+                );
+              } else {
+                return (
+                  <NavLink
+                    key={item.id}
+                    to={item.to}
+                    className={classNames(
+                      ({ isActive }) => (isActive ? "active" : "border-black"),
+                      "border rounded-lg px-5 py-2  text-black"
+                    )}
+                  >
+                    {item.title}
+                  </NavLink>
+                );
+              }
+            })}
         </div>
       </div>
       <div className="flex-1 w-full px-10 pt-5 pb-[80px] bg-white">

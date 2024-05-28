@@ -29,7 +29,9 @@ const LoginPage = () => {
     }
   };
   useEffect(() => {
-    navigate("/");
+    if (user) {
+      navigate("/");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

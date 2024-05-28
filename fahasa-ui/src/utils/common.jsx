@@ -323,6 +323,12 @@ const sidebarAccount = [
     title: "Thông báo",
     to: "/account-notification",
   },
+  {
+    id: 6,
+    title: "Đăng xuất",
+    to: "/logout",
+    onClick: () => {},
+  },
 ];
 export {
   bannerSmall,
