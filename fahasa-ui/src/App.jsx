@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import LayoutAccount from "./layout/LayoutAccount";
 import LayoutAdmin from "./layout/LayoutAdmin";
 import LayoutMain from "./layout/LayoutMain";
 import Dashboard from "./modules/admin/Dashboard";
@@ -11,7 +12,10 @@ import ManageOrder from "./modules/admin/order/ManageOrder";
 import ManageSupplier from "./modules/admin/supplier/ManageSupplier";
 import ManageUser from "./modules/admin/user/ManageUser";
 import ManageVoucher from "./modules/admin/voucher/ManageVoucher";
-import AccountClientPage from "./pages/AccountClientPage";
+import AccountAddress from "./modules/client/AccountAddress";
+import AccountInfo from "./modules/client/AccountInfo";
+import AccountOrder from "./modules/client/AccountOrder";
+import DashBoardClient from "./modules/client/DashBoardClient";
 import BookDetailPage from "./pages/BookDetailPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
@@ -37,10 +41,24 @@ function App() {
             path="/forget-password"
             element={<ForgetPasswordPage></ForgetPasswordPage>}
           ></Route>
-          <Route
-            path="/account-client"
-            element={<AccountClientPage></AccountClientPage>}
-          ></Route>
+          <Route element={<LayoutAccount></LayoutAccount>}>
+            <Route
+              path="/account-client"
+              element={<DashBoardClient></DashBoardClient>}
+            ></Route>
+            <Route
+              path="/account-information"
+              element={<AccountInfo></AccountInfo>}
+            ></Route>
+            <Route
+              path="/account-address"
+              element={<AccountAddress></AccountAddress>}
+            ></Route>
+            <Route
+              path="/account-order"
+              element={<AccountOrder></AccountOrder>}
+            ></Route>
+          </Route>
           <Route path="/cart" element={<CartPage></CartPage>}></Route>
           <Route
             path="/flash-sale"

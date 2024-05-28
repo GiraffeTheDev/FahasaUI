@@ -10,6 +10,7 @@ import Input from "../components/input/Input";
 import InputPassword from "../components/input/InputPassword";
 import { Label } from "../components/label";
 import NavigationBar from "../modules/client/NavigationBar";
+import { navi } from "../utils/constant";
 
 const RegisterPage = () => {
   const [step, setStep] = useState(1);
@@ -62,7 +63,7 @@ const RegisterPage = () => {
   return (
     <div className="w-full py-10 mt-5 bg-white rounded-lg">
       <div className="max-w-[400px] mx-auto">
-        <NavigationBar></NavigationBar>
+        <NavigationBar menu={navi} className="max-w-[300px]"></NavigationBar>
         <form
           onSubmit={handleSubmit(
             step === 1

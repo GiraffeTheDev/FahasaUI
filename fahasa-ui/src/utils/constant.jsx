@@ -1,4 +1,4 @@
-export const menuAside = [
+const menuAside = [
   {
     title: "Dashboard",
     url: "/dashboard",
@@ -221,3 +221,40 @@ export const menuAside = [
     onClick: () => {},
   },
 ];
+const navi = [
+  { id: 1, title: "Đăng nhập", to: "/login" },
+  { id: 2, title: "Đăng kí", to: "/register" },
+];
+const naviOrder = [
+  {
+    id: 1,
+    title: "Tất cả",
+    to: "/account-order",
+  },
+  {
+    id: 2,
+    title: "Chờ xác nhận",
+    to: "/pending-confirm",
+  },
+  {
+    id: 3,
+    title: "Chờ lấy hàng",
+    to: "/pending-product",
+  },
+  {
+    id: 4,
+    title: "Chờ giao hàng",
+    to: "/confirm-order",
+  },
+  {
+    id: 5,
+    title: "Đã giao",
+    to: "/fullfil-order",
+  },
+  {
+    id: 6,
+    title: "Đã hủy",
+    to: "/cancel-order",
+  },
+];
+export { menuAside, navi, naviOrder };

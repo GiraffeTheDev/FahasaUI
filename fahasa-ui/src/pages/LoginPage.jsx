@@ -11,6 +11,7 @@ import InputPassword from "../components/input/InputPassword";
 import { Label } from "../components/label";
 import NavigationBar from "../modules/client/NavigationBar";
 import { handleLoginRedux } from "../redux/auth/handlers";
+import { navi } from "../utils/constant";
 
 const LoginPage = () => {
   const { control, handleSubmit } = useForm({
@@ -34,7 +35,7 @@ const LoginPage = () => {
   return (
     <div className="w-full py-10 mt-5 bg-white rounded-lg">
       <div className="max-w-[400px] mx-auto">
-        <NavigationBar></NavigationBar>
+        <NavigationBar menu={navi} className="max-w-[300px]"></NavigationBar>
         <form onSubmit={handleSubmit(handleLogin)} autoComplete="off">
           <FormGroup>
             <Label htmlFor="email">Email</Label>
