@@ -7,6 +7,7 @@ import ManageAuthor from "./modules/admin/author/ManageAuthor";
 import ManageBook from "./modules/admin/book/ManageBook";
 import ManageCategory from "./modules/admin/category/ManageCategory";
 import ManageComment from "./modules/admin/comment/ManageComment";
+import GenresAddNew from "./modules/admin/genres/GenresAddNew";
 import ManageGenres from "./modules/admin/genres/ManageGenres";
 import ManageOrder from "./modules/admin/order/ManageOrder";
 import ManageSupplier from "./modules/admin/supplier/ManageSupplier";
@@ -113,6 +114,10 @@ function App() {
           <Route
             element={<ManageComment></ManageComment>}
             path="/manage/comment"
+          ></Route>
+          <Route
+            element={<GenresAddNew></GenresAddNew>}
+            path="/manage/add-genres"
           ></Route>
           <Route element={<Dashboard></Dashboard>} path="/dashboard"></Route>
         </Route>

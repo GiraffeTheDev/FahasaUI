@@ -5,7 +5,7 @@ import Footer from "../modules/client/Footer";
 import Header from "../modules/client/Header";
 const LayoutMain = () => {
   const { user } = useSelector((state) => state.auth);
-  console.log("user", user);
+
   return (
     <div className="h-full bg-gray1">
       <div className="h-[60px] w-full ">

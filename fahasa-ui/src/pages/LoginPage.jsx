@@ -29,11 +29,12 @@ const LoginPage = () => {
     }
   };
   useEffect(() => {
-    if (user) {
+    if (user && user.isAdmin === false) {
       navigate("/");
+    } else if (user && user.isAdmin === true) {
+      navigate("/dashboard");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, user, navigate]);
   return (
     <div className="w-full py-10 mt-5 bg-white rounded-lg">
       <div className="max-w-[400px] mx-auto">

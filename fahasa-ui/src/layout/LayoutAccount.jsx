@@ -1,9 +1,18 @@
-import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import classNames from "../components/classname/className";
+import { handleLogout } from "../redux/auth/handlers";
 import { sidebarAccount } from "../utils/common";
-
 const LayoutAccount = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (user === null) {
+      navigate("/");
+    }
+  }, [navigate, user]);
   return (
     <div className="flex items-start mt-5 gap-x-5">
       <div className="w-[280px] bg-white min-h-[500px]">
@@ -16,13 +25,11 @@ const LayoutAccount = () => {
               if (item.to === "/logout") {
                 return (
                   <button
-                    onClick={() => {
-                      console.log("logout");
-                    }}
+                    onClick={() => dispatch(handleLogout())}
                     key={item.id}
-                    className="flex items-center px-4 py-3 text-gray-900 rounded-lg dark:text-white gap-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className="flex items-center px-5 py-2 text-gray-900 border border-black rounded-lg dark:text-white gap-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 group"
                   >
-                    <span> {item.title}</span>
+                    {item.title}
                   </button>
                 );
               } else {

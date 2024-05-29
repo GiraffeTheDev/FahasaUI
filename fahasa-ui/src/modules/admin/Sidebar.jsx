@@ -1,10 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
+import { handleLogout } from "../../redux/auth/handlers";
 import { menuAside } from "../../utils/constant";
 const Sidebar = () => {
+  const dispatch = useDispatch();
   return (
-    <aside className="w-[260px] h-screen transition-transform -translate-x-full sm:translate-x-0">
+    <aside className="shadow-md w-[260px] h-screen transition-transform -translate-x-full sm:translate-x-0">
       <div className="h-full px-3 py-4 overflow-y-auto rounded-xl bg-gray-50 dark:bg-gray-800">
         <div className="w-full mb-3">
           <img
@@ -19,9 +22,7 @@ const Sidebar = () => {
               if (item.url === "/logout") {
                 return (
                   <button
-                    onClick={() => {
-                      console.log("logout");
-                    }}
+                    onClick={() => dispatch(handleLogout())}
                     key={uuidv4()}
                     className="flex items-center px-4 py-3 text-gray-900 rounded-lg dark:text-white gap-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 group"
                   >

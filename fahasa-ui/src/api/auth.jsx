@@ -12,6 +12,6 @@ const login = async (data) => {
   return instance.post(`http://localhost:8008/api/v1/login`, data);
 };
 const logout = async () => {
-  return instance.post(`http://localhost:8008/v1/logout-auth`);
+  return instance.post(`http://localhost:8008/api/v1/logout`);
 };
 export { createAccount, login, logout, register, verifyOTP };
