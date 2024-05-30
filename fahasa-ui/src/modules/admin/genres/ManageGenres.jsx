@@ -1,6 +1,8 @@
 import React from "react";
 import Button from "../../../components/button/Button";
+import GapRow from "../../../components/common/GapRow";
 import Heading from "../Heading";
+import TableGenres from "./TableGenres";
 
 const ManageGenres = () => {
   return (
@@ -14,6 +16,8 @@ const ManageGenres = () => {
       >
         Thêm thể loại
       </Button>
+      <GapRow></GapRow>
+      <TableGenres></TableGenres>
     </>
   );
 };

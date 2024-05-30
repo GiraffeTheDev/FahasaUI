@@ -1,11 +1,11 @@
 const banners = [
   {
     id: 1,
-    url: "https://cdn0.fahasa.com/media/magentothem/banner7/SieeuSale_Week2_T524_Banner_Slide_840x320.jpg",
+    url: "https://cdn0.fahasa.com/media/magentothem/banner7/Bo0106__840x320.jpg",
   },
   {
     id: 2,
-    url: "https://cdn0.fahasa.com/media/magentothem/banner7/MCBookT524_bannerSlide_840x320.jpg",
+    url: "https://cdn0.fahasa.com/media/magentothem/banner7/Silver_0524_Ver1_SachVietSlide_840x320.jpg",
   },
   {
     id: 3,

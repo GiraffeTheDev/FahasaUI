@@ -7,7 +7,7 @@ import {
 import { useState } from "react";
 import { app } from "../config/firebase";
 
-export function useFireBase(setValue) {
+export function useImageUpload(setValue) {
   const [image, setImage] = useState("");
   const handleUploadImage = (file) => {
     const storage = getStorage(app);

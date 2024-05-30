@@ -5,9 +5,11 @@ import LayoutMain from "./layout/LayoutMain";
 import Dashboard from "./modules/admin/Dashboard";
 import ManageAuthor from "./modules/admin/author/ManageAuthor";
 import ManageBook from "./modules/admin/book/ManageBook";
+import CategoryAddNew from "./modules/admin/category/CategoryAddNew";
 import ManageCategory from "./modules/admin/category/ManageCategory";
 import ManageComment from "./modules/admin/comment/ManageComment";
 import GenresAddNew from "./modules/admin/genres/GenresAddNew";
+import GenresUpdate from "./modules/admin/genres/GenresUpdate";
 import ManageGenres from "./modules/admin/genres/ManageGenres";
 import ManageOrder from "./modules/admin/order/ManageOrder";
 import ManageSupplier from "./modules/admin/supplier/ManageSupplier";
@@ -100,6 +102,10 @@ function App() {
             path="/manage/genres"
           ></Route>
           <Route
+            element={<GenresUpdate></GenresUpdate>}
+            path="/manage/update-genres"
+          ></Route>
+          <Route
             element={<ManageOrder></ManageOrder>}
             path="/manage/order"
           ></Route>
@@ -112,6 +118,10 @@ function App() {
             path="/manage/category"
           ></Route>
           <Route
+            element={<CategoryAddNew></CategoryAddNew>}
+            path="/manage/add-category"
+          ></Route>
+          <Route
             element={<ManageComment></ManageComment>}
             path="/manage/comment"
           ></Route>
@@ -119,6 +129,7 @@ function App() {
             element={<GenresAddNew></GenresAddNew>}
             path="/manage/add-genres"
           ></Route>
+
           <Route element={<Dashboard></Dashboard>} path="/dashboard"></Route>
         </Route>
       </Routes>
