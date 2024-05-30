@@ -6,6 +6,7 @@ import Dashboard from "./modules/admin/Dashboard";
 import ManageAuthor from "./modules/admin/author/ManageAuthor";
 import ManageBook from "./modules/admin/book/ManageBook";
 import CategoryAddNew from "./modules/admin/category/CategoryAddNew";
+import CategoryUpdate from "./modules/admin/category/CategoryUpdate";
 import ManageCategory from "./modules/admin/category/ManageCategory";
 import ManageComment from "./modules/admin/comment/ManageComment";
 import GenresAddNew from "./modules/admin/genres/GenresAddNew";
@@ -120,6 +121,10 @@ function App() {
           <Route
             element={<CategoryAddNew></CategoryAddNew>}
             path="/manage/add-category"
+          ></Route>
+          <Route
+            element={<CategoryUpdate></CategoryUpdate>}
+            path="/manage/update-category"
           ></Route>
           <Route
             element={<ManageComment></ManageComment>}

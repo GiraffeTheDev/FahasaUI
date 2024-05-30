@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { handleCreateCategory, handleGetAllCategory } from "./handlers";
+import {
+  handleCreateCategory,
+  handleGetAllCategory,
+  handleUpdateCategory,
+} from "./handlers";
 
 const categorySlice = createSlice({
   name: "category",
@@ -22,6 +26,12 @@ const categorySlice = createSlice({
       .addCase(handleGetAllCategory.fulfilled, (state, action) => {
         state.loading = false;
         state.category = action.payload.data;
+      })
+      .addCase(handleUpdateCategory.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(handleUpdateCategory.fulfilled, (state) => {
+        state.loading = false;
       });
   },
 });

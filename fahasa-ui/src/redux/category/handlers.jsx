@@ -1,6 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import { create, getAll } from "../../api/category";
+import {
+  create,
+  deleteCategory,
+  getAll,
+  updateCategory,
+} from "../../api/category";
 export const handleCreateCategory = createAsyncThunk(
   "createCategory",
   async (value) => {
@@ -18,6 +23,26 @@ export const handleGetAllCategory = createAsyncThunk(
     const response = await getAll(value);
     console.log("resss", response);
     if (response.data.data) {
+      toast(response.data.message);
+    }
+    return response.data;
+  }
+);
+export const handleUpdateCategory = createAsyncThunk(
+  "updateCategory",
+  async (value) => {
+    const response = await updateCategory(value);
+    if (response.data) {
+      toast(response.data.message);
+    }
+    return response.data;
+  }
+);
+export const handleDeleteCategory = createAsyncThunk(
+  "deleteCate",
+  async (value) => {
+    const response = await deleteCategory(value);
+    if (response.data) {
       toast(response.data.message);
     }
     return response.data;

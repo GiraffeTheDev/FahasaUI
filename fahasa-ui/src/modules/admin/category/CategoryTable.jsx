@@ -1,9 +1,11 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getAll } from "../../../api/category";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
 import Table from "../../../components/table/Table";
+import { handleDeleteCategory } from "../../../redux/category/handlers";
 const title = [
   {
     id: 1,
@@ -20,11 +22,18 @@ const title = [
 ];
 const CategoryTable = () => {
   const navigate = useNavigate();
-  const handleRemove = () => {
-    console.log("remove");
+  const dispatch = useDispatch();
+  const handleRemove = (id) => {
+    dispatch(handleDeleteCategory(id));
   };
-
-  const { category } = useSelector((state) => state.cate);
+  const [category, setCategory] = useState([]);
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await getAll();
+      setCategory(response.data.data);
+    };
+    fetch();
+  }, []);
   return (
     <>
       {category && category.length > 0 ? (
@@ -54,7 +63,7 @@ const CategoryTable = () => {
                     <div className="flex items-center gap-x-3">
                       <ActionEdit
                         onClick={() =>
-                          navigate(`/manage/update-genres?id=${item.id}`)
+                          navigate(`/manage/update-category?id=${item.id}`)
                         }
                       ></ActionEdit>
                       <ActionDelete
