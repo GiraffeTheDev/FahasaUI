@@ -3,6 +3,7 @@ import LayoutAccount from "./layout/LayoutAccount";
 import LayoutAdmin from "./layout/LayoutAdmin";
 import LayoutMain from "./layout/LayoutMain";
 import Dashboard from "./modules/admin/Dashboard";
+import AuthorAddNew from "./modules/admin/author/AuthorAddNew";
 import ManageAuthor from "./modules/admin/author/ManageAuthor";
 import ManageBook from "./modules/admin/book/ManageBook";
 import CategoryAddNew from "./modules/admin/category/CategoryAddNew";
@@ -105,6 +106,14 @@ function App() {
           <Route
             element={<GenresUpdate></GenresUpdate>}
             path="/manage/update-genres"
+          ></Route>
+          <Route
+            element={<GenresAddNew></GenresAddNew>}
+            path="/manage/add-genres"
+          ></Route>
+          <Route
+            element={<AuthorAddNew></AuthorAddNew>}
+            path="/manage/add-author"
           ></Route>
           <Route
             element={<ManageOrder></ManageOrder>}

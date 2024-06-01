@@ -1,5 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { create } from "../../../api/genres";
 import Button from "../../../components/button/Button";
 import GapRow from "../../../components/common/GapRow";
 import Input from "../../../components/input/Input";
@@ -7,8 +10,17 @@ import { Label } from "../../../components/label";
 
 const GenresAddNew = () => {
   const { control, handleSubmit } = useForm({ mode: "onSubmit" });
-  const handleAddGenres = (value) => {
-    console.log(value);
+  const navigate = useNavigate();
+  const handleAddGenres = async (value) => {
+    try {
+      const response = await create(value);
+      if (response.status === 200) {
+        toast(response.data.message);
+        navigate("/manage/genres");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>

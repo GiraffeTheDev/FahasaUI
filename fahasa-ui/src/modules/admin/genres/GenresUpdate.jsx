@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { getOne, update } from "../../../api/genres";
 import Button from "../../../components/button/Button";
 import GapRow from "../../../components/common/GapRow";
 import Input from "../../../components/input/Input";
@@ -8,12 +10,27 @@ import { Label } from "../../../components/label";
 
 const GenresUpdate = () => {
   const { control, handleSubmit, reset } = useForm({ mode: "onSubmit" });
-  const handleUpdateGenres = (value) => {
-    console.log(value);
+  const navigate = useNavigate();
+  const handleUpdateGenres = async (value) => {
+    try {
+      const response = await update(value);
+      if (response.status === 200) {
+        toast(response.data.message);
+        navigate("/manage/genres");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   const [params] = useSearchParams();
   const id = params.get("id");
-
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await getOne(id);
+      reset(response.data.data);
+    };
+    fetch();
+  }, [id, reset]);
   return (
     <div className="max-w-2xl px-4 py-8 mx-auto lg:py-16">
       <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">

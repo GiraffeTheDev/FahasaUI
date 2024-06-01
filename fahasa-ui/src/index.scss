@@ -19,7 +19,6 @@ img {
 }
 .active {
   color: #c40c0c;
-  
 }
 .text {
   display: -webkit-box;
@@ -38,4 +37,20 @@ img {
   position: absolute;
   width: 1px;
   white-space: nowrap;
+}
+th,
+td {
+  vertical-align: middle;
+  text-align: center;
+}
+th {
+  padding: 20px 30px;
+  font-weight: 600;
+  text-align: center;
+}
+td {
+  padding: 15px 30px;
+}
+table {
+  width: 100%;
 }

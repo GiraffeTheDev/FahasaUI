@@ -17,7 +17,9 @@ const ManageGenres = () => {
         Thêm thể loại
       </Button>
       <GapRow></GapRow>
-      <TableGenres></TableGenres>
+      <div className="w-full mt-5">
+        <TableGenres></TableGenres>
+      </div>
     </>
   );
 };
