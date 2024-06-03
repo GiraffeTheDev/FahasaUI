@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../../../components/button/Button";
+import GapRow from "../../../components/common/GapRow";
 import Heading from "../Heading";
 import AuthorTable from "./AuthorTable";
 
@@ -15,6 +16,7 @@ const ManageAuthor = () => {
       >
         Thêm mới tác giả
       </Button>
+      <GapRow></GapRow>
       <AuthorTable></AuthorTable>
     </>
   );

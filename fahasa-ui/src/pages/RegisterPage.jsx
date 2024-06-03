@@ -24,9 +24,11 @@ const RegisterPage = () => {
   const handleRegister = async (values) => {
     try {
       const response = await register(values);
-      console.log(response);
-      setStep(2);
-      setOtpDisabled(false);
+      toast(response.data.message);
+      if (response.data.error !== 1) {
+        setStep(2);
+        setOtpDisabled(false);
+      }
     } catch (error) {
       console.log(error);
     }

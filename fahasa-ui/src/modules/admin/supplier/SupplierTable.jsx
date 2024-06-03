@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { deleteGenres, getAll } from "../../../api/genres";
+import { getAll } from "../../../api/supplier";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
 import Table from "../../../components/table/Table";
@@ -12,57 +11,54 @@ const title = [
   },
   {
     id: 2,
+    name: "Ảnh bìa",
+  },
+  {
+    id: 3,
     name: "Hành động",
   },
 ];
-const TableGenres = () => {
-  const [genres, setGenres] = useState([]);
+const SupplierTable = () => {
   const navigate = useNavigate();
-  const handleRemove = async (id) => {
-    try {
-      const response = await deleteGenres(id);
-      if (response.status === 200) {
-        toast(response.data.message);
-        const responseData = await getAll();
-        setGenres(responseData.data.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const handleRemove = (id) => {
+    console.log(id);
   };
+  const [supplier, setSupplier] = useState([]);
   useEffect(() => {
-    try {
-      const fetch = async () => {
-        const response = await getAll();
-        setGenres(response.data.data);
-      };
-      fetch();
-    } catch (error) {
-      console.log(error);
-    }
+    const fetch = async () => {
+      const response = await getAll();
+      setSupplier(response.data.data);
+    };
+    fetch();
   }, []);
   return (
     <>
-      {genres && genres.length > 0 ? (
+      {supplier && supplier.length > 0 ? (
         <Table>
           <thead className="bg-[#f7f7f8] ">
             <tr>
-              <th>Id</th>
-              <th>Tên thể loại</th>
-              <th>Hành động</th>
+              {title.map((item) => (
+                <th key={item.id}>{item.name}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            {genres.length > 0 &&
-              genres.map((item) => (
+            {supplier.length > 0 &&
+              supplier.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.id}</td>
                   <td>{item.name}</td>
+                  <td className="flex items-center justify-center">
+                    <img
+                      src={item.image}
+                      className="object-cover rounded-lg w-[100px] h-[100px]"
+                      alt=""
+                    />
+                  </td>
                   <td>
                     <div className="flex items-center justify-center gap-x-3">
                       <ActionEdit
                         onClick={() =>
-                          navigate(`/manage/update-category?id=${item.id}`)
+                          navigate(`/manage/update-supplier?id=${item.id}`)
                         }
                       ></ActionEdit>
                       <ActionDelete
@@ -83,4 +79,4 @@ const TableGenres = () => {
   );
 };
 
-export default TableGenres;
+export default SupplierTable;

@@ -41,9 +41,7 @@ const CategoryTable = () => {
           <thead className="bg-[#f7f7f8] ">
             <tr>
               {title.map((item) => (
-                <td key={item.id} className="py-2 text-xl font-semibold">
-                  {item.name}
-                </td>
+                <th key={item.id}>{item.name}</th>
               ))}
             </tr>
           </thead>
@@ -52,15 +50,15 @@ const CategoryTable = () => {
               category.map((item) => (
                 <tr key={item.id}>
                   <td>{item.name}</td>
-                  <td>
+                  <td className="flex items-center justify-center">
                     <img
                       src={item.image}
-                      className="object-cover  rounded-lg w-[100px] h-[100px]"
+                      className="object-cover rounded-lg w-[100px] h-[100px]"
                       alt=""
                     />
                   </td>
-                  <td className="">
-                    <div className="flex items-center gap-x-3">
+                  <td>
+                    <div className="flex items-center justify-center gap-x-3">
                       <ActionEdit
                         onClick={() =>
                           navigate(`/manage/update-category?id=${item.id}`)

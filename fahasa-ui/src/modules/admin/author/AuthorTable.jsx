@@ -5,7 +5,20 @@ import { deleteAuthor, getAll } from "../../../api/author";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
 import Table from "../../../components/table/Table";
-
+const title = [
+  {
+    id: 1,
+    name: "Tên tác giả",
+  },
+  {
+    id: 2,
+    name: "Ảnh",
+  },
+  {
+    id: 3,
+    name: "Hành động",
+  },
+];
 const AuthorTable = () => {
   const [author, setAuthor] = useState([]);
   const navigate = useNavigate();
@@ -36,11 +49,11 @@ const AuthorTable = () => {
     <>
       {author && author.length > 0 ? (
         <Table>
-          <thead>
+          <thead className="bg-[#f7f7f8] ">
             <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Actions</th>
+              {title.map((item) => (
+                <th key={item.id}>{item.name}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -48,18 +61,18 @@ const AuthorTable = () => {
               author.map((item) => (
                 <tr key={item.id}>
                   <td>{item.name}</td>
-                  <td>
+                  <td className="flex items-center justify-center">
                     <img
                       src={item.image}
-                      className="object-cover  rounded-lg w-[100px] h-[100px]"
+                      className="object-cover rounded-lg w-[100px] h-[100px]"
                       alt=""
                     />
                   </td>
                   <td className="">
-                    <div className="flex items-center gap-x-3">
+                    <div className="flex items-center justify-center gap-x-3">
                       <ActionEdit
                         onClick={() =>
-                          navigate(`/manage/update-category?id=${item.id}`)
+                          navigate(`/manage/update-author?id=${item.id}`)
                         }
                       ></ActionEdit>
                       <ActionDelete

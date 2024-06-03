@@ -15,6 +15,8 @@ import GenresUpdate from "./modules/admin/genres/GenresUpdate";
 import ManageGenres from "./modules/admin/genres/ManageGenres";
 import ManageOrder from "./modules/admin/order/ManageOrder";
 import ManageSupplier from "./modules/admin/supplier/ManageSupplier";
+import SupplierAddNew from "./modules/admin/supplier/SupplierAddNew";
+import SupplierUpdate from "./modules/admin/supplier/SupplierUpdate";
 import ManageUser from "./modules/admin/user/ManageUser";
 import ManageVoucher from "./modules/admin/voucher/ManageVoucher";
 import AccountAddress from "./modules/client/AccountAddress";
@@ -90,6 +92,14 @@ function App() {
           <Route
             element={<ManageSupplier></ManageSupplier>}
             path="/manage/supplier"
+          ></Route>
+          <Route
+            element={<SupplierAddNew></SupplierAddNew>}
+            path="/manage/add-supplier"
+          ></Route>
+          <Route
+            element={<SupplierUpdate></SupplierUpdate>}
+            path="/manage/update-supplier"
           ></Route>
           <Route
             element={<ManageVoucher></ManageVoucher>}
