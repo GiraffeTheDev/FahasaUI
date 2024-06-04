@@ -19,6 +19,8 @@ import SupplierAddNew from "./modules/admin/supplier/SupplierAddNew";
 import SupplierUpdate from "./modules/admin/supplier/SupplierUpdate";
 import ManageUser from "./modules/admin/user/ManageUser";
 import ManageVoucher from "./modules/admin/voucher/ManageVoucher";
+import VoucherAddNew from "./modules/admin/voucher/VoucherAddNew";
+import VoucherUpdate from "./modules/admin/voucher/VoucherUpdate";
 import AccountAddress from "./modules/client/AccountAddress";
 import AccountInfo from "./modules/client/AccountInfo";
 import AccountOrder from "./modules/client/AccountOrder";
@@ -104,6 +106,14 @@ function App() {
           <Route
             element={<ManageVoucher></ManageVoucher>}
             path="/manage/voucher"
+          ></Route>
+          <Route
+            element={<VoucherAddNew></VoucherAddNew>}
+            path="/manage/add-voucher"
+          ></Route>
+          <Route
+            element={<VoucherUpdate></VoucherUpdate>}
+            path="/manage/update-voucher"
           ></Route>
           <Route
             element={<ManageUser></ManageUser>}
