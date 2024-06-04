@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAll } from "../../../api/user";
-import ActionDelete from "../../../components/action/ActionDelete";
-import ActionEdit from "../../../components/action/ActionEdit";
 import Table from "../../../components/table/Table";
 const title = [
   {
@@ -20,10 +18,6 @@ const title = [
   {
     id: 4,
     name: "Chức danh",
-  },
-  {
-    id: 5,
-    name: "Hành động",
   },
 ];
 const UserTable = () => {
@@ -53,15 +47,15 @@ const UserTable = () => {
             {user.length > 0 &&
               user.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.name ? item.name : ""}</td>
+                  <td>{item?.name ? item.name : "Chưa cập nhật"}</td>
                   <td>{item.email}</td>
-                  <td>{item.phone}</td>
-                  <td>{item.isAdmin}</td>
-                  <td className="">
+                  <td>{item.phone ? item.phone : "Chưa cập nhật"}</td>
+                  <td>{item.isAdmin === false ? "Người dùng" : "Quản trị"}</td>
+                  {/* <td className="">
                     <div className="flex items-center gap-x-3">
                       <ActionEdit
                         onClick={() =>
-                          navigate(`/manage/update-category?id=${item.id}`)
+                          navigate(`/manage/update-user?id=${item.id}`)
                         }
                       ></ActionEdit>
                       <ActionDelete
@@ -70,7 +64,7 @@ const UserTable = () => {
                         }}
                       ></ActionDelete>
                     </div>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
           </tbody>

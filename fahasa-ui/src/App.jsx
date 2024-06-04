@@ -18,6 +18,7 @@ import ManageSupplier from "./modules/admin/supplier/ManageSupplier";
 import SupplierAddNew from "./modules/admin/supplier/SupplierAddNew";
 import SupplierUpdate from "./modules/admin/supplier/SupplierUpdate";
 import ManageUser from "./modules/admin/user/ManageUser";
+import UpdateUser from "./modules/admin/user/UpdateUser";
 import ManageVoucher from "./modules/admin/voucher/ManageVoucher";
 import VoucherAddNew from "./modules/admin/voucher/VoucherAddNew";
 import VoucherUpdate from "./modules/admin/voucher/VoucherUpdate";
@@ -118,6 +119,10 @@ function App() {
           <Route
             element={<ManageUser></ManageUser>}
             path="/manage/users"
+          ></Route>
+          <Route
+            element={<UpdateUser></UpdateUser>}
+            path="/manage/update-user"
           ></Route>
           <Route
             element={<ManageGenres></ManageGenres>}
