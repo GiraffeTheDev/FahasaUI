@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getAllBook } from "../api/product";
 import BookCard from "../components/bookcard/BookCard";
 import BannerSwipper from "../modules/client/BannerSwipper";
 import BrandHightlight from "../modules/client/BrandHightlight";
@@ -9,6 +10,14 @@ import { bannerSmall } from "../utils/common";
 import ForeignBook from "./ForeignBook";
 
 const HomePage = () => {
+  const [books, setBooks] = useState([]);
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await getAllBook();
+      setBooks(response.data.data);
+    };
+    fetch();
+  }, []);
   return (
     <div className="mt-4">
       <div className="flex w-full  gap-x-5 h-[350px]">
@@ -58,12 +67,17 @@ const HomePage = () => {
             className="w-[150px] object-cover"
           />
         </div>
-        <div className="flex items-center mt-5 gap-x-5">
-          {Array(5)
-            .fill(0)
-            .map((item) => (
-              <BookCard key={item}></BookCard>
-            ))}
+        <div className="grid grid-cols-5 mt-5 gap-x-5">
+          {books.map((item) => (
+            <BookCard
+              key={item.id}
+              image={item.image}
+              name={item.name}
+              price={item.price}
+              discount={item.discount}
+              sale={item.sale}
+            ></BookCard>
+          ))}
         </div>
       </div>
 

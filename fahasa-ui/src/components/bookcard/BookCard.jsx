@@ -1,4 +1,5 @@
 import React from "react";
+import { formatNumber } from "../../utils/function";
 import Button from "../button/Button";
 
 const BookCard = ({
@@ -6,6 +7,10 @@ const BookCard = ({
   className = "",
   isCard = false,
   stock = false,
+  discount = 0,
+  image = "",
+  name = "",
+  price = 0,
 }) => {
   return (
     <div
@@ -13,25 +18,27 @@ const BookCard = ({
     >
       <div className="flex items-center justify-center w-full overflow-hidden bg-transparent">
         <img
-          src="https://cdn0.fahasa.com/media/catalog/product/9/7/9781982167288.jpg"
+          src={image}
           alt=""
-          className="object-cover h-auto max-h-[190px] w-fit"
+          className="object-cover h-auto max-h-[190px] w-[190px]"
         />
       </div>
-      <h3 className="mt-2 mr-2 custom-line">
-        Violet Bent Backwards Over The Grass
-      </h3>
+      <h3 className="mt-2 mr-2 custom-line">{name}</h3>
       <div className="flex items-center mt-2 gap-x-2">
-        <span className="text-base font-bold text-red-500 ">51.750 đ</span>
+        <span className="text-base font-bold text-red-500 ">
+          {formatNumber(price - price * (discount / 100))} đ
+        </span>
         {sale ? (
           <span className="p-1 text-xs text-white rounded-lg bg-primary">
-            -10%
+            {"-"}
+            {discount}
+            {"%"}
           </span>
         ) : (
           ""
         )}
       </div>
-      <h3 className="text-sm line-through ">115.000 đ</h3>
+      <h3 className="text-sm line-through ">{formatNumber(price)} đ</h3>
       {stock ? (
         <div className="relative h-4 mt-2 text-center bg-red-200 rounded-full dark:bg-gray-700">
           <div
