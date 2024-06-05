@@ -1,5 +1,5 @@
 import { instance } from "../config/axios";
-const getAll = async (data) => {
+const getAllSupplier = async (data) => {
   return instance.get(`http://localhost:8008/api/v1/suppliers`, data);
 };
 const getOne = async (id) => {
@@ -19,4 +19,4 @@ const update = async (data) => {
 const create = async (data) => {
   return instance.post(`http://localhost:8008/api/v1/create-supplier`, data);
 };
-export { create, deleteSupplier, getAll, getOne, update };
+export { create, deleteSupplier, getAllSupplier, getOne, update };

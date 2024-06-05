@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import {
   create,
   deleteCategory,
-  getAll,
+  getAllCategory,
   updateCategory,
 } from "../../api/category";
 export const handleCreateCategory = createAsyncThunk(
@@ -20,7 +20,7 @@ export const handleCreateCategory = createAsyncThunk(
 export const handleGetAllCategory = createAsyncThunk(
   "getAllCategory",
   async (value) => {
-    const response = await getAll(value);
+    const response = await getAllCategory(value);
     console.log("resss", response);
     if (response.data.data) {
       toast(response.data.message);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getAll } from "../../../api/category";
+import { getAllCategory } from "../../../api/category";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
 import Table from "../../../components/table/Table";
@@ -29,7 +29,7 @@ const CategoryTable = () => {
   const [category, setCategory] = useState([]);
   useEffect(() => {
     const fetch = async () => {
-      const response = await getAll();
+      const response = await getAllCategory();
       setCategory(response.data.data);
     };
     fetch();

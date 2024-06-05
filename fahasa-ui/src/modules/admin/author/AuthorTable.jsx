@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { deleteAuthor, getAll } from "../../../api/author";
+import { deleteAuthor, getAllAuthor } from "../../../api/author";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
 import Table from "../../../components/table/Table";
@@ -27,7 +27,7 @@ const AuthorTable = () => {
       const response = await deleteAuthor(id);
       if (response.status === 200) {
         toast(response.data.message);
-        const responseData = await getAll();
+        const responseData = await getAllAuthor();
         setAuthor(responseData.data.data);
       }
     } catch (error) {
@@ -37,7 +37,7 @@ const AuthorTable = () => {
   useEffect(() => {
     try {
       const fetch = async () => {
-        const response = await getAll();
+        const response = await getAllAuthor();
         setAuthor(response.data.data);
       };
       fetch();

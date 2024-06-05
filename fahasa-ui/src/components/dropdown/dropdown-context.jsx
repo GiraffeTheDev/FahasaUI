@@ -1,4 +1,4 @@
-const { createContext, useState, useContext } = require("react");
+import { createContext, useContext, useState } from "react";
 
 const DropdownContext = createContext();
 function DropdownProvider(props) {
@@ -20,4 +20,4 @@ function useDropdown() {
   }
   return context;
 }
-export { useDropdown, DropdownProvider };
+export { DropdownProvider, useDropdown };

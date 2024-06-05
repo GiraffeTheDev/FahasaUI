@@ -1,5 +1,5 @@
 import { instance } from "../config/axios";
-const getAll = async () => {
+const getAllCategory = async () => {
   return instance.get(`http://localhost:8008/api/v1/categories`);
 };
 const getOne = async (id) => {
@@ -17,4 +17,4 @@ const deleteCategory = async (id) => {
 const updateCategory = async (data) => {
   return instance.put(`http://localhost:8008/api/v1/update-category`, data);
 };
-export { create, deleteCategory, getAll, getOne, updateCategory };
+export { create, deleteCategory, getAllCategory, getOne, updateCategory };

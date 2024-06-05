@@ -5,6 +5,8 @@ import LayoutMain from "./layout/LayoutMain";
 import Dashboard from "./modules/admin/Dashboard";
 import AuthorAddNew from "./modules/admin/author/AuthorAddNew";
 import ManageAuthor from "./modules/admin/author/ManageAuthor";
+import BookAddNew from "./modules/admin/book/BookAddNew";
+import BookUpdate from "./modules/admin/book/BookUpdate";
 import ManageBook from "./modules/admin/book/ManageBook";
 import CategoryAddNew from "./modules/admin/category/CategoryAddNew";
 import CategoryUpdate from "./modules/admin/category/CategoryUpdate";
@@ -93,6 +95,14 @@ function App() {
             path="/manage/book"
           ></Route>
           <Route
+            element={<BookAddNew></BookAddNew>}
+            path="/manage/add-book"
+          ></Route>
+          <Route
+            element={<BookUpdate></BookUpdate>}
+            path="/manage/update-book"
+          ></Route>
+          <Route
             element={<ManageSupplier></ManageSupplier>}
             path="/manage/supplier"
           ></Route>
@@ -168,7 +178,6 @@ function App() {
             element={<GenresAddNew></GenresAddNew>}
             path="/manage/add-genres"
           ></Route>
-
           <Route element={<Dashboard></Dashboard>} path="/dashboard"></Route>
         </Route>
       </Routes>

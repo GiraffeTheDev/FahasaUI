@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { deleteGenres, getAll } from "../../../api/genres";
+import { deleteGenres, getAllGenres } from "../../../api/genres";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
 import Table from "../../../components/table/Table";
@@ -23,7 +23,7 @@ const TableGenres = () => {
       const response = await deleteGenres(id);
       if (response.status === 200) {
         toast(response.data.message);
-        const responseData = await getAll();
+        const responseData = await getAllGenres();
         setGenres(responseData.data.data);
       }
     } catch (error) {
@@ -33,7 +33,7 @@ const TableGenres = () => {
   useEffect(() => {
     try {
       const fetch = async () => {
-        const response = await getAll();
+        const response = await getAllGenres();
         setGenres(response.data.data);
       };
       fetch();

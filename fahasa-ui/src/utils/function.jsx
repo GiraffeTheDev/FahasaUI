@@ -12,4 +12,7 @@ const convertTime = (originalDateString) => {
     .padStart(2, "0")}`;
   return newDateString;
 };
-export { convertTime };
+const formatNumber = (num) => {
+  return num.toLocaleString("vi-VN");
+};
+export { convertTime, formatNumber };

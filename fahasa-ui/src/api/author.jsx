@@ -1,5 +1,5 @@
 import { instance } from "../config/axios";
-const getAll = async (data) => {
+const getAllAuthor = async (data) => {
   return instance.get(`http://localhost:8008/api/v1/authors`, data);
 };
 const getOne = async (id) => {
@@ -19,4 +19,4 @@ const update = async (data) => {
 const create = async (data) => {
   return instance.post(`http://localhost:8008/api/v1/create-author`, data);
 };
-export { create, deleteAuthor, getAll, getOne, update };
+export { create, deleteAuthor, getAllAuthor, getOne, update };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAll } from "../../../api/supplier";
+import { getAllSupplier } from "../../../api/supplier";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
 import Table from "../../../components/table/Table";
@@ -26,7 +26,7 @@ const SupplierTable = () => {
   const [supplier, setSupplier] = useState([]);
   useEffect(() => {
     const fetch = async () => {
-      const response = await getAll();
+      const response = await getAllSupplier();
       setSupplier(response.data.data);
     };
     fetch();
