@@ -19,4 +19,10 @@ const update = async (data) => {
 const create = async (data) => {
   return instance.post(`http://localhost:8008/api/v1/create-voucher`, data);
 };
-export { create, deleteVoucher, getAll, getOne, update };
+const getAllVoucherSearch = async (query) => {
+  return instance.get(
+    `http://localhost:8008/api/v1/search-voucher?voucher_code=${query}`,
+    query
+  );
+};
+export { create, deleteVoucher, getAll, getAllVoucherSearch, getOne, update };

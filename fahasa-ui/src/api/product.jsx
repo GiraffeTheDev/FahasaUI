@@ -14,4 +14,10 @@ const getOne = async (id) => {
 const getAllBook = async () => {
   return instance.get(`http://localhost:8008/api/v1/books`);
 };
-export { create, getAllBook, getOne, removeBook, update };
+const getAllBookSearch = async (name) => {
+  return instance.get(
+    `http://localhost:8008/api/v1/search-books?name=${name}`,
+    name
+  );
+};
+export { create, getAllBook, getAllBookSearch, getOne, removeBook, update };

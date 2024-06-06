@@ -19,4 +19,17 @@ const update = async (data) => {
 const create = async (data) => {
   return instance.post(`http://localhost:8008/api/v1/create-genres`, data);
 };
-export { create, deleteGenres, getAllGenres, getOne, update };
+const getAllGenresBySearch = async (name) => {
+  return instance.get(
+    `http://localhost:8008/api/v1/search-genres?name=${name}`,
+    name
+  );
+};
+export {
+  create,
+  deleteGenres,
+  getAllGenres,
+  getAllGenresBySearch,
+  getOne,
+  update,
+};

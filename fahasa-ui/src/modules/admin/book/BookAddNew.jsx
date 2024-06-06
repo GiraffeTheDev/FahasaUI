@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getAllAuthor } from "../../../api/author";
 import { getAllCategory } from "../../../api/category";
@@ -29,12 +30,14 @@ const BookAddNew = () => {
   const [genres, setGenres] = useState([]);
   const [author, setAuthor] = useState([]);
   const { handleSelectImage, image } = useImageUpload(setValue);
+  const navigate = useNavigate();
   const handleAddBook = async (value) => {
     try {
       const response = await create(value);
       console.log(response);
       if (!response.data.error) {
         toast(response.data.message);
+        navigate("/manage/book");
       }
     } catch (error) {
       console.log(error);
@@ -78,7 +81,7 @@ const BookAddNew = () => {
             <Input
               name="name"
               control={control}
-              placeholder="Nhập vào tên thể loại"
+              placeholder="Nhập vào tên sách"
             ></Input>
           </FormGroup>
           <FormGroup>

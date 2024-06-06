@@ -19,4 +19,17 @@ const update = async (data) => {
 const create = async (data) => {
   return instance.post(`http://localhost:8008/api/v1/create-author`, data);
 };
-export { create, deleteAuthor, getAllAuthor, getOne, update };
+const getAllAuthorBySearch = async (name) => {
+  return instance.get(
+    `http://localhost:8008/api/v1/search-author?name=${name}`,
+    name
+  );
+};
+export {
+  create,
+  deleteAuthor,
+  getAllAuthor,
+  getAllAuthorBySearch,
+  getOne,
+  update,
+};

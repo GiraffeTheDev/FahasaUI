@@ -7,7 +7,7 @@ import { menuAside } from "../../utils/constant";
 const Sidebar = () => {
   const dispatch = useDispatch();
   return (
-    <aside className="shadow-md w-[260px] h-screen transition-transform -translate-x-full sm:translate-x-0">
+    <aside className=" w-[260px] h-screen transition-transform -translate-x-full sm:translate-x-0">
       <div className="h-full px-3 py-4 overflow-y-auto rounded-xl bg-gray-50 dark:bg-gray-800">
         <div className="w-full mb-3">
           <img

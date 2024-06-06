@@ -19,4 +19,10 @@ const update = async (data) => {
 const create = async (data) => {
   return instance.post(`http://localhost:8008/api/v1/create-supplier`, data);
 };
-export { create, deleteSupplier, getAllSupplier, getOne, update };
+const getAllSupplierSearch = async (name) => {
+  return instance.get(
+    `http://localhost:8008/api/v1/search-supplier?name=${name}`,
+    name
+  );
+};
+export { create, deleteSupplier, getAllSupplier, getOne, update , getAllSupplierSearch };

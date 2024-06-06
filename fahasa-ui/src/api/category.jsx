@@ -17,4 +17,10 @@ const deleteCategory = async (id) => {
 const updateCategory = async (data) => {
   return instance.put(`http://localhost:8008/api/v1/update-category`, data);
 };
-export { create, deleteCategory, getAllCategory, getOne, updateCategory };
+const getAllCateBySearch = async (name) => {
+  return instance.get(
+    `http://localhost:8008/api/v1/search-category?name=${name}`,
+    name
+  );
+};
+export { create, deleteCategory, getAllCategory,getAllCateBySearch, getOne, updateCategory };

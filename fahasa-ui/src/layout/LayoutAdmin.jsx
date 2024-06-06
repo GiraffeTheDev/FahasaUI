@@ -18,7 +18,7 @@ const LayoutAdmin = () => {
         <Sidebar></Sidebar>
         <div className="flex-1">
           <Header></Header>
-          <div className="px-5">
+          <div className="px-5 pb-10">
             <Outlet></Outlet>
           </div>
         </div>

@@ -54,3 +54,19 @@ td {
 table {
   width: 100%;
 }
+.pagination li {
+  display: block;
+  padding: 5px 8px;
+  background: white;
+  color: #000;
+  line-height: none;
+  border-radius: 8px;
+}
+.pagination li.selected {
+  background: #c40c0c;
+  color: white;
+}
+.pagination li.next a,
+li.previous a {
+  text-transform: capitalize;
+}

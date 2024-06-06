@@ -2,6 +2,7 @@ import moment from "moment";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { create } from "../../../api/voucher";
 import Button from "../../../components/button/Button";
@@ -15,6 +16,7 @@ const VoucherAddNew = () => {
   });
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const navigate = useNavigate();
   const handleChangeStartTime = (time) => {
     setStartDate(time);
     const date = new Date(time).getTime();
@@ -30,10 +32,10 @@ const VoucherAddNew = () => {
 
   const handleAddNewVoucher = async (value) => {
     try {
-      console.log(value);
       const response = await create(value);
       if (!response.data.error) {
         toast(response.data.message);
+        navigate("/manage/voucher");
       }
     } catch (error) {
       console.log(error);

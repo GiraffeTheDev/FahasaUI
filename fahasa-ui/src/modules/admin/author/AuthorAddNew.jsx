@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { create } from "../../../api/author";
 import Button from "../../../components/button/Button";
@@ -12,11 +13,12 @@ import { useImageUpload } from "../../../hooks/useImageUpload";
 const AuthorAddNew = () => {
   const { control, handleSubmit, setValue } = useForm({ mode: "onSubmit" });
   // const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleAddAuthor = async (value) => {
-    console.log(value);
     try {
       const response = await create(value);
       if (response.status === 200) {
+        navigate("/manage/author");
         toast(response.data.message);
       }
     } catch (error) {
@@ -28,7 +30,7 @@ const AuthorAddNew = () => {
     <>
       <div className="max-w-2xl px-4 py-8 mx-auto lg:py-16">
         <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-          Thêm danh mục
+          Thêm mới tác giả
         </h2>
         <form onSubmit={handleSubmit(handleAddAuthor)}>
           <FormGroup>
