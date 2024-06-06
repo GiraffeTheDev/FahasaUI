@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { getOne, update } from "../../../api/supplier";
 import Button from "../../../components/button/Button";
 import GapRow from "../../../components/common/GapRow";
@@ -20,8 +21,10 @@ const SupplierUpdate = () => {
   const updateSupplier = async (value) => {
     try {
       const response = await update(value);
-      console.log(response);
-      navigate("/manage/supplier");
+      if (!response.data.error) {
+        navigate("/manage/supplier");
+        toast(response.data.message);
+      }
     } catch (error) {
       console.log(error);
     }

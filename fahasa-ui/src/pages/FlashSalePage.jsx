@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
+import { getAllBookFlashSale } from "../api/product";
 import BookCard from "../components/bookcard/BookCard";
+import Button from "../components/button/Button";
 import { cateFlashSale } from "../utils/common";
 const FlashSalePage = () => {
   const { control, handleSubmit } = useForm({ mode: "onChange" });
   const handleChangeCate = (value) => {
     console.log(value);
   };
+  const [book, setBook] = useState([]);
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await getAllBookFlashSale();
+      setBook(response.data.data);
+    };
+    fetch();
+  }, []);
   return (
     <div>
       <nav className="flex mt-5" aria-label="Breadcrumb">
@@ -115,11 +125,22 @@ const FlashSalePage = () => {
         </div>
       </form>
       <div className="grid grid-cols-5 gap-5 mt-5">
-        {Array(25)
-          .fill(0)
-          .map((item) => (
-            <BookCard key={uuidv4()} isCard={true} sale={true}></BookCard>
-          ))}
+        {book.map((item) => (
+          <BookCard
+            key={uuidv4()}
+            isCard={true}
+            sale={true}
+            image={item.image}
+            name={item.name}
+            price={item.price}
+            discount={item.discount}
+          ></BookCard>
+        ))}
+      </div>
+      <div className="flex items-center justify-center mt-5">
+        <Button type="button" kind="semi" className=" w-[250px]">
+          Xem thêm
+        </Button>
       </div>
     </div>
   );

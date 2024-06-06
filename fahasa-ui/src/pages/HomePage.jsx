@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAllBook } from "../api/product";
+import { getBookFlashSaleHightLight } from "../api/product";
 import BookCard from "../components/bookcard/BookCard";
 import BannerSwipper from "../modules/client/BannerSwipper";
 import BrandHightlight from "../modules/client/BrandHightlight";
@@ -11,9 +11,10 @@ import ForeignBook from "./ForeignBook";
 
 const HomePage = () => {
   const [books, setBooks] = useState([]);
+
   useEffect(() => {
     const fetch = async () => {
-      const response = await getAllBook();
+      const response = await getBookFlashSaleHightLight();
       setBooks(response.data.data);
     };
     fetch();
@@ -66,6 +67,9 @@ const HomePage = () => {
             alt=""
             className="w-[150px] object-cover"
           />
+          <Link to={"/flash-sale"} className="pr-10 text-xl text-primary">
+            Xem thêm >{" "}
+          </Link>
         </div>
         <div className="grid grid-cols-5 mt-5 gap-x-5">
           {books.map((item) => (

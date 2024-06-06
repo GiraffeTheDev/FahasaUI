@@ -1,7 +1,15 @@
-import React from "react";
-import { cates } from "../../utils/common";
+import React, { useEffect, useState } from "react";
+import { getAllCategory } from "../../api/category";
 
 const CategoryProduct = () => {
+  const [category, setCategory] = useState([]);
+  useEffect(() => {
+    const fetch = async () => {
+      const category = await getAllCategory();
+      setCategory(category.data.data);
+    };
+    fetch();
+  }, []);
   return (
     <div className="p-5 mt-10 bg-white bg-gray-500 rounded-lg">
       <div className="flex items-center pb-5 gap-x-5">
@@ -22,16 +30,19 @@ const CategoryProduct = () => {
         <span className="text-xl font-semibold">Danh mục sản phẩm</span>
       </div>
       <div className="grid grid-cols-10 p-4">
-        {cates.length > 0 &&
-          cates.map((item) => (
+        {category.length > 0 &&
+          category.map((item) => (
             <div
               key={item.id}
               className="flex flex-col items-center text-center gap-y-3"
             >
-              <div>
-                <img src={item.url} alt={item.title} />
+              <div className="h-[100px] w-[100px] rounded-lg">
+                <img
+                  src={item.image}
+                  className="object-cover w-full h-full rounded-lg"
+                />
               </div>
-              <span>{item.title}</span>
+              <span className="text-sm">{item.name}</span>
             </div>
           ))}
       </div>

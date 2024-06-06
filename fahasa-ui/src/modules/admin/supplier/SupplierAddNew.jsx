@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
+import { useNavigate } from "react-router-dom";
 import { create } from "../../../api/supplier";
 import Button from "../../../components/button/Button";
 import GapRow from "../../../components/common/GapRow";
@@ -13,12 +14,14 @@ import { useImageUpload } from "../../../hooks/useImageUpload";
 const SupplierAddNew = () => {
   const { control, handleSubmit, setValue } = useForm({ mode: "onSubmit" });
   // const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleAddSupplier = async (value) => {
     console.log(value);
     try {
       const response = await create(value);
       if (response.status === 200) {
         toast(response.data.message);
+        navigate("/manage/supplier");
       }
     } catch (error) {
       console.log(error);
@@ -29,7 +32,7 @@ const SupplierAddNew = () => {
     <>
       <div className="max-w-2xl px-4 py-8 mx-auto lg:py-16">
         <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-          Thêm danh mục
+          Thêm nhà cung cấp
         </h2>
         <form onSubmit={handleSubmit(handleAddSupplier)}>
           <FormGroup>
@@ -37,7 +40,7 @@ const SupplierAddNew = () => {
             <Input
               name="name"
               control={control}
-              placeholder="Nhập vào tên thể loại"
+              placeholder="Nhập vào tên nhà cung cấp"
             ></Input>
           </FormGroup>
           <FormGroup>
