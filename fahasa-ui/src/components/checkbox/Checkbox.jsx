@@ -42,7 +42,10 @@ const Checkbox = ({
         </span>
       </div>
       {children && (
-        <label onClick={onClick} className="font-base text-text3">
+        <label
+          onClick={onClick}
+          className="flex items-start font-base text-text3"
+        >
           {children}
         </label>
       )}

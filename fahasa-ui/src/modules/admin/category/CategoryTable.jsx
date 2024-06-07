@@ -18,6 +18,10 @@ const title = [
   },
   {
     id: 3,
+    name: "Kiểu",
+  },
+  {
+    id: 4,
     name: "Hành động",
   },
 ];
@@ -94,6 +98,7 @@ const CategoryTable = () => {
                             alt=""
                           />
                         </td>
+                        <td>{item.type}</td>
                         <td className="">
                           <div className="flex items-center justify-center gap-x-3">
                             <ActionEdit

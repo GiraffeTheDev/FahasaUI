@@ -18,7 +18,10 @@ const Header = () => {
             className="w-[300px] h-14"
           />
         </Link>
-        <MenuIcon></MenuIcon>
+        <Link to={"/bookpage"}>
+          {" "}
+          <MenuIcon></MenuIcon>
+        </Link>
         <Search></Search>
         {menu.map((item) => (
           <Link key={item.id} to={item.to}>

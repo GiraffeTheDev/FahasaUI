@@ -29,6 +29,7 @@ import AccountInfo from "./modules/client/AccountInfo";
 import AccountOrder from "./modules/client/AccountOrder";
 import DashBoardClient from "./modules/client/DashBoardClient";
 import BookDetailPage from "./pages/BookDetailPage";
+import BookPage from "./pages/BookPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import FlashSalePage from "./pages/FlashSalePage";
@@ -53,6 +54,7 @@ function App() {
             path="/forget-password"
             element={<ForgetPasswordPage></ForgetPasswordPage>}
           ></Route>
+          <Route path="/bookpage" element={<BookPage></BookPage>}></Route>
           <Route element={<LayoutAccount></LayoutAccount>}>
             <Route
               path="/account-client"

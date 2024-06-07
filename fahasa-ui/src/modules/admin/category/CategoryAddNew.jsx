@@ -1,20 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { create } from "../../../api/category";
 import Button from "../../../components/button/Button";
 import GapRow from "../../../components/common/GapRow";
+import DropDown from "../../../components/dropdown/DropDown";
+import List from "../../../components/dropdown/List";
+import Options from "../../../components/dropdown/Options";
+import Select from "../../../components/dropdown/Select";
 import FormGroup from "../../../components/form/FormGroup";
 import ImageUpload from "../../../components/image/ImageUpload";
 import Input from "../../../components/input/Input";
 import { Label } from "../../../components/label";
 import { useImageUpload } from "../../../hooks/useImageUpload";
-import { handleCreateCategory } from "../../../redux/category/handlers";
+const types = [
+  { id: 1, name: "VI" },
+  {
+    id: 2,
+    name: "EN",
+  },
+];
 const CategoryAddNew = () => {
   const { control, handleSubmit, setValue } = useForm({ mode: "onSubmit" });
-  const dispatch = useDispatch();
-  const handleAddGenres = (value) => {
+  const [select, setSelect] = useState("");
+  const handleSelectType = (item) => {
+    setValue("type", item);
+    setSelect(item);
+  };
+  const navigate = useNavigate();
+  const handleAddGenres = async (value) => {
     try {
-      console.log(dispatch(handleCreateCategory(value)));
+      const response = await create(value);
+      if (!response.data.error) {
+        toast(response.data.message);
+        navigate("/manage/category");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -38,6 +59,23 @@ const CategoryAddNew = () => {
           <FormGroup>
             <Label htmlFor="name">Ảnh danh mục</Label>
             <ImageUpload onChange={handleSelectImage} url={image}></ImageUpload>
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="type">Kiểu mục</Label>
+            <DropDown>
+              <Select placeholder={select ? select : "Kiểu"}></Select>
+              <List>
+                {types.length > 0 &&
+                  types.map((item) => (
+                    <Options
+                      key={item.id}
+                      onClick={() => handleSelectType(item.name)}
+                    >
+                      {item.name}
+                    </Options>
+                  ))}
+              </List>
+            </DropDown>
           </FormGroup>
           <GapRow></GapRow>
           <Button type="submit" kind="primary">

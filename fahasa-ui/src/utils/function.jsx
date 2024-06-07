@@ -13,6 +13,6 @@ const convertTime = (originalDateString) => {
   return newDateString;
 };
 const formatNumber = (num) => {
-  return num.toLocaleString("vi-VN");
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 export { convertTime, formatNumber };

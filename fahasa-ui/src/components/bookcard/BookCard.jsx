@@ -14,7 +14,7 @@ const BookCard = ({
 }) => {
   return (
     <div
-      className={`flex flex-col h-full justify-center pb-4 p-2 bg-white rounded-lg ${className}`}
+      className={`border border-gray1 flex flex-col h-full justify-center pb-4 p-2 bg-white rounded-lg ${className}`}
     >
       <div className="flex mb-1 items-center h-[200px] justify-center w-full overflow-hidden bg-transparent">
         <img

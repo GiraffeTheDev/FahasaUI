@@ -257,4 +257,11 @@ const naviOrder = [
     to: "/cancel-order",
   },
 ];
-export { menuAside, navi, naviOrder };
+const priceRanges = [
+  { label: "0đ - 150,000đ", min: 0, max: 150000 },
+  { label: "150,000đ - 300,000đ", min: 150000, max: 300000 },
+  { label: "300,000đ - 500,000đ", min: 300000, max: 500000 },
+  { label: "500,000đ - 700,000đ", min: 500000, max: 700000 },
+  { label: "700,000đ - Trở Lên", min: 700000, max: Infinity },
+];
+export { menuAside, navi, naviOrder, priceRanges };

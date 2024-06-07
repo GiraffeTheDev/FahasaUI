@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getBooksWithSupplier } from "../../api/product";
 import BookCard from "../../components/bookcard/BookCard";
 import Button from "../../components/button/Button";
@@ -72,15 +73,17 @@ const BrandHightlight = ({ header = false, title = [] }) => {
         {book &&
           book.length > 0 &&
           book.map((item) => (
-            <BookCard
-              image={item.image}
-              name={item.name}
-              price={item.price}
-              discount={item.discount}
-              sale={item.sale}
-              key={item.id}
-              className="transition-all hover:shadow-lg"
-            ></BookCard>
+            <Link to={`/detail-book?id=${item.id}`} key={item.id}>
+              <BookCard
+                image={item.image}
+                name={item.name}
+                price={item.price}
+                discount={item.discount}
+                sale={item.sale}
+                key={item.id}
+                className="transition-all hover:shadow-lg"
+              ></BookCard>
+            </Link>
           ))}
       </div>
       <div className="flex items-center justify-center mt-5">
