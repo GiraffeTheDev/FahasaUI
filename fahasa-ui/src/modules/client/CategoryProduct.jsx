@@ -34,9 +34,9 @@ const CategoryProduct = () => {
           category.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col items-center text-center gap-y-3"
+              className="flex flex-col items-center text-center  gap-y-3"
             >
-              <div className="h-[100px] w-[100px] rounded-lg">
+              <div className="h-[100px] w-[100px] rounded-lg shadow-md">
                 <img
                   src={item.image}
                   className="object-cover w-full h-full rounded-lg"

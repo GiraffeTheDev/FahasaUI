@@ -26,6 +26,7 @@ const UserTable = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await getAll();
+      console.log(response);
       setUser(response.data.data);
     };
     fetch();
@@ -50,7 +51,7 @@ const UserTable = () => {
                   <td>{item?.name ? item.name : "Chưa cập nhật"}</td>
                   <td>{item.email}</td>
                   <td>{item.phone ? item.phone : "Chưa cập nhật"}</td>
-                  <td>{item.isAdmin === false ? "Người dùng" : "Quản trị"}</td>
+                  <td>{item.isAdmin === 0 ? "Người dùng" : "Quản trị"}</td>
                   {/* <td className="">
                     <div className="flex items-center gap-x-3">
                       <ActionEdit

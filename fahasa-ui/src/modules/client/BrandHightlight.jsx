@@ -1,12 +1,33 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { getBooksWithSupplier } from "../../api/product";
 import BookCard from "../../components/bookcard/BookCard";
 import Button from "../../components/button/Button";
-import classNames from "../../components/classname/className";
 
-const BrandHightlight = ({ header = false }) => {
+const BrandHightlight = ({ header = false, title = [] }) => {
+  const [active, setActive] = useState();
+  const [query, setQuery] = useState(title[0]?.name);
+  const [book, setBook] = useState([]);
+  useEffect(() => {
+    setActive(title[0]?.name);
+    setQuery(title[0]?.name);
+  }, []);
+  const handleSupplierClick = (supplier) => {
+    setQuery(supplier?.name);
+    setActive(supplier?.name);
+  };
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        const response = await getBooksWithSupplier(query);
+        setBook(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetch();
+  }, [query]);
   return (
-    <div className="pb-5 mt-5 bg-white rounded-bl-lg rounded-br-lg">
+    <div className="pb-5 mt-5 bg-white rounded-lg ">
       {header ? (
         <div className="flex items-center p-2 bg-red-300 rounded-tl-lg rounded-tr-lg gap-x-5">
           <div className="p-2 bg-red-500 rounded-lg">
@@ -31,26 +52,33 @@ const BrandHightlight = ({ header = false }) => {
         ""
       )}
       <div className="flex items-center py-3 pl-5 gap-x-3">
-        {Array(4)
-          .fill(0)
-          .map((item) => (
-            <NavLink
-              to={"/trending"}
-              key={item}
-              className={classNames(({ isActive }) =>
-                isActive ? "active" : ""
-              )}
-            >
-              Mcbooks
-            </NavLink>
-          ))}
+        <ul className="flex items-center gap-x-3">
+          {title &&
+            title.length > 0 &&
+            title.map((supplier) => (
+              <li
+                key={supplier.id}
+                onClick={() => handleSupplierClick(supplier)}
+                className={`cursor-pointer ${
+                  supplier.name === active ? "text-primary" : ""
+                }`}
+              >
+                {supplier.name}
+              </li>
+            ))}
+        </ul>
       </div>
       <div className="grid grid-cols-5 gap-2 px-5 mt-2">
-        {Array(5)
-          .fill(0)
-          .map((item) => (
+        {book &&
+          book.length > 0 &&
+          book.map((item) => (
             <BookCard
-              key={item}
+              image={item.image}
+              name={item.name}
+              price={item.price}
+              discount={item.discount}
+              sale={item.sale}
+              key={item.id}
               className="transition-all hover:shadow-lg"
             ></BookCard>
           ))}

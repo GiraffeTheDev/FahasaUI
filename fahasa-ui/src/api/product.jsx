@@ -26,12 +26,19 @@ const getAllBookFlashSale = async () => {
 const getBookFlashSaleHightLight = async () => {
   return instance.get(`http://localhost:8008/api/v1/book-flashsale-hightlight`);
 };
+const getBooksWithSupplier = async (name) => {
+  return instance.get(
+    `http://localhost:8008/api/v1/book-supplier?name=${name}`,
+    name
+  );
+};
 export {
   create,
   getAllBook,
   getAllBookFlashSale,
   getAllBookSearch,
   getBookFlashSaleHightLight,
+  getBooksWithSupplier,
   getOne,
   removeBook,
   update,

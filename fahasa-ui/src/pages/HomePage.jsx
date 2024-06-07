@@ -8,7 +8,48 @@ import CategoryProduct from "../modules/client/CategoryProduct";
 import PurchaseTrending from "../modules/client/PurchaseTrending";
 import { bannerSmall } from "../utils/common";
 import ForeignBook from "./ForeignBook";
-
+const suppliers = [
+  {
+    id: 1,
+    name: "Nhã Nam",
+  },
+  {
+    id: 2,
+    name: "MegaBook",
+  },
+  {
+    id: 3,
+    name: "NXB Kim Đồng",
+  },
+];
+const suppliers1 = [
+  {
+    id: 1,
+    name: "Cty TNHH More Production Vietnam",
+  },
+  {
+    id: 2,
+    name: "AZ Việt Nam",
+  },
+  {
+    id: 3,
+    name: "Penguin Books",
+  },
+];
+const suppliers2 = [
+  {
+    id: 1,
+    name: "Penguin Books",
+  },
+  {
+    id: 2,
+    name: "FIRST NEWS",
+  },
+  {
+    id: 3,
+    name: "SkyBooks",
+  },
+];
 const HomePage = () => {
   const [books, setBooks] = useState([]);
 
@@ -19,6 +60,7 @@ const HomePage = () => {
     };
     fetch();
   }, []);
+
   return (
     <div className="mt-4">
       <div className="flex w-full  gap-x-5 h-[350px]">
@@ -67,8 +109,8 @@ const HomePage = () => {
             alt=""
             className="w-[150px] object-cover"
           />
-          <Link to={"/flash-sale"} className="pr-10 text-xl text-primary">
-            Xem thêm >{" "}
+          <Link to={"/flash-sale"} className="pr-10 text-lg text-primary">
+            Xem tất cả {">"}
           </Link>
         </div>
         <div className="grid grid-cols-5 mt-5 gap-x-5">
@@ -92,13 +134,13 @@ const HomePage = () => {
         <PurchaseTrending></PurchaseTrending>
       </div>
       <div>
-        <BrandHightlight header={true}></BrandHightlight>
+        <BrandHightlight header={true} title={suppliers}></BrandHightlight>
       </div>
       <div>
-        <BrandHightlight header={false}></BrandHightlight>
+        <BrandHightlight header={false} title={suppliers1}></BrandHightlight>
       </div>
       <div>
-        <BrandHightlight header={false}></BrandHightlight>
+        <BrandHightlight header={false} title={suppliers2}></BrandHightlight>
       </div>
       <div>
         <ForeignBook></ForeignBook>

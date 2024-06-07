@@ -13,9 +13,8 @@ const CategoryAddNew = () => {
   const { control, handleSubmit, setValue } = useForm({ mode: "onSubmit" });
   const dispatch = useDispatch();
   const handleAddGenres = (value) => {
-    console.log(value);
     try {
-      dispatch(handleCreateCategory(value));
+      console.log(dispatch(handleCreateCategory(value)));
     } catch (error) {
       console.log(error);
     }

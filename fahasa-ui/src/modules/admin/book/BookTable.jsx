@@ -25,7 +25,7 @@ const title = [
     name: "Khuyến mãi",
   },
   {
-    id: 3,
+    id: 5,
     name: "Hành động",
   },
 ];

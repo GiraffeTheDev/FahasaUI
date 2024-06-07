@@ -9,9 +9,8 @@ import {
 export const handleCreateCategory = createAsyncThunk(
   "createCategory",
   async (value) => {
-    console.log("cate in redux", value);
     const response = await create(value);
-    if (response) {
+    if (!response.data.error) {
       toast(response.data.message);
     }
     return response.data;
