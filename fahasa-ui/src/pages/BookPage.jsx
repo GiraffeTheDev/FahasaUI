@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { getAllCategory } from "../api/category";
-import { getAllGenres } from "../api/genres";
+import { Link } from "react-router-dom";
+import { getAllCategoryVi } from "../api/category";
+import { getAllGenresVi } from "../api/genres";
 import { getAllBook } from "../api/product";
 import { getAllSupplier } from "../api/supplier";
 import BookCard from "../components/bookcard/BookCard";
@@ -19,8 +20,8 @@ const BookPage = () => {
     const fetch = async () => {
       try {
         const response = await getAllBook();
-        const category = await getAllCategory();
-        const gen = await getAllGenres();
+        const category = await getAllCategoryVi();
+        const gen = await getAllGenresVi();
         const sup = await getAllSupplier();
         setSupplier(sup.data.data);
         setGenres(gen.data.data);
@@ -86,7 +87,7 @@ const BookPage = () => {
                             item;
                           }}
                         >
-                          {item.label}
+                          <span className="text-sm">{item.label}</span>
                         </Checkbox>
                       </li>
                     ))}
@@ -110,7 +111,7 @@ const BookPage = () => {
                             item;
                           }}
                         >
-                          {item.name}
+                          <span className="text-sm"> {item.name}</span>
                         </Checkbox>
                       </li>
                     ))}
@@ -133,8 +134,9 @@ const BookPage = () => {
                           onClick={() => {
                             item;
                           }}
+                          className="!items-start"
                         >
-                          {item.name}
+                          <span className="text-sm"> {item.name}</span>
                         </Checkbox>
                       </li>
                     ))}
@@ -163,13 +165,14 @@ const BookPage = () => {
           <div className="grid grid-cols-4 gap-3 mt-5">
             {currentItems.length > 0 &&
               currentItems.map((item) => (
-                <BookCard
-                  key={item.id}
-                  image={item.image}
-                  name={item.name}
-                  price={item.price}
-                  discount={item.discount}
-                ></BookCard>
+                <Link key={item.id} to={`/detail-book?id=${item.id}`}>
+                  <BookCard
+                    image={item.image}
+                    name={item.name}
+                    price={item.price}
+                    discount={item.discount}
+                  ></BookCard>
+                </Link>
               ))}
           </div>
           <div className="flex items-center justify-center mt-5">

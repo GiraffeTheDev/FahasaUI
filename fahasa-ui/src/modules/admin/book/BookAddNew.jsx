@@ -29,12 +29,16 @@ const BookAddNew = () => {
   const [suppliers, setSuppliers] = useState([]);
   const [genres, setGenres] = useState([]);
   const [author, setAuthor] = useState([]);
+  const [selectAu, setSelectAu] = useState("");
+  const [selectSu, setSelectSu] = useState("");
+  const [selectGen, setSelectGen] = useState("");
+  const [selectCate, setSelectCate] = useState("");
   const { handleSelectImage, image } = useImageUpload(setValue);
   const navigate = useNavigate();
   const handleAddBook = async (value) => {
     try {
       const response = await create(value);
-      console.log(response);
+
       if (!response.data.error) {
         toast(response.data.message);
         navigate("/manage/book");
@@ -58,17 +62,22 @@ const BookAddNew = () => {
     fetch();
   }, []);
   const handleSelectAuthor = (item) => {
-    setValue("author_id", item);
+    setValue("author_id", item.id);
+    setSelectAu(item.name);
   };
   const handleSelectGenres = (item) => {
-    setValue("genres_id", item);
+    setValue("genres_id", item.id);
+    setSelectGen(item.name);
   };
   const handleSelectCategory = (item) => {
-    setValue("category_id", item);
+    setValue("category_id", item.id);
+    setSelectCate(item.name);
   };
   const handleSelectSupplier = (item) => {
-    setValue("supplier_id", item);
+    setValue("supplier_id", item.id);
+    setSelectSu(item.name);
   };
+
   return (
     <>
       <div className="max-w-2xl px-4 py-8 mx-auto lg:py-16">
@@ -135,13 +144,15 @@ const BookAddNew = () => {
             <FormGroup>
               <Label htmlFor="category">Danh mục</Label>
               <DropDown>
-                <Select placeholder={"Category"}></Select>
+                <Select
+                  placeholder={`${selectCate ? selectCate : "Category"}`}
+                ></Select>
                 <List>
                   {categories.length > 0 &&
                     categories.map((item) => (
                       <Options
                         key={item.id}
-                        onClick={() => handleSelectCategory(item.id)}
+                        onClick={() => handleSelectCategory(item)}
                       >
                         {item.name}
                       </Options>
@@ -149,16 +160,19 @@ const BookAddNew = () => {
                 </List>
               </DropDown>
             </FormGroup>
+
             <FormGroup>
               <Label htmlFor="author">Tác giả</Label>
               <DropDown>
-                <Select placeholder={"Author"}></Select>
+                <Select
+                  placeholder={`${selectAu ? selectAu : "Author"}`}
+                ></Select>
                 <List>
                   {author.length > 0 &&
                     author.map((item) => (
                       <Options
                         key={item.id}
-                        onClick={() => handleSelectAuthor(item.id)}
+                        onClick={() => handleSelectAuthor(item)}
                       >
                         {item.name}
                       </Options>
@@ -166,16 +180,20 @@ const BookAddNew = () => {
                 </List>
               </DropDown>
             </FormGroup>
+          </FormRow>
+          <FormRow>
             <FormGroup>
               <Label htmlFor="category">Thể loại</Label>
               <DropDown>
-                <Select placeholder={"Genres"}></Select>
+                <Select
+                  placeholder={`${selectGen ? selectGen : "Genres"}`}
+                ></Select>
                 <List>
                   {genres.length > 0 &&
                     genres.map((item) => (
                       <Options
                         key={item.id}
-                        onClick={() => handleSelectGenres(item.id)}
+                        onClick={() => handleSelectGenres(item)}
                       >
                         {item.name}
                       </Options>
@@ -183,16 +201,19 @@ const BookAddNew = () => {
                 </List>
               </DropDown>
             </FormGroup>
+
             <FormGroup>
               <Label htmlFor="supplier">Nhà cung cấp</Label>
               <DropDown>
-                <Select placeholder={"Supplier"}></Select>
+                <Select
+                  placeholder={`${selectSu ? selectSu : "Supplier"}`}
+                ></Select>
                 <List>
                   {suppliers.length > 0 &&
                     suppliers.map((item) => (
                       <Options
                         key={item.id}
-                        onClick={() => handleSelectSupplier(item.id)}
+                        onClick={() => handleSelectSupplier(item)}
                       >
                         {item.name}
                       </Options>

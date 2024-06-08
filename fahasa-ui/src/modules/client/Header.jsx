@@ -15,22 +15,23 @@ const Header = () => {
           <img
             src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/fahasa-logo.png"
             alt="logo"
-            className="w-[300px] h-14"
+            className="w-[250px] h-12"
           />
         </Link>
         <Link to={"/bookpage"}>
-          {" "}
           <MenuIcon></MenuIcon>
         </Link>
         <Search></Search>
-        {menu.map((item) => (
-          <Link key={item.id} to={item.to}>
-            <div className="flex flex-col items-center">
-              {item.icon}
-              <span>{item.title}</span>
-            </div>
-          </Link>
-        ))}
+        <div className="flex items-center justify-end flex-1 gap-x-8">
+          {menu.map((item) => (
+            <Link key={item.id} to={item.to}>
+              <div className="flex flex-col items-center">
+                {item.icon}
+                <span>{item.title}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

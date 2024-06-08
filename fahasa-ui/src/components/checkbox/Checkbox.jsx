@@ -6,9 +6,10 @@ const Checkbox = ({
   onClick = () => {},
   name = "",
   children,
+  className = "",
 }) => {
   return (
-    <div className="flex items-center gap-x-3">
+    <div className={`flex items-center gap-x-3 ${className}`}>
       <div
         className={classNames(
           "inline-flex items-center justify-center w-5 h-5 border bg-gray rounded cursor-pointer p-1 text-white",
@@ -42,10 +43,7 @@ const Checkbox = ({
         </span>
       </div>
       {children && (
-        <label
-          onClick={onClick}
-          className="flex items-start font-base text-text3"
-        >
+        <label onClick={onClick} className="flex center font-base text-text3">
           {children}
         </label>
       )}

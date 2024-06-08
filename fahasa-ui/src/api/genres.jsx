@@ -25,11 +25,19 @@ const getAllGenresBySearch = async (name) => {
     name
   );
 };
+const getAllGenresVi = async (data) => {
+  return instance.get(`http://localhost:8008/api/v1/vi-genres`, data);
+};
+const getAllGenresEn = async (data) => {
+  return instance.get(`http://localhost:8008/api/v1/en-genres`, data);
+};
 export {
   create,
   deleteGenres,
   getAllGenres,
   getAllGenresBySearch,
+  getAllGenresEn,
+  getAllGenresVi,
   getOne,
   update,
 };

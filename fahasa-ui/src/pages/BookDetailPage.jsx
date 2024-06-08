@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { v4 as uuidv4 } from "uuid";
-import { getOne } from "../api/product";
+import { getBooksWithCategory, getOne } from "../api/product";
 import BookCard from "../components/bookcard/BookCard";
 import Button from "../components/button/Button";
 import ChangeCount from "../components/input/ChangeCount";
@@ -11,18 +11,35 @@ const BookDetailPage = () => {
   const [book, setBook] = useState({});
   const [params] = useSearchParams();
   const id = params.get("id");
+  const [sameBook, setSameBook] = useState([]);
   useEffect(() => {
     const fetch = async () => {
       const response = await getOne(id);
       setBook(response.data.data);
+      const bookCateogory = await getBooksWithCategory(
+        book.category_id ? book.category_id : book.category_id
+      );
+      setSameBook(bookCateogory.data.data);
     };
     fetch();
-  }, [id]);
+  }, [id, book.category_id]);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  useEffect(() => {}, []);
   if (!book) return null;
-  const { image, name, price, discount, page } = book;
+  const {
+    image,
+    name,
+    price,
+    discount,
+    page,
+    Author,
+    Supplier,
+    Category,
+    Genres,
+  } = book;
+
   return (
     <>
       {book ? (
@@ -48,13 +65,14 @@ const BookDetailPage = () => {
               <h3 className="text-xl font-base">{name}</h3>
               <div className="flex items-center justify-between max-w-[70%] mt-5">
                 <span>
-                  Nhà cung cấp:<span className="text-blue1">AZ Việt Nam</span>
+                  Nhà cung cấp:{" "}
+                  <span className="text-blue1">{Supplier?.name}</span>
                 </span>
                 <span>
-                  Tác giả:<span className="font-semibold">Diệp Hồng Vũ</span>
+                  Tác giả: <span className="font-semibold">{Author?.name}</span>
                 </span>
               </div>
-              <div className="flex items-center justify-between max-w-[70%] mt-2">
+              <div className="flex items-center max-w-[70%] mt-2 justify-between">
                 <span>
                   Nhà xuất bản:
                   <span className="font-semibold">NXB Thanh Niên</span>
@@ -108,19 +126,21 @@ const BookDetailPage = () => {
           <div className="px-5 py-5 mt-5 bg-white rounded-lg">
             <h3 className="mb-5 text-xl font-semibold">Fahasa giới thiệu</h3>
             <Swiper
-              spaceBetween={50}
-              slidesPerView={4}
+              spaceBetween={10}
+              slidesPerView={5}
               autoplay
               className="w-full h-full"
             >
-              {Array(8)
-                .fill(0)
-                .map((item) => (
-                  <SwiperSlide
-                    key={item.id}
-                    className="w-full h-full rounded-xl"
-                  >
-                    <BookCard></BookCard>
+              {sameBook.length > 0 &&
+                sameBook.map((item) => (
+                  <SwiperSlide key={uuidv4()} className="rounded-xl">
+                    <BookCard
+                      image={item.image}
+                      name={item.name}
+                      price={item.price}
+                      discount={item.discount}
+                      sale={item.sale}
+                    ></BookCard>
                   </SwiperSlide>
                 ))}
             </Swiper>
@@ -148,7 +168,7 @@ const BookDetailPage = () => {
                       >
                         Tên nhà cung cấp
                       </th>
-                      <td className="px-6 py-4"> Đinh Tị</td>
+                      <td className="px-6 py-4"> {Supplier?.name}</td>
                     </tr>
                     <tr className="bg-white dark:bg-gray-800">
                       <th
@@ -157,7 +177,7 @@ const BookDetailPage = () => {
                       >
                         Tác giả
                       </th>
-                      <td className="px-6 py-4">Clint Emerson</td>
+                      <td className="px-6 py-4">{Author?.name}</td>
                     </tr>
                     <tr className="bg-white dark:bg-gray-800">
                       <th

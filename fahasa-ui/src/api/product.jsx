@@ -32,12 +32,19 @@ const getBooksWithSupplier = async (name) => {
     name
   );
 };
+const getBooksWithCategory = async (id) => {
+  return instance.get(
+    `http://localhost:8008/api/v1/book-category?id=${id}`,
+    id
+  );
+};
 export {
   create,
   getAllBook,
   getAllBookFlashSale,
   getAllBookSearch,
   getBookFlashSaleHightLight,
+  getBooksWithCategory,
   getBooksWithSupplier,
   getOne,
   removeBook,

@@ -23,4 +23,19 @@ const getAllCateBySearch = async (name) => {
     name
   );
 };
-export { create, deleteCategory, getAllCategory,getAllCateBySearch, getOne, updateCategory };
+const getAllCategoryVi = async () => {
+  return instance.get("http://localhost:8008/api/v1/vi-category");
+};
+const getAllCategoryEn = async () => {
+  return instance.get("http://localhost:8008/api/v1/en-category");
+};
+export {
+  create,
+  deleteCategory,
+  getAllCateBySearch,
+  getAllCategory,
+  getAllCategoryEn,
+  getAllCategoryVi,
+  getOne,
+  updateCategory,
+};

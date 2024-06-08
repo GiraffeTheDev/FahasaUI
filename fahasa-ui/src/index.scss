@@ -70,3 +70,9 @@ table {
 li.previous a {
   text-transform: capitalize;
 }
+.swiper-wrapper {
+  flex-shrink: 0;
+}
+.swiper-slide {
+  height: auto !important;
+}

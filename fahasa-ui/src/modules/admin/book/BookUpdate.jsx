@@ -215,7 +215,7 @@ const BookUpdate = () => {
             <Button type="submit" kind="primary">
               Cập nhật sách
             </Button>
-            <Button type="button" kind="semi" href="/manage/books">
+            <Button type="button" kind="semi" href="/manage/book">
               Quay lại
             </Button>
           </div>
