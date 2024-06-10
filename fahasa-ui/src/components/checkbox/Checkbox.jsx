@@ -1,4 +1,5 @@
 import React from "react";
+import { useController } from "react-hook-form";
 import classNames from "../classname/className";
 
 const Checkbox = ({
@@ -6,16 +7,17 @@ const Checkbox = ({
   onClick = () => {},
   name = "",
   children,
-  className = "",
+  control,
 }) => {
+  const { field } = useController({ name, control, defaultValue: "" });
   return (
-    <div className={`flex items-center gap-x-3 ${className}`}>
+    <div className="flex flex-start gap-x-3">
       <div
         className={classNames(
-          "inline-flex items-center justify-center w-5 h-5 border bg-gray rounded cursor-pointer p-1 text-white",
+          "inline-flex items-center justify-center w-5 h-5 border rounded cursor-pointer p-1 text-white",
           checked
             ? "bg-primary border-primary"
-            : "border-strock dark:border-text3"
+            : "border-gray1 bg-gray1 dark:border-text3"
         )}
         onClick={onClick}
       >
@@ -24,8 +26,10 @@ const Checkbox = ({
           className="hidden"
           onChange={() => {}}
           name={name}
+          ref={control}
+          {...field}
         />
-        <span className={`${checked ? "text-white" : "opacity-0 invisible"}`}>
+        <span className={`${checked ? "text-white1" : "opacity-0 invisible"}`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -43,7 +47,7 @@ const Checkbox = ({
         </span>
       </div>
       {children && (
-        <label onClick={onClick} className="flex center font-base text-text3">
+        <label onClick={onClick} className="font-medium text-text3">
           {children}
         </label>
       )}

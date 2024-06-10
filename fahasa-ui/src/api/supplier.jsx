@@ -25,4 +25,19 @@ const getAllSupplierSearch = async (name) => {
     name
   );
 };
-export { create, deleteSupplier, getAllSupplier, getOne, update , getAllSupplierSearch };
+const getViSupplier = async (data) => {
+  return instance.get(`http://localhost:8008/api/v1/suppliers-vi`, data);
+};
+const getEnSupplier = async (data) => {
+  return instance.get(`http://localhost:8008/api/v1/suppliers-en`, data);
+};
+export {
+  create,
+  deleteSupplier,
+  getAllSupplier,
+  getAllSupplierSearch,
+  getEnSupplier,
+  getOne,
+  getViSupplier,
+  update,
+};

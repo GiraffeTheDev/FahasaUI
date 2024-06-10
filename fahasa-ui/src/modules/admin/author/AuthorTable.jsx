@@ -74,7 +74,7 @@ const AuthorTable = () => {
         <div className="flex-1">
           <input
             type="text"
-            placeholder="Tìm kiếm sách"
+            placeholder="Tìm kiếm tác giả"
             className="w-full px-5 py-3 text-black border rounded-lg outline-none border-primary"
             onChange={handleSearch}
           />

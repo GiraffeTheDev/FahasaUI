@@ -258,10 +258,13 @@ const naviOrder = [
   },
 ];
 const priceRanges = [
-  { label: "0đ - 150,000đ", min: 0, max: 150000 },
-  { label: "150,000đ - 300,000đ", min: 150000, max: 300000 },
-  { label: "300,000đ - 500,000đ", min: 300000, max: 500000 },
-  { label: "500,000đ - 700,000đ", min: 500000, max: 700000 },
-  { label: "700,000đ - Trở Lên", min: 700000, max: Infinity },
+  { label: "0đ - 150,000đ", value: "0-150000" },
+  { label: "150,000đ - 300,000đ", value: "150000-300000" },
+  { label: "300,000đ - 500,000đ", value: "300000-500000" },
+  { label: "500,000đ - 700,000đ", value: "500000-700000" },
 ];
-export { menuAside, navi, naviOrder, priceRanges };
+const sup = [
+  { label: "Đinh Tị", value: "1" },
+  { label: "Nhã Nam", value: "5" },
+];
+export { menuAside, navi, naviOrder, priceRanges, sup };

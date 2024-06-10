@@ -18,7 +18,7 @@ const Header = () => {
             className="w-[250px] h-12"
           />
         </Link>
-        <Link to={"/bookpage"}>
+        <Link to={"/bookpage-vi"}>
           <MenuIcon></MenuIcon>
         </Link>
         <Search></Search>

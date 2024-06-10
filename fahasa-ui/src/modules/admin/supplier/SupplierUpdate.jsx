@@ -9,11 +9,13 @@ import FormGroup from "../../../components/form/FormGroup";
 import ImageUpload from "../../../components/image/ImageUpload";
 import Input from "../../../components/input/Input";
 import { Label } from "../../../components/label";
+import Radio from "../../../components/radio/Radio";
 import { useImageUpload } from "../../../hooks/useImageUpload";
 const SupplierUpdate = () => {
-  const { control, handleSubmit, setValue, reset } = useForm({
+  const { control, handleSubmit, setValue, watch, reset } = useForm({
     mode: "onSubmit",
   });
+  const watchOri = watch("original");
   const [url, setUrl] = useState("");
   const [params] = useSearchParams();
   const id = params.get("id");
@@ -22,7 +24,7 @@ const SupplierUpdate = () => {
     try {
       const response = await update(value);
       if (!response.data.error) {
-        navigate("/manage/supplier");
+        //navigate("/manage/supplier");
         toast(response.data.message);
       }
     } catch (error) {
@@ -61,10 +63,33 @@ const SupplierUpdate = () => {
               url={image ? image : url}
             ></ImageUpload>
           </FormGroup>
+          <FormGroup>
+            <Label htmlFor="name">Xuất xứ</Label>
+            <div className="flex items-center gap-x-5">
+              <Radio
+                className="!items-start"
+                control={control}
+                name={"original"}
+                checked={watchOri === "Domestic"}
+                value={"Domestic"}
+              >
+                <span className="text-sm">Domestic</span>
+              </Radio>
+              <Radio
+                className="!items-start"
+                control={control}
+                name={"original"}
+                checked={watchOri === "Foreign"}
+                value={"Foreign"}
+              >
+                <span className="text-sm">Foreign</span>
+              </Radio>
+            </div>
+          </FormGroup>
           <GapRow></GapRow>
           <div className="flex items-center gap-x-5">
             <Button type="submit" kind="primary">
-              Cập nhật danh mục
+              Cập nhật nhà cung cấp
             </Button>
             <Button type="submit" kind="semi" href="/manage/supplier">
               Quay lại

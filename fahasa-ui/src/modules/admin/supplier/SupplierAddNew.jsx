@@ -1,8 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { create } from "../../../api/supplier";
 import Button from "../../../components/button/Button";
 import GapRow from "../../../components/common/GapRow";
@@ -10,16 +10,18 @@ import FormGroup from "../../../components/form/FormGroup";
 import ImageUpload from "../../../components/image/ImageUpload";
 import Input from "../../../components/input/Input";
 import { Label } from "../../../components/label";
+import Radio from "../../../components/radio/Radio";
 import { useImageUpload } from "../../../hooks/useImageUpload";
 const SupplierAddNew = () => {
-  const { control, handleSubmit, setValue } = useForm({ mode: "onSubmit" });
+  const { control, handleSubmit, setValue, watch } = useForm({
+    mode: "onSubmit",
+  });
   // const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleAddSupplier = async (value) => {
-    console.log(value);
     try {
       const response = await create(value);
-      if (response.status === 200) {
+      if (!response.data.error) {
         toast(response.data.message);
         navigate("/manage/supplier");
       }
@@ -28,6 +30,7 @@ const SupplierAddNew = () => {
     }
   };
   const { handleSelectImage, image } = useImageUpload(setValue);
+  const watchOri = watch("original");
   return (
     <>
       <div className="max-w-2xl px-4 py-8 mx-auto lg:py-16">
@@ -46,6 +49,29 @@ const SupplierAddNew = () => {
           <FormGroup>
             <Label htmlFor="name">Ảnh nhà cung cấp</Label>
             <ImageUpload onChange={handleSelectImage} url={image}></ImageUpload>
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor="name">Xuất xứ</Label>
+            <div className="flex items-center gap-x-5">
+              <Radio
+                className="!items-start"
+                control={control}
+                name={"original"}
+                checked={watchOri === "Domestic"}
+                value={"Domestic"}
+              >
+                <span className="text-sm">Domestic</span>
+              </Radio>
+              <Radio
+                className="!items-start"
+                control={control}
+                name={"original"}
+                checked={watchOri === "Foreign"}
+                value={"Foreign"}
+              >
+                <span className="text-sm">Foreign</span>
+              </Radio>
+            </div>
           </FormGroup>
           <GapRow></GapRow>
           <Button type="submit" kind="primary">

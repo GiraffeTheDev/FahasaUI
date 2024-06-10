@@ -38,13 +38,32 @@ const getBooksWithCategory = async (id) => {
     id
   );
 };
+const getBooksWithQuery = async (filters) => {
+  const { cateId = "", priceRange = "", supId = "" } = filters;
+  return instance.get(`http://localhost:8008/api/v1/book-query`, {
+    params: {
+      cateId,
+      priceRange,
+      supId,
+    },
+  });
+};
+const getBooksVI = async () => {
+  return instance.get(`http://localhost:8008/api/v1/book-vi`);
+};
+const getBooksEN = async () => {
+  return instance.get(`http://localhost:8008/api/v1/book-en`);
+};
 export {
   create,
   getAllBook,
   getAllBookFlashSale,
   getAllBookSearch,
   getBookFlashSaleHightLight,
+  getBooksEN,
+  getBooksVI,
   getBooksWithCategory,
+  getBooksWithQuery,
   getBooksWithSupplier,
   getOne,
   removeBook,

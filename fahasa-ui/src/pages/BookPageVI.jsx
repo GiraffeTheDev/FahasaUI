@@ -1,30 +1,45 @@
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import { getAllCategoryVi } from "../api/category";
-import { getAllGenresVi } from "../api/genres";
-import { getAllBook } from "../api/product";
-import { getAllSupplier } from "../api/supplier";
+import {
+  getAllBook,
+  getBooksWithCategory,
+  getBooksWithQuery,
+} from "../api/product";
+import { getViSupplier } from "../api/supplier";
 import BookCard from "../components/bookcard/BookCard";
-import Checkbox from "../components/checkbox/Checkbox";
+import Radio from "../components/radio/Radio";
 import { priceRanges } from "../utils/constant";
 const itemsPerPage = 20;
 
-const BookPage = () => {
+const BookPageVI = () => {
+  const { control, watch, handleSubmit } = useForm({
+    mode: "onChange",
+  });
+
+  const price = watch("priceRange");
+  const supFil = watch("supId");
+  const cateFil = watch("cateId");
   const [book, setBook] = useState([]);
   const [title, setTitle] = useState([]);
-  const [genres, setGenres] = useState([]);
+  // const [genres, setGenres] = useState([]);
   const [supplier, setSupplier] = useState([]);
   const [active, setActive] = useState();
+  const [query, setQuery] = useState(null);
+
   useEffect(() => {
     const fetch = async () => {
       try {
         const response = await getAllBook();
+        console.log(response);
         const category = await getAllCategoryVi();
-        const gen = await getAllGenresVi();
-        const sup = await getAllSupplier();
+        // const gen = await getAllGenresVi();
+        const sup = await getViSupplier();
         setSupplier(sup.data.data);
-        setGenres(gen.data.data);
+        // setGenres(gen.data.data);
         setTitle(category.data.data);
         setBook(response.data.data);
       } catch (error) {
@@ -33,6 +48,15 @@ const BookPage = () => {
     };
     fetch();
   }, []);
+  useEffect(() => {
+    const fetch = async () => {
+      if (query) {
+        const response = await getBooksWithCategory(query);
+        setBook(response.data.data);
+      }
+    };
+    fetch();
+  }, [query]);
   const [itemOffset, setItemOffset] = useState(0);
   const pageCount = Math.ceil(book.length / itemsPerPage);
   const endOffset = itemOffset + itemsPerPage;
@@ -42,58 +66,75 @@ const BookPage = () => {
     setItemOffset(newOffset);
   };
   const handleClick = (item) => {
-    console.log(item);
     setActive(item);
+    setQuery(item);
+  };
+  const handleSubmitData = async (value) => {
+    try {
+      const response = await getBooksWithQuery(value);
+      setBook(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
       <div className="flex items-start mt-5 gap-x-5">
         <div className="w-[300px] bg-white min-h-[500px] px-5 py-2">
-          <h1 className="text-lg font-semibold">Nhóm sản phẩm</h1>
-          <h1 className="font-semibold text-yellow1">Sách Tiếng Việt</h1>
-          <div className="flex items-center py-2 pl-3 gap-x-3">
-            <ul className="flex flex-col items-start gap-y-3">
-              {title &&
-                title.length > 0 &&
-                title.map((item) => (
-                  <li
-                    key={item.id}
-                    onClick={() => handleClick(item)}
-                    className={`cursor-pointer `}
-                  >
-                    {item.name}
-                  </li>
-                ))}
-            </ul>
-          </div>
           <div>
-            <form>
-              {" "}
+            <form onChange={handleSubmit(handleSubmitData)} autoComplete="off">
               <div className="py-3">
+                <h1 className="text-lg font-semibold">Nhóm sản phẩm</h1>
+                <h1
+                  className="font-semibold cursor-pointer text-yellow1"
+                  onClick={() => handleClick(" ")}
+                >
+                  Sách Tiếng Việt
+                </h1>
+                <div className="flex items-center py-2 pl-3 gap-x-3">
+                  <ul className="flex flex-col items-start gap-y-3">
+                    {title &&
+                      title.length > 0 &&
+                      title.map((item) => (
+                        <li
+                          key={item.id}
+                          onClick={() => handleClick(item.id)}
+                          className={`cursor-pointer ${
+                            item.id === active ? "text-primary" : ""
+                          }`}
+                        >
+                          <Radio
+                            control={control}
+                            name={"cateId"}
+                            checked={parseInt(cateFil) === item.id}
+                            value={item.id}
+                            hidden={true}
+                          >
+                            <span className="text-sm">{item.name}</span>
+                          </Radio>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
                 <h1 className="mb-2 text-xl font-semibold">Giá</h1>
                 <ul className="flex flex-col items-start gap-y-3">
                   {priceRanges &&
                     priceRanges.length > 0 &&
                     priceRanges.map((item) => (
-                      <li
-                        key={item.id}
-                        onClick={() => handleClick(item)}
-                        className={`cursor-pointer `}
-                      >
-                        <Checkbox
-                          name="all"
-                          checked={true}
-                          onClick={() => {
-                            item;
-                          }}
+                      <li key={uuidv4()} className={`cursor-pointer `}>
+                        <Radio
+                          control={control}
+                          name={"priceRange"}
+                          checked={price === item.value}
+                          value={item.value}
                         >
                           <span className="text-sm">{item.label}</span>
-                        </Checkbox>
+                        </Radio>
                       </li>
                     ))}
                 </ul>
               </div>
-              <div className="py-3">
+              {/* <div className="py-3">
                 <h1 className="mb-2 text-xl font-semibold">Thể loại</h1>
                 <ul className="flex flex-col items-start gap-y-2">
                   {genres &&
@@ -116,28 +157,23 @@ const BookPage = () => {
                       </li>
                     ))}
                 </ul>
-              </div>
+              </div> */}
               <div className="py-3">
                 <h1 className="mb-2 text-xl font-semibold">Nhà cung cấp</h1>
                 <ul className="flex flex-col items-start gap-y-2">
                   {supplier &&
                     supplier.length > 0 &&
                     supplier.map((item) => (
-                      <li
-                        key={item.id}
-                        onClick={() => handleClick(item)}
-                        className={`cursor-pointer`}
-                      >
-                        <Checkbox
-                          name="all"
-                          checked={true}
-                          onClick={() => {
-                            item;
-                          }}
+                      <li key={uuidv4()} className={`cursor-pointer `}>
+                        <Radio
                           className="!items-start"
+                          control={control}
+                          name={"supId"}
+                          checked={parseInt(supFil) === item.id}
+                          value={item.id}
                         >
-                          <span className="text-sm"> {item.name}</span>
-                        </Checkbox>
+                          <span className="text-sm">{item.name}</span>
+                        </Radio>
                       </li>
                     ))}
                 </ul>
@@ -223,4 +259,4 @@ const BookPage = () => {
   );
 };
 
-export default BookPage;
+export default BookPageVI;

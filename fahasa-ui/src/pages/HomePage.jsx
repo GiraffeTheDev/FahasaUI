@@ -5,9 +5,9 @@ import BookCard from "../components/bookcard/BookCard";
 import BannerSwipper from "../modules/client/BannerSwipper";
 import BrandHightlight from "../modules/client/BrandHightlight";
 import CategoryProduct from "../modules/client/CategoryProduct";
+import ForeignBook from "../modules/client/ForeignBook";
 import PurchaseTrending from "../modules/client/PurchaseTrending";
 import { bannerSmall } from "../utils/common";
-import ForeignBook from "./ForeignBook";
 const suppliers = [
   {
     id: 1,
@@ -48,6 +48,20 @@ const suppliers2 = [
   {
     id: 3,
     name: "SkyBooks",
+  },
+];
+const cateforeign = [
+  {
+    id: 9,
+    name: "Children Book",
+  },
+  {
+    id: 10,
+    name: "Dictionaries & Languages",
+  },
+  {
+    id: 11,
+    name: "Fiction",
   },
 ];
 const HomePage = () => {
@@ -115,14 +129,15 @@ const HomePage = () => {
         </div>
         <div className="grid grid-cols-5 mt-5 gap-x-5">
           {books.map((item) => (
-            <BookCard
-              key={item.id}
-              image={item.image}
-              name={item.name}
-              price={item.price}
-              discount={item.discount}
-              sale={item.sale}
-            ></BookCard>
+            <Link key={item.id} to={`/detail-book?id=${item.id}`}>
+              <BookCard
+                image={item.image}
+                name={item.name}
+                price={item.price}
+                discount={item.discount}
+                sale={item.sale}
+              ></BookCard>
+            </Link>
           ))}
         </div>
       </div>
@@ -143,7 +158,7 @@ const HomePage = () => {
         <BrandHightlight header={false} title={suppliers2}></BrandHightlight>
       </div>
       <div>
-        <ForeignBook></ForeignBook>
+        <ForeignBook title={cateforeign}></ForeignBook>
       </div>
     </div>
   );
