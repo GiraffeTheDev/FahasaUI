@@ -20,7 +20,7 @@ const ForeignBook = ({ header = true, title = [] }) => {
     const fetch = async () => {
       try {
         const response = await getBooksWithCategory(query);
-        console.log(response);
+
         setBook(response.data.data);
       } catch (error) {
         console.log(error);

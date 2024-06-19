@@ -1,6 +1,5 @@
 import React from "react";
-
-const ChangeCount = ({ count = 1, handleIncrement, handleDecrement }) => {
+const ChangeCount = ({ count = 1, handleDecrement, handleIncrement }) => {
   return (
     <>
       <div className="relative flex items-center max-w-[8rem] border border-gray-400 rounded-lg py-2 px-2">
@@ -37,7 +36,7 @@ const ChangeCount = ({ count = 1, handleIncrement, handleDecrement }) => {
           id="increment-button"
           data-input-counter-increment="quantity-input"
           className=" dark:bg-gray-700 rounded-e-lg"
-          onClick={handleDecrement}
+          onClick={handleIncrement}
         >
           <svg
             className="w-3 h-3 text-gray-900 dark:text-white"

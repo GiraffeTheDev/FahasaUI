@@ -1,23 +1,48 @@
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import Button from "../components/button/Button";
 import Checkbox from "../components/checkbox/Checkbox";
-import ChangeCount from "../components/input/ChangeCount";
 import useToggleValue from "../hooks/useToggleValue";
+import {
+  decreaseItem,
+  increaseItem,
+  removeItemFromCart,
+} from "../redux/cart/slice";
+import { formatNumber } from "../utils/function";
 const CartPage = () => {
-  const [count, setCount] = useState(0);
-  const { control, watch, handleSubmit } = useForm({
+  const { watch, control, handleSubmit } = useForm({
     mode: "onSubmit",
   });
-  const handleCart = (value) => {
-    console.log(value);
+  const { items } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const handleRemove = (id) => {
+    dispatch(removeItemFromCart({ id }));
+    toast("Delete Book Success");
+  };
+
+  const handleIncrease = (id) => {
+    dispatch(increaseItem({ id }));
+  };
+
+  const handleDecrease = (id) => {
+    dispatch(decreaseItem({ id }));
   };
   const { value: check, handleToggleValue: handleCheck } = useToggleValue();
-  console.log("check", check);
+  const total = items.reduce(
+    (sum, item) =>
+      sum + (item.price - (item.price * item.discount) / 100) * item.quantity,
+    0
+  );
+  const shippingFee = 32000; // Example shipping fee
+  const totalPrice = total + shippingFee;
   return (
     <div className="mt-5">
-      <h1 className="mb-5 text-xl uppercase">Giỏ hàng ({count} sản phẩm)</h1>
-      {count === 0 ? (
+      <h1 className="mb-5 text-xl uppercase">
+        Giỏ hàng ({items.length} sản phẩm)
+      </h1>
+      {!items ? (
         <div className="flex flex-col items-center justify-center w-full px-5 py-5 mt-5 bg-white rounded-lg gap-x-5">
           <img
             src="https://cdn0.fahasa.com/skin//frontend/ma_vanese/fahasa/images/checkout_cart/ico_emptycart.svg"
@@ -34,47 +59,89 @@ const CartPage = () => {
           </Button>
         </div>
       ) : (
-        <form action="" onSubmit={handleSubmit(handleCart)}>
-          <div className="flex items-start gap-x-5">
-            <div className="max-w-[63%] flex-grow">
-              <div className="flex items-center justify-between py-2 pl-5 bg-white rounded-lg pr-[100px] ">
-                <Checkbox name="all" checked={check} onClick={handleCheck}>
-                  Chọn tất cả ({count} sản phẩm)
-                </Checkbox>
-                <div className="flex items-center justify-between gap-x-10">
-                  <div>
-                    <span>Số lượng</span>
-                  </div>
-                  <div>
-                    <span>Thành tiền</span>
-                  </div>
+        <div className="flex items-start gap-x-5">
+          <div className="max-w-[63%] flex-grow">
+            <div className="flex items-center justify-between py-2 pl-5 bg-white rounded-lg pr-[100px] ">
+              <Checkbox
+                name="all"
+                checked={check}
+                onClick={handleCheck}
+                control={control}
+              >
+                Chọn tất cả ({items.length} sản phẩm)
+              </Checkbox>
+              <div className="flex items-center justify-between gap-x-10">
+                <div>
+                  <span>Số lượng</span>
+                </div>
+                <div>
+                  <span>Thành tiền</span>
                 </div>
               </div>
-
-              <div className="flex items-center justify-between w-full py-5 pl-5 pr-5 mt-5 bg-white rounded-lg">
-                <div className="flex items-center ">
-                  <Checkbox></Checkbox>
-                  <div>
+            </div>
+            <div className="w-full pl-5 mt-5 bg-white rounded-lg ">
+              {items.map((item) => (
+                <div key={item.id} className="flex items-center py-4">
+                  <div className="basis-[8%]">
+                    <Checkbox
+                      control={control}
+                      checked={check}
+                      onClick={handleCheck}
+                    ></Checkbox>
+                  </div>
+                  <div className="flex items-center flex-shrink-0 overflow-hidden basis-[16%]">
                     <img
-                      src="https://cdn0.fahasa.com/media/catalog/product//d/a/damnghilai_bia01.jpg"
+                      src={item.image}
                       alt=""
-                      className="max-h-[120px]"
+                      className="h-[120px] object-contain w-[120px] flex-shrink-0"
                     />
                   </div>
-                  <div className="flex flex-col">
-                    <span className="pb-[70px]">Dám nghĩ lại</span>
-                    <div className="flex items-center gap-x-5">
-                      <span className="font-semibold">114.000 đ</span>
-                      <span className="text-xs line-through text-gray">
-                        168.000 đ
+                  <div className="flex items-center basis-[68%]">
+                    <div className="flex flex-col basis-[60%] px-3">
+                      <span className="pb-[70px] text-sm">{item.name}</span>
+                      <div className="flex items-center gap-x-5">
+                        <span className="font-semibold">
+                          {formatNumber(
+                            item.price - (item.price * item.discount) / 100
+                          )}{" "}
+                          đ
+                        </span>
+                        <span className="text-xs line-through text-gray">
+                          {formatNumber(item.price)} đ
+                        </span>
+                      </div>
+                    </div>
+                    <div className="basis-[40%] flex items-center gap-x-10">
+                      <div className="flex items-center gap-x-2 max-w-[6rem] justify-center border-gray2 border  rounded-lg px-2">
+                        <span
+                          onClick={() => handleDecrease(item.id)}
+                          className="text-xl cursor-pointer text-gray2"
+                        >
+                          -
+                        </span>
+                        <span className="px-2 text-gray-200">
+                          {item.quantity}
+                        </span>
+                        <span
+                          onClick={() => handleIncrease(item.id)}
+                          className="text-xl cursor-pointer text-gray2"
+                        >
+                          +
+                        </span>
+                      </div>
+                      <span className="font-semibold text-primary">
+                        {formatNumber(
+                          (item.price - (item.price * item.discount) / 100) *
+                            item.quantity
+                        )}{" "}
+                        đ
                       </span>
                     </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-x-10">
-                  <ChangeCount></ChangeCount>
-                  <span className="font-semibold text-primary">114.000 đ</span>
-                  <div>
+                  <div
+                    onClick={() => handleRemove(item.id)}
+                    className="basis-[8%] flex items-center justify-center text-[#646464] hover:text-primary"
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -91,93 +158,97 @@ const CartPage = () => {
                     </svg>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="flex-1 ">
-              <div className="bg-white rounded-lg ">
-                <div className="flex items-center justify-between px-5 py-3 text-blue1 ">
-                  <div className="flex items-center gap-x-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
-                      />
-                    </svg>
-                    <span className="uppercase">Khuyến mãi</span>
-                  </div>
-                  <span>Xem thêm</span>
-                </div>
-                {Array(4)
-                  .fill(0)
-                  .map((item) => (
-                    <div className="flex flex-col w-full px-5" key={item}>
-                      <div className="w-full h-[1px] bg-gray1"></div>
-                      <div className="flex flex-col mt-5">
-                        <div className="flex items-center justify-between">
-                          <span className="">
-                            Mã giảm 50% - Đơn hàng từ 500K
-                          </span>
-                          <span className="underline text-blue1">Chi tiết</span>
-                        </div>
-                        <h3>
-                          Không áp dụng cho phiếu quà tặng, Sách giáo khoa và
-                          Giấy Photo
-                        </h3>
-                        <div className="flex items-center w-full gap-x-10">
-                          <div className="flex flex-col w-full py-3 ">
-                            <div className="relative h-2 mt-2 text-center bg-blue-200 rounded-full dark:bg-gray-700">
-                              <div
-                                className="absolute inset-0 h-full bg-blue-500 rounded-full z-5"
-                                style={{ width: "10%" }}
-                              />
-                            </div>
-                            <div className="flex items-center justify-between text-xs">
-                              <span>Mua thêm 500.000 đ để nhận mã </span>
-                              <span>500.000 đ</span>
-                            </div>
-                          </div>
-                          <Button
-                            type="button"
-                            kind={"ghost"}
-                            className="flex-shrink-0 !px-2 !py-1"
-                          >
-                            Mua thêm
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-              <div className="px-5 py-3 mt-5 bg-white rounded-lg max-h-fit">
-                <div className="flex items-center justify-between pb-3">
-                  <span>Thành tiền</span>
-                  <span>0 đ</span>
-                </div>
-                <div className="w-full h-[1px] bg-gray1"></div>
-                <div className="flex items-center justify-between mt-2">
-                  <span className="text-lg font-medium">
-                    Tổng số tiền (gồm VAT)
-                  </span>
-                  <span>0 đ</span>
-                </div>
-                <Button className="!w-full mt-2" type="submit" kind={"primary"}>
-                  Thanh toán
-                </Button>
-                <p className="mt-2 text-sm text-primary">
-                  Giá trên web chỉ áp dụng cho giá bán lẻ
-                </p>
-              </div>
+              ))}
             </div>
           </div>
-        </form>
+          <div className="flex-1 ">
+            <div className="bg-white rounded-lg ">
+              <div className="flex items-center justify-between px-5 py-3 text-blue1 ">
+                <div className="flex items-center gap-x-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 010 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 010-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375z"
+                    />
+                  </svg>
+                  <span className="uppercase">Khuyến mãi</span>
+                </div>
+                <span>Xem thêm</span>
+              </div>
+              {Array(3)
+                .fill(0)
+                .map((item) => (
+                  <div className="flex flex-col w-full px-5" key={item}>
+                    <div className="w-full h-[1px] bg-gray1"></div>
+                    <div className="flex flex-col mt-5">
+                      <div className="flex items-center justify-between">
+                        <span className="">Mã giảm 50% - Đơn hàng từ 500K</span>
+                        <span className="underline text-blue1">Chi tiết</span>
+                      </div>
+                      <h3>
+                        Không áp dụng cho phiếu quà tặng, Sách giáo khoa và Giấy
+                        Photo
+                      </h3>
+                      <div className="flex items-center w-full gap-x-10">
+                        <div className="flex flex-col w-full py-3 ">
+                          <div className="relative h-2 mt-2 text-center bg-blue-200 rounded-full dark:bg-gray-700">
+                            <div
+                              className="absolute inset-0 h-full bg-blue-500 rounded-full z-5"
+                              style={{ width: "10%" }}
+                            />
+                          </div>
+                          <div className="flex items-center justify-between text-xs">
+                            <span>Mua thêm 500.000 đ để nhận mã </span>
+                            <span>500.000 đ</span>
+                          </div>
+                        </div>
+                        <Button
+                          type="button"
+                          kind={"ghost"}
+                          className="flex-shrink-0 !px-2 !py-1"
+                        >
+                          Mua thêm
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+            <div className="px-5 py-3 mt-5 bg-white rounded-lg max-h-fit">
+              <div className="flex items-center justify-between pb-3">
+                <span>Thành tiền</span>
+                <span>{formatNumber(total)} đ</span>
+              </div>
+              <div className="flex items-center justify-between pb-3">
+                <span>Phí vận chuyển</span>
+                <span>{formatNumber(shippingFee)} đ</span>
+              </div>
+              <div className="w-full h-[1px] bg-gray1"></div>
+              <div className="flex items-center justify-between mt-2">
+                <span className="text-lg font-medium">
+                  Tổng số tiền (gồm VAT)
+                </span>
+                <span className="text-2xl font-semibold text-primary">
+                  {formatNumber(totalPrice)} đ
+                </span>
+              </div>
+              <Button className="!w-full mt-2" type="submit" kind={"primary"}>
+                Thanh toán
+              </Button>
+              <p className="mt-2 text-sm text-primary">
+                Giá trên web chỉ áp dụng cho giá bán lẻ
+              </p>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

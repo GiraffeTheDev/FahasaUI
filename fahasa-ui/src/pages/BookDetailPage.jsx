@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { v4 as uuidv4 } from "uuid";
 import { getBooksWithCategory, getOne } from "../api/product";
 import BookCard from "../components/bookcard/BookCard";
 import Button from "../components/button/Button";
-import ChangeCount from "../components/input/ChangeCount";
+import { addToCart } from "../redux/cart/slice";
 import { formatNumber } from "../utils/function";
 const BookDetailPage = () => {
   const [book, setBook] = useState({});
   const [params] = useSearchParams();
   const id = params.get("id");
   const [sameBook, setSameBook] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetch = async () => {
       const response = await getOne(id);
@@ -26,7 +30,10 @@ const BookDetailPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  useEffect(() => {}, []);
+  const handleAddToCart = () => {
+    dispatch(addToCart({ ...book, quantity }));
+    toast("Add to Cart Success");
+  };
   if (!book) return null;
   const {
     image,
@@ -50,10 +57,14 @@ const BookDetailPage = () => {
               <img
                 src={image}
                 alt=""
-                className="w-full h-[390px] object-cover"
+                className="w-full h-[390px] object-contain"
               />
               <div className="flex items-center mt-5 gap-x-5">
-                <Button type="button" kind={"semi"}>
+                <Button
+                  type="button"
+                  kind={"semi"}
+                  onClick={() => dispatch(handleAddToCart)}
+                >
                   Thêm vào giỏ hàng
                 </Button>
                 <Button type="button" kind={"primary"} className="flex-1">
@@ -119,7 +130,29 @@ const BookDetailPage = () => {
               </div>
               <div className="flex items-center mt-2 gap-x-3">
                 <span className="text-lg font-base">Số lượng :</span>
-                <ChangeCount></ChangeCount>
+                <div className="flex items-center">
+                  <button
+                    onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
+                    className="p-2 border"
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    value={quantity}
+                    min="1"
+                    onChange={(e) =>
+                      setQuantity(Math.max(1, parseInt(e.target.value)))
+                    }
+                    className="w-12 mx-2 text-center border"
+                  />
+                  <button
+                    onClick={() => setQuantity(quantity + 1)}
+                    className="p-2 border"
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             </div>
           </div>
