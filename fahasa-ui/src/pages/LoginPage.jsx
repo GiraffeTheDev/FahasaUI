@@ -29,9 +29,9 @@ const LoginPage = () => {
     }
   };
   useEffect(() => {
-    if (user && user.isAdmin === false) {
+    if (user && user.isAdmin === 0) {
       navigate("/");
-    } else if (user && user.isAdmin === true) {
+    } else if (user && user.isAdmin === 1) {
       navigate("/dashboard");
     }
   }, [dispatch, user, navigate]);

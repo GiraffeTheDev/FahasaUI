@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { v4 as uuidv4 } from "uuid";
 import { getBooksWithCategory, getOne } from "../api/product";
@@ -31,8 +31,13 @@ const BookDetailPage = () => {
     window.scrollTo(0, 0);
   }, []);
   const handleAddToCart = () => {
-    dispatch(addToCart({ ...book, quantity }));
-    toast("Add to Cart Success");
+    if (dispatch(addToCart({ ...book, quantity }))) {
+      Swal.fire({
+        title: "Thêm vào giỏ hàng thành công",
+        icon: "success",
+        confirmButtonColor: "#C40C0C",
+      });
+    }
   };
   if (!book) return null;
   const {
@@ -60,14 +65,15 @@ const BookDetailPage = () => {
                 className="w-full h-[390px] object-contain"
               />
               <div className="flex items-center mt-5 gap-x-5">
-                <Button
-                  type="button"
-                  kind={"semi"}
-                  onClick={() => dispatch(handleAddToCart)}
-                >
+                <Button type="button" kind={"semi"} onClick={handleAddToCart}>
                   Thêm vào giỏ hàng
                 </Button>
-                <Button type="button" kind={"primary"} className="flex-1">
+                <Button
+                  type="button"
+                  kind={"primary"}
+                  className="flex-1"
+                  onClick={handleAddToCart}
+                >
                   Mua ngay
                 </Button>
               </div>

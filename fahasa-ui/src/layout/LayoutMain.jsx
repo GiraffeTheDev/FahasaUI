@@ -7,7 +7,7 @@ const LayoutMain = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   useEffect(() => {
-    if (user.isAdmin === 2) {
+    if (user?.isAdmin === 2) {
       navigate("/dashboard");
     }
   }, [user, navigate]);

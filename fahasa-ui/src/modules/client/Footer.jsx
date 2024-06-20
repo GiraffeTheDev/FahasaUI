@@ -13,7 +13,7 @@ const Footer = () => {
   };
   return (
     <div>
-      <div className="rounded-tl-lg rounded-tr-lg bg-gray2">
+      <div className="rounded-tl-lg rounded-tr-lg bg-[#9fa7ab]">
         <div className="flex items-center py-5 max-w-[900px] mx-auto justify-between gap-x-5">
           <div className="flex items-center gap-x-5">
             <span>

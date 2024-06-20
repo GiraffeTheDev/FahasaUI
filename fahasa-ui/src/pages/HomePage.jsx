@@ -84,14 +84,14 @@ const HomePage = () => {
         <div className="flex flex-col w-full h-full gap-y-2">
           <div className="w-full rounded-lg">
             <img
-              src="https://cdn0.fahasa.com/media/wysiwyg/Thang-05-2024/392x156_zalopay_t5.jpg"
+              src="https://cdn0.fahasa.com/media/wysiwyg/Thang-06-2024/Doitac_0624_Sub_392x156.jpg"
               alt=""
               className="w-full rounded-lg"
             />
           </div>
           <div className="w-full rounded-lg">
             <img
-              src="https://cdn0.fahasa.com/media/wysiwyg/Thang-05-2024/KoTienMat_T424_Sub_392x156.jpg"
+              src="https://cdn0.fahasa.com/media/wysiwyg/Thang-06-2024/Sub_392x156.jpg"
               alt=""
               className="w-full rounded-lg"
             />
@@ -130,13 +130,7 @@ const HomePage = () => {
         <div className="grid grid-cols-5 mt-5 gap-x-5">
           {books.map((item) => (
             <Link key={item.id} to={`/detail-book?id=${item.id}`}>
-              <BookCard
-                image={item.image}
-                name={item.name}
-                price={item.price}
-                discount={item.discount}
-                sale={item.sale}
-              ></BookCard>
+              <BookCard book={item}></BookCard>
             </Link>
           ))}
         </div>

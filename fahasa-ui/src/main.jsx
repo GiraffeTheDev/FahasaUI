@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { PersistGate } from "redux-persist/integration/react";
+import "sweetalert2/src/sweetalert2.scss";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";

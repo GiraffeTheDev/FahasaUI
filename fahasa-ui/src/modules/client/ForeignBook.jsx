@@ -76,11 +76,7 @@ const ForeignBook = ({ header = true, title = [] }) => {
           book.map((item) => (
             <Link to={`/detail-book?id=${item.id}`} key={item.id}>
               <BookCard
-                image={item.image}
-                name={item.name}
-                price={item.price}
-                discount={item.discount}
-                sale={item.sale}
+                book={item}
                 key={item.id}
                 className="transition-all hover:shadow-lg"
               ></BookCard>

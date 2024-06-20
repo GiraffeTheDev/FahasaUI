@@ -77,6 +77,7 @@ const BookPageVI = () => {
       console.log(error);
     }
   };
+
   return (
     <>
       <div className="flex items-start mt-5 gap-x-5">
@@ -202,12 +203,7 @@ const BookPageVI = () => {
             {currentItems.length > 0 &&
               currentItems.map((item) => (
                 <Link key={item.id} to={`/detail-book?id=${item.id}`}>
-                  <BookCard
-                    image={item.image}
-                    name={item.name}
-                    price={item.price}
-                    discount={item.discount}
-                  ></BookCard>
+                  <BookCard book={item}></BookCard>
                 </Link>
               ))}
           </div>

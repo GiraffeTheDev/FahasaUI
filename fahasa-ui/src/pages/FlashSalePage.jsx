@@ -114,15 +114,7 @@ const FlashSalePage = () => {
       </form>
       <div className="grid grid-cols-5 gap-5 mt-5">
         {currentItems.map((item) => (
-          <BookCard
-            key={uuidv4()}
-            isCard={true}
-            sale={true}
-            image={item.image}
-            name={item.name}
-            price={item.price}
-            discount={item.discount}
-          ></BookCard>
+          <BookCard key={uuidv4()} isCard={true} book={item}></BookCard>
         ))}
       </div>
       <div className="flex items-center justify-center mt-5">

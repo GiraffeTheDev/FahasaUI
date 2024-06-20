@@ -1,7 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import Button from "../components/button/Button";
 import Checkbox from "../components/checkbox/Checkbox";
 import useToggleValue from "../hooks/useToggleValue";
@@ -19,7 +20,10 @@ const CartPage = () => {
   const dispatch = useDispatch();
   const handleRemove = (id) => {
     dispatch(removeItemFromCart({ id }));
-    toast("Delete Book Success");
+    Swal.fire({
+      title: "Xóa sản phẩm khỏi giỏ hàng thành công",
+      icon: "success",
+    });
   };
 
   const handleIncrease = (id) => {
@@ -42,7 +46,7 @@ const CartPage = () => {
       <h1 className="mb-5 text-xl uppercase">
         Giỏ hàng ({items.length} sản phẩm)
       </h1>
-      {!items ? (
+      {items.length <= 0 ? (
         <div className="flex flex-col items-center justify-center w-full px-5 py-5 mt-5 bg-white rounded-lg gap-x-5">
           <img
             src="https://cdn0.fahasa.com/skin//frontend/ma_vanese/fahasa/images/checkout_cart/ico_emptycart.svg"
@@ -90,15 +94,22 @@ const CartPage = () => {
                     ></Checkbox>
                   </div>
                   <div className="flex items-center flex-shrink-0 overflow-hidden basis-[16%]">
-                    <img
-                      src={item.image}
-                      alt=""
-                      className="h-[120px] object-contain w-[120px] flex-shrink-0"
-                    />
+                    <Link to={`/detail-book?id=${item.id}`}>
+                      {" "}
+                      <img
+                        src={item.image}
+                        alt=""
+                        className="h-[120px] object-contain w-[120px] flex-shrink-0"
+                      />
+                    </Link>
                   </div>
                   <div className="flex items-center basis-[68%]">
-                    <div className="flex flex-col basis-[60%] px-3">
-                      <span className="pb-[70px] text-sm">{item.name}</span>
+                    <div className="flex flex-col basis-[60%] px-3 justify-between ">
+                      <Link to={`/detail-book?id=${item.id}`}>
+                        <span className="pb-[70px] text-sm block">
+                          {item.name}
+                        </span>
+                      </Link>
                       <div className="flex items-center gap-x-5">
                         <span className="font-semibold">
                           {formatNumber(
@@ -240,7 +251,12 @@ const CartPage = () => {
                   {formatNumber(totalPrice)} đ
                 </span>
               </div>
-              <Button className="!w-full mt-2" type="submit" kind={"primary"}>
+              <Button
+                className="!w-full mt-2"
+                type="submit"
+                kind={"primary"}
+                href="/checkout"
+              >
                 Thanh toán
               </Button>
               <p className="mt-2 text-sm text-primary">

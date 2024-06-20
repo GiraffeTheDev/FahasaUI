@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import Button from "../components/button/Button";
 import Checkbox from "../components/checkbox/Checkbox";
@@ -8,6 +9,7 @@ import FormRow from "../components/form/FormRow";
 import Input from "../components/input/Input";
 import { Label } from "../components/label";
 import Radio from "../components/radio/Radio";
+import { formatNumber } from "../utils/function";
 const CheckoutPage = () => {
   const { control, handleSubmit, watch, setValue } = useForm({
     mode: "onSubmit",
@@ -15,18 +17,13 @@ const CheckoutPage = () => {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
-
   const provinceId = watch("province");
   const districtId = watch("district");
-
-  // Fetch provinces when component mounts
   useEffect(() => {
     fetch("https://provinces.open-api.vn/api/?depth=1")
       .then((response) => response.json())
       .then((data) => setProvinces(data));
   }, []);
-
-  // Fetch districts when provinceId changes
   useEffect(() => {
     if (provinceId) {
       fetch(`https://provinces.open-api.vn/api/p/${provinceId}?depth=2`)
@@ -44,8 +41,6 @@ const CheckoutPage = () => {
       setValue("ward", "");
     }
   }, [provinceId, setValue]);
-
-  // Fetch wards when districtId changes
   useEffect(() => {
     if (districtId) {
       fetch(`https://provinces.open-api.vn/api/d/${districtId}?depth=2`)
@@ -59,11 +54,19 @@ const CheckoutPage = () => {
       setValue("ward", "");
     }
   }, [districtId, setValue]);
-
+  const { items } = useSelector((state) => state.cart);
+  console.log(items);
   const handleCheckout = (value) => {
     console.log(value);
   };
   const payment = watch("payment_method");
+  const total = items.reduce(
+    (sum, item) =>
+      sum + (item.price - (item.price * item.discount) / 100) * item.quantity,
+    0
+  );
+  const shippingFee = 32000; // Example shipping fee
+  const totalPrice = total + shippingFee;
   return (
     <div className="mt-5 ">
       <div className="px-5 py-5 bg-white rounded-lg">
@@ -198,55 +201,63 @@ const CheckoutPage = () => {
       <div className="p-5 mt-5 bg-white rounded-lg">
         <h1 className="text-2xl font-base">Kiểm tra lại đơn hàng</h1>
         <div className="flex flex-col px-5">
-          {Array(4)
-            .fill(0)
-            .map((item) => (
-              <div className="mt-5" key={uuidv4()}>
-                <div className="w-full h-[1px] mb-5 bg-black"></div>
-                <div className="flex items-start">
-                  <div className="w-[145px]">
-                    <img
-                      src="https://cdn0.fahasa.com/media/catalog/product//i/m/img_7566.jpg"
-                      className=" object-cover max-h-[145px]"
-                      alt=""
-                    />
-                  </div>
-                  <div className="flex flex-1 gap-x-4">
-                    <div className="w-[700px]">
-                      English Vocabulary in Use: Elementary Book with Answers
-                      Fahasa Reprint Edition: Vocabulary Reference and Practice
-                      (CD-ROM)
+          {items.map((item) => (
+            <div className="mt-5" key={uuidv4()}>
+              <div className="w-full h-[1px] mb-5 bg-black"></div>
+              <div className="flex items-start">
+                <div className="w-[145px]">
+                  <img
+                    src={item.image}
+                    className=" object-cover max-h-[145px]"
+                    alt=""
+                  />
+                </div>
+                <div className="flex flex-1 gap-x-4">
+                  <div className="w-[700px]">{item?.name}</div>
+                  <div className="flex flex-1 gap-x-[60px]">
+                    <div className="flex flex-col">
+                      <span>
+                        {formatNumber(
+                          item.price - (item.price * item.discount) / 100
+                        )}
+                        đ
+                      </span>
+                      <span className="text-sm line-through text-gray2">
+                        {formatNumber(item.price)}đ
+                      </span>
                     </div>
-                    <div className="flex flex-1 gap-x-[60px]">
-                      <div className="flex flex-col">
-                        <span>127.300</span>
-                        <span className="text-sm line-through text-gray2">
-                          134.000
-                        </span>
-                      </div>
-                      <span>1</span>
-                      <span className=" text-yellow1">127.0000</span>
-                    </div>
+                    <span>{item.quantity}</span>
+                    <span className=" text-yellow1">
+                      {formatNumber(
+                        (item.price - (item.price * item.discount) / 100) *
+                          item.quantity
+                      )}{" "}
+                      đ
+                    </span>
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
+          ))}
         </div>
       </div>
       <div className="p-5 mt-5 bg-white rounded-lg">
         <div className="flex items-center justify-end">
           <div className="flex flex-col items-center gap-y-5">
-            <span>Thành tiền : 369.000 đ</span>
+            <span>Thành tiền : {formatNumber(total)} đ</span>
+            <span>
+              Phí vận chuyển tiêu chuẩn : {formatNumber(shippingFee)} đ
+            </span>
             <span>
               Tổng số tiền (gồm VAT) :{" "}
-              <span className="text-yellow1">369.000 đ</span>
+              <span className="text-yellow1">{formatNumber(totalPrice)} đ</span>
             </span>
           </div>
         </div>
 
         <div className="flex items-center justify-between mt-5">
           <div className="flex items-center gap-x-2">
-            <Checkbox checked={true}></Checkbox>
+            <Checkbox checked={true} control={control}></Checkbox>
             <div className="flex flex-col">
               <span>Bằng việc tiến hành mua hàng bạn đã đồng ý với</span>
               <span className="text-blue-500">

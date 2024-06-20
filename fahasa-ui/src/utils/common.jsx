@@ -1,45 +1,45 @@
 const banners = [
   {
     id: 1,
-    url: "https://cdn0.fahasa.com/media/magentothem/banner7/Bo0106__840x320.jpg",
+    url: "https://cdn0.fahasa.com/media/magentothem/banner7/Summersale_0624_ldp_840x320_DealHot.jpg",
   },
   {
     id: 2,
-    url: "https://cdn0.fahasa.com/media/magentothem/banner7/Silver_0524_Ver1_SachVietSlide_840x320.jpg",
+    url: "https://cdn0.fahasa.com/media/magentothem/banner7/NCC_0624_ThienLong_Slide_840x320_1.png",
   },
   {
     id: 3,
-    url: "https://cdn0.fahasa.com/media/magentothem/banner7/Silver_0524_Ver2_dinhtiSlide_840x320.jpg",
+    url: "https://cdn0.fahasa.com/media/magentothem/banner7/DiamondSaiGonBook_0624_Slide_840x320__1.jpg",
   },
   {
     id: 4,
-    url: "https://cdn0.fahasa.com/media/magentothem/banner7/VPPSiT424_Slide_840x320.jpg",
+    url: "https://cdn0.fahasa.com/media/magentothem/banner7/BachHoa_SlideBanner_840x320.jpg",
   },
   {
     id: 5,
-    url: "https://cdn0.fahasa.com/media/magentothem/banner7/ThungGiayT424_Slide_840x320.jpg",
+    url: "https://cdn0.fahasa.com/media/magentothem/banner7/TrangButMau_Banner_SlideBanner_840x320.jpg",
   },
   {
     id: 6,
-    url: "https://cdn0.fahasa.com/media/magentothem/banner7/tranglego_resize_slidebanner_840x320.jpg",
+    url: "https://cdn0.fahasa.com/media/magentothem/banner7/Backtoschool_mainbannerT6_resize_Slide_840x320.jpg",
   },
 ];
 const bannerSmall = [
   {
     id: 1,
-    url: "https://cdn0.fahasa.com/media/wysiwyg/Thang-05-2024/SieeuSale_Week2_T524_Banner_SmallBanner_310x210.jpg",
+    url: "https://cdn0.fahasa.com/media/wysiwyg/Thang-06-2024/Silver_0624_Ver1SmallBanner_310x210.jpg",
   },
   {
     id: 2,
-    url: "https://cdn0.fahasa.com/media/wysiwyg/Thang-05-2024/MinhLongDiamond_0524_SmallBanner_310x210.jpg",
+    url: "https://cdn0.fahasa.com/media/wysiwyg/Thang-06-2024/NgoaiVanT6_310x210_2.jpg",
   },
   {
     id: 3,
-    url: "https://cdn0.fahasa.com/media/wysiwyg/Thang-05-2024/TrangTapVoT424_Small_310x210.jpg",
+    url: "https://cdn0.fahasa.com/media/wysiwyg/Thang-06-2024/BachHoa_SmallBanner_310x210.jpg",
   },
   {
     id: 4,
-    url: "https://cdn0.fahasa.com/media/wysiwyg/Thang-05-2024/Diamond_0524_Ver2_LeMaySmallBanner_310x210.jpg",
+    url: "https://cdn0.fahasa.com/media/wysiwyg/Thang-06-2024/Silver_0624_Ver2_ZenBooksSmallBanner_310x210.png",
   },
 ];
 const cates = [
