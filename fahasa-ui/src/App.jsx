@@ -27,6 +27,7 @@ import VoucherUpdate from "./modules/admin/voucher/VoucherUpdate";
 import AccountAddress from "./modules/client/AccountAddress";
 import AccountInfo from "./modules/client/AccountInfo";
 import AccountOrder from "./modules/client/AccountOrder";
+import AddAccountAddress from "./modules/client/AddAccountAddress";
 import DashBoardClient from "./modules/client/DashBoardClient";
 import BookDetailPage from "./pages/BookDetailPage";
 import BookPageEN from "./pages/BookPageEN";
@@ -71,6 +72,10 @@ function App() {
             <Route
               path="/account-information"
               element={<AccountInfo></AccountInfo>}
+            ></Route>
+            <Route
+              path="/new/account-address"
+              element={<AddAccountAddress></AddAccountAddress>}
             ></Route>
             <Route
               path="/account-address"
