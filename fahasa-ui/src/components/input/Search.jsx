@@ -2,7 +2,7 @@ import React from "react";
 
 const Search = () => {
   return (
-    <div className="w-[630px] bg-white rounded-lg px-2 border border-gray">
+    <div className="w-[700px] bg-white rounded-lg px-2 border border-gray">
       <form className="flex items-center" autoComplete="off">
         <input
           type="search"

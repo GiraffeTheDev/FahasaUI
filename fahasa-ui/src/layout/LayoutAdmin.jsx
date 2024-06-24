@@ -7,7 +7,7 @@ import Sidebar from "../modules/admin/Sidebar";
 const LayoutAdmin = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  console.log(user);
+
   useEffect(() => {
     if (user === null || user.isAdmin !== 1) {
       navigate("/");

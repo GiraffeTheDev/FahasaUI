@@ -16,6 +16,7 @@ import GenresAddNew from "./modules/admin/genres/GenresAddNew";
 import GenresUpdate from "./modules/admin/genres/GenresUpdate";
 import ManageGenres from "./modules/admin/genres/ManageGenres";
 import ManageOrder from "./modules/admin/order/ManageOrder";
+import OrderDetail from "./modules/admin/order/OrderDetail";
 import ManageSupplier from "./modules/admin/supplier/ManageSupplier";
 import SupplierAddNew from "./modules/admin/supplier/SupplierAddNew";
 import SupplierUpdate from "./modules/admin/supplier/SupplierUpdate";
@@ -168,6 +169,10 @@ function App() {
           <Route
             element={<ManageOrder></ManageOrder>}
             path="/manage/order"
+          ></Route>
+          <Route
+            element={<OrderDetail></OrderDetail>}
+            path="/manage/order-detail"
           ></Route>
           <Route
             element={<ManageAuthor></ManageAuthor>}

@@ -36,7 +36,6 @@ const BookUpdate = () => {
   const handleUpdateBook = async (value) => {
     try {
       const response = await update(value);
-      console.log(response);
       if (!response.data.error) {
         toast(response.data.message);
       }
@@ -56,13 +55,12 @@ const BookUpdate = () => {
       const authors = await getAllAuthor();
       setAuthor(authors.data.data);
       const book = await getOne(id);
-      console.log(book);
       reset(book.data.data);
       setUrl(book.data.data.image);
     };
 
     fetch();
-  }, []);
+  }, [id, reset]);
   const handleSelectAuthor = (item) => {
     setValue("author_id", item);
   };

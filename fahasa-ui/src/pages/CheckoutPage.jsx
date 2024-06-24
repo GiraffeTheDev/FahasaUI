@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid";
+import { createNewOrder } from "../api/order";
 import { getUserInfor } from "../api/userinfor";
 import Button from "../components/button/Button";
 import Checkbox from "../components/checkbox/Checkbox";
@@ -16,22 +17,6 @@ const CheckoutPage = () => {
   });
   const { items } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (items.length <= 0) {
-      navigate("/cart");
-    }
-  }, [items.length, navigate]);
-  const dispatch = useDispatch();
-  const handleCheckout = (value) => {
-    console.log(value);
-    Swal.fire({
-      title: "Thanh toán thành công",
-      icon: "success",
-    });
-    dispatch(clearCart());
-  };
-  const payment = watch("payment_method");
   const total = items.reduce(
     (sum, item) =>
       sum + (item.price - (item.price * item.discount) / 100) * item.quantity,
@@ -40,13 +25,61 @@ const CheckoutPage = () => {
   const shippingFee = 32000; // Example shipping fee
   const totalPrice = total + shippingFee;
   const [infor, setInfor] = useState([]);
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (items.length <= 0) {
+      navigate("/cart");
+    }
+  }, [items.length, navigate]);
+  const dispatch = useDispatch();
+
+  const payment = watch("payment_method");
+  const watchInfor = watch("infor_id");
+
+  useEffect(() => {
+    if (user === null) {
+      Swal.fire("Bạn phải đăng nhập mới có thể thanh toán đơn hàng");
+      navigate("/cart");
+    }
+  }, [user, navigate]);
+
   useEffect(() => {
     const fetch = async () => {
       const response = await getUserInfor(user.id);
       setInfor(response.data.data);
+      setValue("infor_id", infor.id);
+      setValue("total_price", totalPrice);
+      setValue("shipping_fee", shippingFee);
+      setValue(
+        "orderDetails",
+        items.map((item) => ({
+          book_id: item.id,
+          quantity: item.quantity,
+          price: item.price,
+        }))
+      );
     };
     fetch();
-  }, [user.id]);
+  }, [infor.id, totalPrice, setValue, items, user.id]);
+  const handleCheckout = async (value) => {
+    try {
+      const response = await createNewOrder(value);
+      if (!response.data.error) {
+        Swal.fire({
+          title: "Thanh toán thành công",
+          icon: "success",
+        });
+        dispatch(clearCart());
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Thanh toán thất bại",
+        icon: "success",
+      });
+    }
+  };
+
   useEffect(() => {
     document.title = "One Step CheckOut FAHASA";
   }, []);
@@ -59,9 +92,10 @@ const CheckoutPage = () => {
             {infor.map((item) => (
               <Radio
                 key={item.id}
-                name={"name"}
-                checked={false}
+                name={"infor_id"}
+                checked={parseInt(watchInfor) === item.id}
                 control={control}
+                value={item.id}
               >{`${item.user_name} | ${item.address_detail} - Xã ${item.ward} - Huyện ${item.district} - Tỉnh ${item.province}`}</Radio>
             ))}
             <Link
@@ -90,7 +124,7 @@ const CheckoutPage = () => {
         </div>
         <div className="px-5 py-5 mt-5 bg-white rounded-lg">
           <h1 className="text-2xl font-base">Phương thức vận chuyển</h1>
-          <Radio name={"name"} checked={true} control={control}>
+          <Radio name={"shipping_fee"} checked={true} control={control}>
             <span className="font-semibold">
               Giao hàng tiêu chuẩn : 32.000 đ
             </span>

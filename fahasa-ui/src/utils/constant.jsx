@@ -180,7 +180,7 @@ const menuAside = [
     ),
   },
   {
-    title: "Quản lý bình luận",
+    title: "Quản lý đánh giá",
     url: "/manage/comment",
     icon: (
       <svg
@@ -267,4 +267,26 @@ const sup = [
   { label: "Đinh Tị", value: "1" },
   { label: "Nhã Nam", value: "5" },
 ];
-export { menuAside, navi, naviOrder, priceRanges, sup };
+const statusOrder = [
+  {
+    id: 1,
+    title: "Chờ xác nhận",
+  },
+  {
+    id: 2,
+    title: "Đã xác nhận",
+  },
+  {
+    id: 3,
+    title: "Đang vận chuyển",
+  },
+  {
+    id: 4,
+    title: "Đã giao",
+  },
+  {
+    id: 5,
+    title: "Đã hủy",
+  },
+];
+export { menuAside, navi, naviOrder, priceRanges, statusOrder, sup };

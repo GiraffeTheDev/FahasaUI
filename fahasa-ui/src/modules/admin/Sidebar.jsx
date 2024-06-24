@@ -7,7 +7,7 @@ import { menuAside } from "../../utils/constant";
 const Sidebar = () => {
   const dispatch = useDispatch();
   return (
-    <aside className=" w-[260px] h-screen transition-transform -translate-x-full sm:translate-x-0">
+    <aside className=" w-[260px] h-100vh transition-transform -translate-x-full sm:translate-x-0">
       <div className="h-full px-3 py-4 overflow-y-auto rounded-xl bg-gray-50 dark:bg-gray-800">
         <div className="w-full mb-3">
           <img
@@ -24,7 +24,7 @@ const Sidebar = () => {
                   <button
                     onClick={() => dispatch(handleLogout())}
                     key={uuidv4()}
-                    className="flex items-center px-4 py-3 text-gray-900 rounded-lg dark:text-white gap-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className="flex items-center px-4 py-3 mt-auto text-gray-900 rounded-lg dark:text-white gap-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 group"
                   >
                     <span>{item.icon}</span>
                     <span> {item.title}</span>
