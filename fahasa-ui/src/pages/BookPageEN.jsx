@@ -282,12 +282,7 @@ const BookPageEN = () => {
             {currentItems.length > 0 &&
               currentItems.map((item) => (
                 <Link key={item.id} to={`/detail-book?id=${item.id}`}>
-                  <BookCard
-                    image={item.image}
-                    name={item.name}
-                    price={item.price}
-                    discount={item.discount}
-                  ></BookCard>
+                  <BookCard book={item}></BookCard>
                 </Link>
               ))}
           </div>

@@ -136,28 +136,20 @@ const BookDetailPage = () => {
               </div>
               <div className="flex items-center mt-2 gap-x-3">
                 <span className="text-lg font-base">Số lượng :</span>
-                <div className="flex items-center">
-                  <button
+                <div className="flex items-center px-2 py-1 gap-x-2 max-w-[6rem] justify-center border-gray2 border  rounded-lg ">
+                  <span
                     onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
-                    className="p-2 border"
+                    className="cursor-pointer "
                   >
                     -
-                  </button>
-                  <input
-                    type="number"
-                    value={quantity}
-                    min="1"
-                    onChange={(e) =>
-                      setQuantity(Math.max(1, parseInt(e.target.value)))
-                    }
-                    className="w-12 mx-2 text-center border"
-                  />
-                  <button
+                  </span>
+                  <span className="px-2 select-none">{quantity}</span>
+                  <span
                     onClick={() => setQuantity(quantity + 1)}
-                    className="p-2 border"
+                    className="cursor-pointer "
                   >
                     +
-                  </button>
+                  </span>
                 </div>
               </div>
             </div>
@@ -173,13 +165,7 @@ const BookDetailPage = () => {
               {sameBook.length > 0 &&
                 sameBook.map((item) => (
                   <SwiperSlide key={uuidv4()} className="rounded-xl">
-                    <BookCard
-                      image={item.image}
-                      name={item.name}
-                      price={item.price}
-                      discount={item.discount}
-                      sale={item.sale}
-                    ></BookCard>
+                    <BookCard book={item}></BookCard>
                   </SwiperSlide>
                 ))}
             </Swiper>

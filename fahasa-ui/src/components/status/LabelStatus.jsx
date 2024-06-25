@@ -7,7 +7,7 @@ const LabelStatus = ({ kind = "", title = "" }) => {
       classNameLabel += " bg-gray1 text-black";
       break;
     case "confirm":
-      classNameLabel += " bg-success text-white ";
+      classNameLabel += " bg-success1 text-white ";
       break;
     case "delivery":
       classNameLabel += " bg-yellow1 text-white ";
