@@ -54,11 +54,19 @@ const getBooksVI = async () => {
 const getBooksEN = async () => {
   return instance.get(`http://localhost:8008/api/v1/book-en`);
 };
+const getBestBookDaily = async () => {
+  return instance.get(`http://localhost:8008/api/v1/best-daily`);
+};
+const getBestBookWeekly = async () => {
+  return instance.get(`http://localhost:8008/api/v1/best-week`);
+};
 export {
   create,
   getAllBook,
   getAllBookFlashSale,
   getAllBookSearch,
+  getBestBookDaily,
+  getBestBookWeekly,
   getBookFlashSaleHightLight,
   getBooksEN,
   getBooksVI,

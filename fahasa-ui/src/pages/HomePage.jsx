@@ -7,6 +7,7 @@ import BrandHightlight from "../modules/client/BrandHightlight";
 import CategoryProduct from "../modules/client/CategoryProduct";
 import ForeignBook from "../modules/client/ForeignBook";
 import PurchaseTrending from "../modules/client/PurchaseTrending";
+import PurchaseTrendingWeekly from "../modules/client/PurchaseTrendingWeekly";
 import { bannerSmall } from "../utils/common";
 const suppliers = [
   {
@@ -141,6 +142,9 @@ const HomePage = () => {
       </div>
       <div>
         <PurchaseTrending></PurchaseTrending>
+      </div>
+      <div>
+        <PurchaseTrendingWeekly></PurchaseTrendingWeekly>
       </div>
       <div>
         <BrandHightlight header={true} title={suppliers}></BrandHightlight>

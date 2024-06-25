@@ -1,8 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getBestBookDaily, getBestBookWeekly } from "../../api/product";
 import BookCard from "../../components/bookcard/BookCard";
-
+const title = [
+  {
+    id: 1,
+    title: "Xu hướng theo ngày",
+  },
+  { id: 2, title: "Xu hướng theo tuần" },
+];
 const PurchaseTrending = () => {
+  const [query, setQuery] = useState("");
+  const [active, setActive] = useState(null);
+  const [bookDaily, setBookDaily] = useState([]);
+  const [bookWeekly, setBookWeekly] = useState([]);
+  const handleQueryClick = (query) => {
+    console.log(query);
+    setQuery(query.title);
+    setActive(query.title);
+  };
+  useEffect(() => {
+    const fetch = async () => {
+      const bestDaily = await getBestBookDaily();
+      const bestWeek = await getBestBookWeekly();
+      setBookDaily(bestDaily.data.data);
+      setBookWeekly(bestWeek.data.data);
+      setActive(title[0].title);
+    };
+    fetch();
+  }, []);
   return (
     <div className="pb-5 mt-5 bg-white rounded-bl-lg rounded-br-lg">
       <div className="flex items-center p-2 bg-red-300 rounded-tl-lg rounded-tr-lg gap-x-5">
@@ -25,23 +51,40 @@ const PurchaseTrending = () => {
         <span className="text-xl font-semibold">Xu hướng mua sắm</span>
       </div>
       <div className="flex items-center py-3 pl-5 gap-x-3">
-        {Array(3)
-          .fill(0)
-          .map((item) => (
-            <Link to={"/trending"} key={item}>
-              Xu hướng theo ngày
-            </Link>
-          ))}
+        <ul className="flex items-center gap-x-3">
+          {title &&
+            title.length > 0 &&
+            title.map((item) => (
+              <li
+                key={item.id}
+                onClick={() => handleQueryClick(item)}
+                className={`cursor-pointer ${
+                  item.title === active ? "text-primary" : ""
+                }`}
+              >
+                {item.title}
+              </li>
+            ))}
+        </ul>
       </div>
       <div className="grid grid-cols-5 gap-2 px-5 mt-2">
-        {Array(10)
-          .fill(0)
-          .map((item) => (
-            <BookCard
-              key={item}
-              className="transition-all hover:shadow-lg"
-            ></BookCard>
-          ))}
+        {active === "Xu hướng theo ngày"
+          ? bookDaily.map((item) => (
+              <Link to={`/detail-book?id=${item.id}`} key={item.id}>
+                <BookCard
+                  book={item.Book}
+                  className="transition-all hover:shadow-lg"
+                ></BookCard>
+              </Link>
+            ))
+          : bookWeekly.map((item) => (
+              <Link to={`/detail-book?id=${item.id}`} key={item.id}>
+                <BookCard
+                  book={item.Book}
+                  className="transition-all hover:shadow-lg"
+                ></BookCard>
+              </Link>
+            ))}
       </div>
     </div>
   );
