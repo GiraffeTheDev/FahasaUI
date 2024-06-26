@@ -24,7 +24,7 @@ const SupplierUpdate = () => {
     try {
       const response = await update(value);
       if (!response.data.error) {
-        //navigate("/manage/supplier");
+        navigate("/manage/supplier");
         toast(response.data.message);
       }
     } catch (error) {

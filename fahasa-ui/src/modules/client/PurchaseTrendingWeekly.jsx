@@ -24,11 +24,11 @@ const PurchaseTrendingWeekly = () => {
           {book.length > 0 &&
             book.slice(0, 5).map((item) => (
               <div key={item.id} className="flex items-start gap-x-3">
-                <div className="w-[150px] h-[100px]">
+                <div className="w-[150px] h-[100px] overflow-hidden">
                   <img
                     src={item.Book.image}
                     alt=""
-                    className="object-contain w-full h-full"
+                    className="object-contain w-full h-full overflow-hidden"
                   />
                 </div>
                 <div>

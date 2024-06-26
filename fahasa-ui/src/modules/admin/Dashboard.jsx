@@ -100,10 +100,10 @@ const Dashboard = () => {
             />
           </div>
 
-          <div className="flex flex-col items-start justify-start gap-y-5">
+          <div className="flex flex-col items-start gap-y-3">
             <Link to={"/manage/order"}>
-              <div className="flex items-center gap-x-3">
-                <div className="p-10 text-white rounded-lg bg-yellow1">
+              <div className="flex items-center gap-x-2">
+                <div className="text-white rounded-lg p-9 bg-yellow1">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -126,7 +126,7 @@ const Dashboard = () => {
               </div>
             </Link>
             <div className="flex items-center gap-x-3">
-              <div className="p-10 text-white rounded-lg bg-primary">
+              <div className="text-white rounded-lg p-9 bg-primary">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -154,7 +154,7 @@ const Dashboard = () => {
             </div>
             <Link to={"/manage/book"}>
               <div className="flex items-center gap-x-3">
-                <div className="p-10 text-white rounded-lg bg-success">
+                <div className="text-white rounded-lg p-9 bg-success">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -173,6 +173,29 @@ const Dashboard = () => {
                 <div className="flex flex-col items-center gap-y-2">
                   <span>Số đầu sách</span>
                   <span>{order.total_book} </span>
+                </div>
+              </div>
+            </Link>
+            <Link to={"/manage/storage"}>
+              <div className="flex items-center gap-x-3">
+                <div className="text-white rounded-lg p-9 bg-gray2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
+                    />
+                  </svg>
+                </div>
+                <div className="flex flex-col items-center gap-y-2">
+                  <span>Kho</span>
                 </div>
               </div>
             </Link>

@@ -17,6 +17,10 @@ import GenresUpdate from "./modules/admin/genres/GenresUpdate";
 import ManageGenres from "./modules/admin/genres/ManageGenres";
 import ManageOrder from "./modules/admin/order/ManageOrder";
 import OrderDetail from "./modules/admin/order/OrderDetail";
+import ManagePublisher from "./modules/admin/publisher/ManagePublisher";
+import PublisherAddNew from "./modules/admin/publisher/PublisherAddNew";
+import UpdatePublisher from "./modules/admin/publisher/UpdatePublisher";
+import StorageBook from "./modules/admin/storage/StorageBook";
 import ManageSupplier from "./modules/admin/supplier/ManageSupplier";
 import SupplierAddNew from "./modules/admin/supplier/SupplierAddNew";
 import SupplierUpdate from "./modules/admin/supplier/SupplierUpdate";
@@ -179,6 +183,10 @@ function App() {
             path="/manage/author"
           ></Route>
           <Route
+            element={<StorageBook></StorageBook>}
+            path="/manage/storage"
+          ></Route>
+          <Route
             element={<ManageCategory></ManageCategory>}
             path="/manage/category"
           ></Route>
@@ -189,6 +197,18 @@ function App() {
           <Route
             element={<CategoryUpdate></CategoryUpdate>}
             path="/manage/update-category"
+          ></Route>
+          <Route
+            element={<ManagePublisher></ManagePublisher>}
+            path="/manage/publisher"
+          ></Route>
+          <Route
+            element={<PublisherAddNew></PublisherAddNew>}
+            path="/manage/add-publisher"
+          ></Route>
+          <Route
+            element={<UpdatePublisher></UpdatePublisher>}
+            path="/manage/update-publisher"
           ></Route>
           <Route
             element={<ManageComment></ManageComment>}
