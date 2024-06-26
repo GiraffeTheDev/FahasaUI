@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { getAllBookFlashSale } from "../api/product";
 import BookCard from "../components/bookcard/BookCard";
+import usePagination from "../hooks/usePagination";
 import { cateFlashSale } from "../utils/common";
 const itemsPerPage = 10;
 const FlashSalePage = () => {
@@ -13,14 +14,7 @@ const FlashSalePage = () => {
     console.log(value);
   };
   const [book, setBook] = useState([]);
-  const [itemOffset, setItemOffset] = useState(0);
-  const pageCount = Math.ceil(book.length / itemsPerPage);
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = book.slice(itemOffset, endOffset);
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % book.length;
-    setItemOffset(newOffset);
-  };
+  const { pageCount, handlePageClick, currentItems } = usePagination(book, 30);
   useEffect(() => {
     const fetch = async () => {
       const response = await getAllBookFlashSale();
@@ -35,7 +29,7 @@ const FlashSalePage = () => {
           <Link className="inline-flex items-center" to={"/"}>
             <a
               href="#"
-              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
+              className="inline-flex items-center text-sm font-medium text-gray-700 hover:text-primary dark:text-gray-400 dark:hover:text-white"
             >
               <svg
                 className="w-3 h-3 me-2.5"
@@ -50,9 +44,9 @@ const FlashSalePage = () => {
             </a>
           </Link>
           <Link to={"/flash-sale"}>
-            <div className="flex items-center">
+            <div className="flex items-center hover:text-primary">
               <svg
-                className="w-3 h-3 mx-1 text-gray-400 rtl:rotate-180"
+                className="w-3 h-3 mx-1 text-gray-400 rtl:rotate-180 "
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -68,7 +62,7 @@ const FlashSalePage = () => {
               </svg>
               <a
                 href="#"
-                className="text-sm font-medium text-gray-700 ms-1 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
+                className="text-sm font-medium text-gray-700 ms-1 hover:text-primary md:ms-2 dark:text-gray-400 dark:hover:text-white"
               >
                 Flash Sale
               </a>

@@ -24,7 +24,7 @@ const Sidebar = () => {
                   <button
                     onClick={() => dispatch(handleLogout())}
                     key={uuidv4()}
-                    className="flex items-center px-4 py-3 mt-[100px] text-gray-900 rounded-lg dark:text-white gap-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className="flex items-center px-4 py-3 mt-[70px] text-gray-900 rounded-lg dark:text-white gap-x-3 hover:bg-gray-100 dark:hover:bg-gray-700 group"
                   >
                     <span>{item.icon}</span>
                     <span> {item.title}</span>

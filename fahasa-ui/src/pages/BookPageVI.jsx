@@ -12,34 +12,28 @@ import {
 import { getViSupplier } from "../api/supplier";
 import BookCard from "../components/bookcard/BookCard";
 import Radio from "../components/radio/Radio";
+import usePagination from "../hooks/usePagination";
 import { priceRanges } from "../utils/constant";
-const itemsPerPage = 20;
-
 const BookPageVI = () => {
   const { control, watch, handleSubmit } = useForm({
     mode: "onChange",
   });
-
   const price = watch("priceRange");
   const supFil = watch("supId");
   const cateFil = watch("cateId");
   const [book, setBook] = useState([]);
   const [title, setTitle] = useState([]);
-  // const [genres, setGenres] = useState([]);
   const [supplier, setSupplier] = useState([]);
   const [active, setActive] = useState();
   const [query, setQuery] = useState(null);
-
   useEffect(() => {
     const fetch = async () => {
       try {
         const response = await getAllBook();
         console.log(response);
         const category = await getAllCategoryVi();
-        // const gen = await getAllGenresVi();
         const sup = await getViSupplier();
         setSupplier(sup.data.data);
-        // setGenres(gen.data.data);
         setTitle(category.data.data);
         setBook(response.data.data);
       } catch (error) {
@@ -57,14 +51,7 @@ const BookPageVI = () => {
     };
     fetch();
   }, [query]);
-  const [itemOffset, setItemOffset] = useState(0);
-  const pageCount = Math.ceil(book.length / itemsPerPage);
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = book.slice(itemOffset, endOffset);
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % book.length;
-    setItemOffset(newOffset);
-  };
+  const { pageCount, handlePageClick, currentItems } = usePagination(book, 20);
   const handleClick = (item) => {
     setActive(item);
     setQuery(item);

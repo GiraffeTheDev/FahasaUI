@@ -10,6 +10,7 @@ import {
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
 import Table from "../../../components/table/Table";
+import usePagination from "../../../hooks/usePagination";
 const title = [
   {
     id: 1,
@@ -37,14 +38,10 @@ const PublisherTable = () => {
       console.log(error);
     }
   };
-  const [itemOffset, setItemOffset] = useState(0);
-  const pageCount = Math.ceil(publisher.length / itemsPerPage);
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = publisher.slice(itemOffset, endOffset);
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % publisher.length;
-    setItemOffset(newOffset);
-  };
+  const { pageCount, handlePageClick, currentItems } = usePagination(
+    publisher,
+    5
+  );
   useEffect(() => {
     const fetch = async () => {
       try {

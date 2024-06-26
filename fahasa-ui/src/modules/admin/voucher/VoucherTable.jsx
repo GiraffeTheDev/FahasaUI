@@ -9,21 +9,17 @@ import {
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
 import Table from "../../../components/table/Table";
+import usePagination from "../../../hooks/usePagination";
 import { convertTime } from "../../../utils/function";
 
-const itemsPerPage = 5;
 const VoucherTable = () => {
   const [voucher, setVoucher] = useState([]);
   const [filter, setFilter] = useState("");
   const navigate = useNavigate();
-  const [itemOffset, setItemOffset] = useState(0);
-  const pageCount = Math.ceil(voucher.length / itemsPerPage);
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = voucher.slice(itemOffset, endOffset);
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % voucher.length;
-    setItemOffset(newOffset);
-  };
+  const { pageCount, handlePageClick, currentItems } = usePagination(
+    voucher,
+    5
+  );
   const handleRemove = async (id) => {
     try {
       const response = await deleteVoucher(id);

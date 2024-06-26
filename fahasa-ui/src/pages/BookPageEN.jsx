@@ -12,6 +12,7 @@ import {
 import { getEnSupplier } from "../api/supplier";
 import BookCard from "../components/bookcard/BookCard";
 import Radio from "../components/radio/Radio";
+import usePagination from "../hooks/usePagination";
 import { priceRanges } from "../utils/constant";
 const itemsPerPage = 20;
 
@@ -57,14 +58,7 @@ const BookPageEN = () => {
     };
     fetch();
   }, [query]);
-  const [itemOffset, setItemOffset] = useState(0);
-  const pageCount = Math.ceil(book.length / itemsPerPage);
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = book.slice(itemOffset, endOffset);
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % book.length;
-    setItemOffset(newOffset);
-  };
+  const { pageCount, handlePageClick, currentItems } = usePagination(book, 20);
   const handleClick = (item) => {
     setActive(item);
     setQuery(item);
@@ -293,7 +287,7 @@ const BookPageEN = () => {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
-                  EnBookPageENewBox="0 0 24 24"
+                  viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
                   className="w-6 h-6"
@@ -308,11 +302,11 @@ const BookPageEN = () => {
               onPageChange={handlePageClick}
               pageRangeDisplayed={5}
               pageCount={pageCount}
-              preEnBookPageENousLabel={
+              previousLabel={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
-                  EnBookPageENewBox="0 0 24 24"
+                  viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
                   className="w-6 h-6"

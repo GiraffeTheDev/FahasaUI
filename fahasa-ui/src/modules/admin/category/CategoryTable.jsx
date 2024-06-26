@@ -6,6 +6,7 @@ import { getAllCateBySearch, getAllCategory } from "../../../api/category";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
 import Table from "../../../components/table/Table";
+import usePagination from "../../../hooks/usePagination";
 import { handleDeleteCategory } from "../../../redux/category/handlers";
 const title = [
   {
@@ -25,7 +26,7 @@ const title = [
     name: "Hành động",
   },
 ];
-const itemsPerPage = 5;
+
 const CategoryTable = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -34,14 +35,10 @@ const CategoryTable = () => {
     dispatch(handleDeleteCategory(id));
   };
   const [category, setCategory] = useState([]);
-  const [itemOffset, setItemOffset] = useState(0);
-  const pageCount = Math.ceil(category.length / itemsPerPage);
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = category.slice(itemOffset, endOffset);
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % category.length;
-    setItemOffset(newOffset);
-  };
+  const { pageCount, handlePageClick, currentItems } = usePagination(
+    category,
+    4
+  );
   const handleSearch = (e) => {
     setFilter(e.target.value);
   };

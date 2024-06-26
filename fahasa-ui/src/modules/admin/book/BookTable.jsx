@@ -6,6 +6,7 @@ import { getAllBook, getAllBookSearch, removeBook } from "../../../api/product";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
 import Table from "../../../components/table/Table";
+import usePagination from "../../../hooks/usePagination";
 import { formatNumber } from "../../../utils/function";
 const title = [
   {
@@ -47,14 +48,7 @@ const BookTable = () => {
       console.log(error);
     }
   };
-  const [itemOffset, setItemOffset] = useState(0);
-  const pageCount = Math.ceil(books.length / itemsPerPage);
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = books.slice(itemOffset, endOffset);
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % books.length;
-    setItemOffset(newOffset);
-  };
+  const { pageCount, handlePageClick, currentItems } = usePagination(books, 5);
   const handleSearch = (e) => {
     setFilter(e.target.value);
   };

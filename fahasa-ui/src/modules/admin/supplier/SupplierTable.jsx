@@ -5,6 +5,7 @@ import { getAllSupplier, getAllSupplierSearch } from "../../../api/supplier";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
 import Table from "../../../components/table/Table";
+import usePagination from "../../../hooks/usePagination";
 const title = [
   {
     id: 1,
@@ -19,7 +20,7 @@ const title = [
     name: "Hành động",
   },
 ];
-const itemsPerPage = 5;
+
 const SupplierTable = () => {
   const navigate = useNavigate();
   const [filter, setFilter] = useState("");
@@ -34,14 +35,10 @@ const SupplierTable = () => {
     };
     fetch();
   }, []);
-  const [itemOffset, setItemOffset] = useState(0);
-  const pageCount = Math.ceil(supplier.length / itemsPerPage);
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = supplier.slice(itemOffset, endOffset);
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % supplier.length;
-    setItemOffset(newOffset);
-  };
+  const { pageCount, handlePageClick, currentItems } = usePagination(
+    supplier,
+    5
+  );
   useEffect(() => {
     const fetch = async () => {
       try {

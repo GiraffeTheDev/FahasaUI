@@ -2,7 +2,7 @@ import React from "react";
 
 const ImageUpload = ({ url, name, className = "", onChange = () => {} }) => {
   return (
-    <label className="flex overflow-hidden bg-gray-100 cursor-pointer ">
+    <label className="flex overflow-hidden bg-gray-100 cursor-pointer min-h-[200px]">
       <input type="file" name={name} className="hidden" onChange={onChange} />
       {!url && (
         <div className="flex items-center justify-center w-full py-2 border border-gray-300 rounded-lg">

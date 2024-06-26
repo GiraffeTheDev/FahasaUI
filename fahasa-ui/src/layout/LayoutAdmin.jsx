@@ -7,12 +7,14 @@ import Sidebar from "../modules/admin/Sidebar";
 const LayoutAdmin = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-
   useEffect(() => {
     if (user === null || user.isAdmin !== 1) {
       navigate("/");
     }
   }, [user, navigate]);
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
   return (
     <>
       <div className="flex items-start">

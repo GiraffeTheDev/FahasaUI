@@ -10,6 +10,7 @@ import {
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
 import Table from "../../../components/table/Table";
+import usePagination from "../../../hooks/usePagination";
 const title = [
   {
     id: 1,
@@ -20,7 +21,7 @@ const title = [
     name: "Hành động",
   },
 ];
-const itemsPerPage = 5;
+
 const TableGenres = () => {
   const [genres, setGenres] = useState([]);
   const navigate = useNavigate();
@@ -37,14 +38,7 @@ const TableGenres = () => {
       console.log(error);
     }
   };
-  const [itemOffset, setItemOffset] = useState(0);
-  const pageCount = Math.ceil(genres.length / itemsPerPage);
-  const endOffset = itemOffset + itemsPerPage;
-  const currentItems = genres.slice(itemOffset, endOffset);
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % genres.length;
-    setItemOffset(newOffset);
-  };
+  const { pageCount, handlePageClick, currentItems } = usePagination(genres, 4);
   useEffect(() => {
     const fetch = async () => {
       try {

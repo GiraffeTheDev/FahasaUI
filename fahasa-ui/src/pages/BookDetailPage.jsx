@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { v4 as uuidv4 } from "uuid";
@@ -29,7 +29,7 @@ const BookDetailPage = () => {
   }, [id, book.category_id]);
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [book]);
   const handleAddToCart = () => {
     if (dispatch(addToCart({ ...book, quantity }))) {
       Swal.fire({
@@ -39,6 +39,9 @@ const BookDetailPage = () => {
       });
     }
   };
+  useEffect(() => {
+    document.title = book.name;
+  }, [book]);
   if (!book) return null;
   const {
     image,
@@ -46,10 +49,10 @@ const BookDetailPage = () => {
     price,
     discount,
     page,
+    description,
     Author,
     Supplier,
-    Category,
-    Genres,
+    Publisher,
   } = book;
 
   return (
@@ -92,7 +95,7 @@ const BookDetailPage = () => {
               <div className="flex items-center max-w-[70%] mt-2 justify-between">
                 <span>
                   Nhà xuất bản:
-                  <span className="font-semibold">NXB Thanh Niên</span>
+                  <span className="font-semibold">{Publisher?.name}</span>
                 </span>
                 <span>
                   Hình thức bìa: <span className="font-semibold">Bìa Mềm</span>
@@ -165,7 +168,10 @@ const BookDetailPage = () => {
               {sameBook.length > 0 &&
                 sameBook.map((item) => (
                   <SwiperSlide key={uuidv4()} className="rounded-xl">
-                    <BookCard book={item}></BookCard>
+                    <Link to={`/detail-book?id=${item.id}`}>
+                      {" "}
+                      <BookCard book={item}></BookCard>
+                    </Link>
                   </SwiperSlide>
                 ))}
             </Swiper>
@@ -263,6 +269,12 @@ const BookDetailPage = () => {
                 Nhà sách Fahasa trên toàn quốc
               </span>
             </div>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: description ? description : "",
+              }}
+              className="mt-5 text-sm"
+            ></div>
           </div>
         </>
       ) : (
