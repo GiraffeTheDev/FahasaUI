@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import { create } from "../../../api/category";
 import Button from "../../../components/button/Button";
 import GapRow from "../../../components/common/GapRow";
@@ -33,11 +33,17 @@ const CategoryAddNew = () => {
     try {
       const response = await create(value);
       if (!response.data.error) {
-        toast(response.data.message);
+        Swal.fire({
+          title: "Thêm mới thành công",
+          icon: "success",
+        });
         navigate("/manage/category");
       }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        title: "Thêm mới thất bại",
+        icon: "error",
+      });
     }
   };
   const { handleSelectImage, image } = useImageUpload(setValue);

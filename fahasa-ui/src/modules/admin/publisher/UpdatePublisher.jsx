@@ -25,7 +25,10 @@ const UpdatePublisher = () => {
         navigate("/manage/Publisher");
       }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        title: "Cập nhật thất bại",
+        icon: "error",
+      });
     }
   };
   const [params] = useSearchParams();

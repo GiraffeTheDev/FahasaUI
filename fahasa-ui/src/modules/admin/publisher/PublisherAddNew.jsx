@@ -23,7 +23,10 @@ const PublisherAddNew = () => {
         navigate("/manage/publisher");
       }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        title: "Thêm mới thất bại",
+        icon: "error",
+      });
     }
   };
 

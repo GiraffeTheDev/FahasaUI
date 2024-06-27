@@ -1,5 +1,5 @@
 import { Editor } from "@tinymce/tinymce-react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -37,12 +37,10 @@ const BookAddNew = () => {
   const [selectGen, setSelectGen] = useState("");
   const [selectCate, setSelectCate] = useState("");
   const { handleSelectImage, image } = useImageUpload(setValue);
-  const editorRef = useRef(null);
   const navigate = useNavigate();
   const handleAddBook = async (value) => {
     try {
       const response = await create(value);
-
       if (!response.data.error) {
         Swal.fire({
           title: "Thêm mới thành công",
@@ -51,7 +49,10 @@ const BookAddNew = () => {
         navigate("/manage/book");
       }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        title: "Thêm mới thất bại",
+        icon: "error",
+      });
     }
   };
   const watchSale = watch("sale");
@@ -88,7 +89,7 @@ const BookAddNew = () => {
   };
   const handleSelectPublisher = (item) => {
     setValue("publisher_id", item.id);
-    setSelectSu(item.name);
+    setSelectPublisher(item.name);
   };
   return (
     <>

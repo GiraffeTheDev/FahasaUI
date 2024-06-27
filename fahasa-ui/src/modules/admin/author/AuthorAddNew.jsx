@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import { create } from "../../../api/author";
 import Button from "../../../components/button/Button";
 import GapRow from "../../../components/common/GapRow";
@@ -10,6 +10,7 @@ import ImageUpload from "../../../components/image/ImageUpload";
 import Input from "../../../components/input/Input";
 import { Label } from "../../../components/label";
 import { useImageUpload } from "../../../hooks/useImageUpload";
+
 const AuthorAddNew = () => {
   const { control, handleSubmit, setValue } = useForm({ mode: "onSubmit" });
   // const dispatch = useDispatch();
@@ -19,9 +20,16 @@ const AuthorAddNew = () => {
       const response = await create(value);
       if (response.status === 200) {
         navigate("/manage/author");
-        toast(response.data.message);
+        Swal.fire({
+          title: "Thêm mới thành công",
+          icon: "success",
+        });
       }
     } catch (error) {
+      Swal.fire({
+        title: "Thêm mới thất bại",
+        icon: "error",
+      });
       console.log(error);
     }
   };

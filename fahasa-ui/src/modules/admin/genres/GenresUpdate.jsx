@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import { getAllCategory } from "../../../api/category";
 import { getOne, update } from "../../../api/genres";
 import Button from "../../../components/button/Button";
@@ -25,11 +25,17 @@ const GenresUpdate = () => {
     try {
       const response = await update(value);
       if (response.status === 200) {
-        toast(response.data.message);
+        Swal.fire({
+          title: "Cập nhật thành công",
+          icon: "success",
+        });
         navigate("/manage/genres");
       }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        title: "Cập nhật thất bại",
+        icon: "success",
+      });
     }
   };
   const [params] = useSearchParams();

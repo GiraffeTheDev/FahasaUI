@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import { create } from "../../../api/supplier";
 import Button from "../../../components/button/Button";
 import GapRow from "../../../components/common/GapRow";
@@ -22,11 +22,17 @@ const SupplierAddNew = () => {
     try {
       const response = await create(value);
       if (!response.data.error) {
-        toast(response.data.message);
+        Swal.fire({
+          title: "Thêm mới thành công",
+          icon: "success",
+        });
         navigate("/manage/supplier");
       }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        title: "Thêm mới thất bại",
+        icon: "success",
+      });
     }
   };
   const { handleSelectImage, image } = useImageUpload(setValue);

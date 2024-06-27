@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import { getOne, update } from "../../../api/voucher";
 import Button from "../../../components/button/Button";
 import GapRow from "../../../components/common/GapRow";
@@ -44,11 +44,17 @@ const VoucherUpdate = () => {
     try {
       const response = await update(value);
       if (!response.data.error) {
-        toast(response.data.message);
+        Swal.fire({
+          title: "Cập nhật thành công",
+          icon: "success",
+        });
         navigate("/manage/voucher");
       }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        title: "Cập nhật thất bại",
+        icon: "error",
+      });
     }
   };
   return (
