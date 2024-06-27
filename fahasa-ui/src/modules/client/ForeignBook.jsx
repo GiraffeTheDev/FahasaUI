@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getBooksWithCategory } from "../../api/product";
+import { getBooksWithCategoryEn } from "../../api/product";
 import BookCard from "../../components/bookcard/BookCard";
 import Button from "../../components/button/Button";
 
@@ -11,7 +11,7 @@ const ForeignBook = ({ header = true, title = [] }) => {
   useEffect(() => {
     setActive(title[0]?.id);
     setQuery(title[0]?.id);
-  }, []);
+  }, [title]);
   const handleCateClick = (cate) => {
     setQuery(cate?.id);
     setActive(cate?.id);
@@ -19,7 +19,7 @@ const ForeignBook = ({ header = true, title = [] }) => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const response = await getBooksWithCategory(query);
+        const response = await getBooksWithCategoryEn(query);
 
         setBook(response.data.data);
       } catch (error) {

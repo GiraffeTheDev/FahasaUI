@@ -32,9 +32,15 @@ const getBooksWithSupplier = async (name) => {
     name
   );
 };
-const getBooksWithCategory = async (id) => {
+const getBooksWithCategoryVi = async (id) => {
   return instance.get(
-    `http://localhost:8008/api/v1/book-category?id=${id}`,
+    `http://localhost:8008/api/v1/book-category-vi?id=${id}`,
+    id
+  );
+};
+const getBooksWithCategoryEn = async (id) => {
+  return instance.get(
+    `http://localhost:8008/api/v1/book-category-en?id=${id}`,
     id
   );
 };
@@ -60,6 +66,12 @@ const getBestBookDaily = async () => {
 const getBestBookWeekly = async () => {
   return instance.get(`http://localhost:8008/api/v1/best-week`);
 };
+const getBookWithMultiQuery = async (query) => {
+  return instance.get(
+    `http://localhost:8008/api/v1/book-search-query?query=${query}`,
+    query
+  );
+};
 export {
   create,
   getAllBook,
@@ -68,9 +80,11 @@ export {
   getBestBookDaily,
   getBestBookWeekly,
   getBookFlashSaleHightLight,
+  getBookWithMultiQuery,
   getBooksEN,
   getBooksVI,
-  getBooksWithCategory,
+  getBooksWithCategoryEn,
+  getBooksWithCategoryVi,
   getBooksWithQuery,
   getBooksWithSupplier,
   getOne,

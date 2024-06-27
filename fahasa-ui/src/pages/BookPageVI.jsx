@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { getAllCategoryVi } from "../api/category";
 import {
   getAllBook,
-  getBooksWithCategory,
+  getBooksWithCategoryVi,
   getBooksWithQuery,
 } from "../api/product";
 import { getViSupplier } from "../api/supplier";
@@ -45,7 +45,7 @@ const BookPageVI = () => {
   useEffect(() => {
     const fetch = async () => {
       if (query) {
-        const response = await getBooksWithCategory(query);
+        const response = await getBooksWithCategoryVi(query);
         setBook(response.data.data);
       }
     };

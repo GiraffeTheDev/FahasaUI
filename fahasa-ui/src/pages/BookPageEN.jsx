@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { getAllCategoryEn } from "../api/category";
 import {
   getBooksEN,
-  getBooksWithCategory,
+  getBooksWithCategoryEn,
   getBooksWithQuery,
 } from "../api/product";
 import { getEnSupplier } from "../api/supplier";
@@ -14,33 +14,25 @@ import BookCard from "../components/bookcard/BookCard";
 import Radio from "../components/radio/Radio";
 import usePagination from "../hooks/usePagination";
 import { priceRanges } from "../utils/constant";
-const itemsPerPage = 20;
-
 const BookPageEN = () => {
   const { control, watch, handleSubmit } = useForm({
     mode: "onChange",
   });
-
   const price = watch("priceRange");
   const supFil = watch("supId");
   const cateFil = watch("cateId");
   const [book, setBook] = useState([]);
   const [title, setTitle] = useState([]);
-  // const [genres, setGenres] = useState([]);
   const [supplier, setSupplier] = useState([]);
   const [active, setActive] = useState();
-  const [query, setQuery] = useState(null);
-
+  const [query, setQuery] = useState("");
   useEffect(() => {
     const fetch = async () => {
       try {
         const response = await getBooksEN();
-        console.log(response);
         const category = await getAllCategoryEn();
-        // const gen = await getAllGenresEnBookPageEN();
         const sup = await getEnSupplier();
         setSupplier(sup.data.data);
-        // setGenres(gen.data.data);
         setTitle(category.data.data);
         setBook(response.data.data);
       } catch (error) {
@@ -52,12 +44,13 @@ const BookPageEN = () => {
   useEffect(() => {
     const fetch = async () => {
       if (query) {
-        const response = await getBooksWithCategory(query);
+        const response = await getBooksWithCategoryEn(query);
         setBook(response.data.data);
       }
     };
     fetch();
   }, [query]);
+  useEffect(() => {});
   const { pageCount, handlePageClick, currentItems } = usePagination(book, 20);
   const handleClick = (item) => {
     setActive(item);

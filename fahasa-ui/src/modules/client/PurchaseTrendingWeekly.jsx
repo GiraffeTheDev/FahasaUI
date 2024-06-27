@@ -21,7 +21,7 @@ const PurchaseTrendingWeekly = () => {
         <h1>Bảng xếp hạng bán chạy tuần</h1>
       </div>
       <div className="flex items-start py-5 bg-white rounded-bl-lg rounded-br-lg">
-        <div className="flex flex-col basis-1/2 gap-y-5">
+        <div className="flex flex-col pr-3 basis-1/2 gap-y-5">
           {book.length > 0 &&
             book.slice(0, 5).map((item) => (
               <div key={item.id} className="flex items-start gap-x-2 h-[100px]">
@@ -53,7 +53,7 @@ const PurchaseTrendingWeekly = () => {
               />
             </div>
             <div>
-              <h1>{book[0]?.Book.name}</h1>
+              <h1 className="max-w-[300px]">{book[0]?.Book.name}</h1>
               <h1 className="line-through">
                 {book[0]?.Book?.price === undefined
                   ? "NaN"

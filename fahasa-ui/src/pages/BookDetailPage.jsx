@@ -4,7 +4,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { v4 as uuidv4 } from "uuid";
-import { getBooksWithCategory, getOne } from "../api/product";
+import { getBooksWithCategoryVi, getOne } from "../api/product";
 import BookCard from "../components/bookcard/BookCard";
 import Button from "../components/button/Button";
 import { addToCart } from "../redux/cart/slice";
@@ -20,7 +20,7 @@ const BookDetailPage = () => {
     const fetch = async () => {
       const response = await getOne(id);
       setBook(response.data.data);
-      const bookCateogory = await getBooksWithCategory(
+      const bookCateogory = await getBooksWithCategoryVi(
         book.category_id ? book.category_id : book.category_id
       );
       setSameBook(bookCateogory.data.data);
