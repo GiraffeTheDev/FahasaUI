@@ -13,7 +13,6 @@ const Search = () => {
     const fetch = async () => {
       try {
         const response = await getBookWithMultiQuery(filter);
-        console.log(response);
         setBook(response.data.data);
       } catch (error) {
         console.log(error);

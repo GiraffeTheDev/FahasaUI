@@ -1,17 +1,32 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import moment from "moment";
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import Swal from "sweetalert2";
+import * as yup from "yup";
 import { create } from "../../../api/voucher";
 import Button from "../../../components/button/Button";
 import GapRow from "../../../components/common/GapRow";
 import FormGroup from "../../../components/form/FormGroup";
 import Input from "../../../components/input/Input";
 import { Label } from "../../../components/label";
+const schema = yup.object({
+  voucher_code: yup.string().required("Nhập vào mã mã giảm giá"),
+  voucher_count: yup.string().required("Nhập vào số lượng mã giảm giá"),
+  discount_percent: yup.string().required("Nhập vào phần trăm giảm giá"),
+  end_date: yup.date().required("Chọn ngày kết thúc"),
+  start_date: yup.date().required("Chọn ngày bắt đầu"),
+});
 const VoucherAddNew = () => {
-  const { control, handleSubmit, setValue } = useForm({
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
     mode: "onSubmit",
   });
   const [startDate, setStartDate] = useState(new Date());
@@ -34,11 +49,17 @@ const VoucherAddNew = () => {
     try {
       const response = await create(value);
       if (!response.data.error) {
-        toast(response.data.message);
+        Swal.fire({
+          title: "Thêm mới thành công",
+          icon: "success",
+        });
         navigate("/manage/voucher");
       }
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        title: "Thêm mới thất bại",
+        icon: "error",
+      });
     }
   };
   return (
@@ -55,6 +76,13 @@ const VoucherAddNew = () => {
               control={control}
               placeholder="Nhập vào mã giảm giá"
             ></Input>
+            {errors?.voucher_code ? (
+              <p className="mt-1 text-sm text-red-500">
+                {errors?.voucher_code?.message}
+              </p>
+            ) : (
+              ""
+            )}
           </FormGroup>
           <FormGroup>
             <Label htmlFor="name">Số lượng mã giảm giá</Label>
@@ -63,6 +91,13 @@ const VoucherAddNew = () => {
               control={control}
               placeholder="Nhập vào số lượng mã giảm giá"
             ></Input>
+            {errors?.voucher_count ? (
+              <p className="mt-1 text-sm text-red-500">
+                {errors?.voucher_count?.message}
+              </p>
+            ) : (
+              ""
+            )}
           </FormGroup>
           <FormGroup>
             <Label htmlFor="name">Phầm trăm giảm giá</Label>
@@ -72,6 +107,13 @@ const VoucherAddNew = () => {
               placeholder="Nhập vào phần trăm giảm giá
               "
             ></Input>
+            {errors?.discount_percent ? (
+              <p className="mt-1 text-sm text-red-500">
+                {errors?.discount_percent?.message}
+              </p>
+            ) : (
+              ""
+            )}
           </FormGroup>
           <FormGroup>
             <Label htmlFor="name">Ngày bắt đầu</Label>
@@ -82,6 +124,13 @@ const VoucherAddNew = () => {
               minDate={new Date()}
               selected={startDate}
             />
+            {errors?.start_date ? (
+              <p className="mt-1 text-sm text-red-500">
+                {errors?.start_date?.message}
+              </p>
+            ) : (
+              ""
+            )}
           </FormGroup>
           <FormGroup>
             <Label htmlFor="name">Ngày kết thúc</Label>
@@ -91,6 +140,13 @@ const VoucherAddNew = () => {
               showTimeSelect
               selected={endDate}
             />
+            {errors?.end_date ? (
+              <p className="mt-1 text-sm text-red-500">
+                {errors?.end_date?.message}
+              </p>
+            ) : (
+              ""
+            )}
           </FormGroup>
           <GapRow></GapRow>
           <Button type="submit" kind="primary">

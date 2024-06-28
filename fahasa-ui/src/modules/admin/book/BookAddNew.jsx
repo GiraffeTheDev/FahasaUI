@@ -1,8 +1,10 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { Editor } from "@tinymce/tinymce-react";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import * as yup from "yup";
 import { getAllAuthor } from "../../../api/author";
 import { getAllCategory } from "../../../api/category";
 import { getAllGenres } from "../../../api/genres";
@@ -20,12 +22,35 @@ import FormRow from "../../../components/form/FormRow";
 import ImageUpload from "../../../components/image/ImageUpload";
 import Input from "../../../components/input/Input";
 import { Label } from "../../../components/label";
+import Loading from "../../../components/loading/Loading";
 import Toggle from "../../../components/toggle/Toggle";
 import { useImageUpload } from "../../../hooks/useImageUpload";
+const schema = yup.object({
+  name: yup.string().required("Nhập vào tên sản phẩm"),
+  price: yup.string().required("Nhập vào giá sản phẩm"),
+  discount: yup.string().required("Nhập vào phần trăm giảm giá"),
+  page: yup.string().required("Nhập vào số trang sách"),
+  chapter: yup.string().required("Nhập vào số chương"),
+  image: yup.string().required("Chọn hình ảnh cho sản phẩm"),
+  id_category: yup.string().required("Nhập vào danh mục"),
+  id_supplier: yup.string().required("Nhập vào nhà cung cấp"),
+  id_author: yup.string().required("Nhập vào tác giả"),
+  id_genres: yup.string().required("Nhập vào thể loại"),
+  id_publisher: yup.string().required("Nhập vào nhà xuất bản"),
+  description: yup.string().required("Nhập vào mô tả sản phẩm"),
+});
 const BookAddNew = () => {
-  const { control, handleSubmit, setValue, watch } = useForm({
-    mode: "onChange",
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    mode: "onSubmit",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [categories, setCategories] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [genres, setGenres] = useState([]);
@@ -39,9 +64,11 @@ const BookAddNew = () => {
   const { handleSelectImage, image } = useImageUpload(setValue);
   const navigate = useNavigate();
   const handleAddBook = async (value) => {
+    setIsSubmitting(true);
     try {
       const response = await create(value);
       if (!response.data.error) {
+        setIsSubmitting(false);
         Swal.fire({
           title: "Thêm mới thành công",
           icon: "success",
@@ -49,6 +76,7 @@ const BookAddNew = () => {
         navigate("/manage/book");
       }
     } catch (error) {
+      setIsSubmitting(false);
       Swal.fire({
         title: "Thêm mới thất bại",
         icon: "error",
@@ -91,6 +119,7 @@ const BookAddNew = () => {
     setValue("publisher_id", item.id);
     setSelectPublisher(item.name);
   };
+  console.log(errors);
   return (
     <>
       <div className="max-w-2xl px-4 py-8 mx-auto lg:py-16">
@@ -105,10 +134,20 @@ const BookAddNew = () => {
               control={control}
               placeholder="Nhập vào tên sách"
             ></Input>
+            {errors?.name ? (
+              <p className="text-sm text-red-500">{errors?.name?.message}</p>
+            ) : (
+              ""
+            )}
           </FormGroup>
           <FormGroup>
             <Label htmlFor="name">Ảnh bìa sách</Label>
             <ImageUpload onChange={handleSelectImage} url={image}></ImageUpload>
+            {errors?.image ? (
+              <p className="text-sm text-red-500">{errors?.image?.message}</p>
+            ) : (
+              ""
+            )}
           </FormGroup>
           <FormGroup>
             <Label htmlFor="price">Giá</Label>
@@ -117,6 +156,11 @@ const BookAddNew = () => {
               control={control}
               placeholder="Nhập vào giá"
             ></Input>
+            {errors?.price ? (
+              <p className="text-sm text-red-500">{errors?.price?.message}</p>
+            ) : (
+              ""
+            )}
           </FormGroup>
           <FormGroup>
             <Label htmlFor="price">Giảm giá</Label>
@@ -125,6 +169,13 @@ const BookAddNew = () => {
               control={control}
               placeholder="Nhập vào phần trăm giả giá : VD : 30%"
             ></Input>
+            {errors?.discount ? (
+              <p className="text-sm text-red-500">
+                {errors?.discount?.message}
+              </p>
+            ) : (
+              ""
+            )}
           </FormGroup>
           <FormRow>
             <FormGroup>
@@ -134,6 +185,11 @@ const BookAddNew = () => {
                 control={control}
                 placeholder="Nhập vào số trang"
               ></Input>
+              {errors?.page ? (
+                <p className="text-sm text-red-500">{errors?.page?.message}</p>
+              ) : (
+                ""
+              )}
             </FormGroup>
             <FormGroup>
               <Label htmlFor="chapter">Nhập vào số chương</Label>
@@ -142,6 +198,13 @@ const BookAddNew = () => {
                 control={control}
                 placeholder="Nhập vào số chương"
               ></Input>
+              {errors?.chapter ? (
+                <p className="text-sm text-red-500">
+                  {errors?.chapter?.message}
+                </p>
+              ) : (
+                ""
+              )}
             </FormGroup>
             <FormGroup>
               <Label htmlFor="sale">Giảm giá</Label>
@@ -173,6 +236,13 @@ const BookAddNew = () => {
                       ))}
                   </List>
                 </DropDown>
+                {errors?.id_category ? (
+                  <p className="text-sm text-red-500">
+                    {errors?.id_category?.message}
+                  </p>
+                ) : (
+                  ""
+                )}
               </FormGroup>
             </div>
             <div className="basis-1/2">
@@ -194,6 +264,13 @@ const BookAddNew = () => {
                       ))}
                   </List>
                 </DropDown>
+                {errors?.id_author ? (
+                  <p className="text-sm text-red-500">
+                    {errors?.id_author?.message}
+                  </p>
+                ) : (
+                  ""
+                )}
               </FormGroup>
             </div>
           </FormRow>
@@ -217,6 +294,13 @@ const BookAddNew = () => {
                       ))}
                   </List>
                 </DropDown>
+                {errors?.id_genres ? (
+                  <p className="text-sm text-red-500">
+                    {errors?.id_genres?.message}
+                  </p>
+                ) : (
+                  ""
+                )}
               </FormGroup>
             </div>
 
@@ -239,6 +323,13 @@ const BookAddNew = () => {
                       ))}
                   </List>
                 </DropDown>
+                {errors?.id_supplier ? (
+                  <p className="text-sm text-red-500">
+                    {errors?.id_supplier?.message}
+                  </p>
+                ) : (
+                  ""
+                )}
               </FormGroup>
             </div>
           </FormRow>
@@ -266,6 +357,13 @@ const BookAddNew = () => {
                       ))}
                   </List>
                 </DropDown>
+                {errors?.id_publisher ? (
+                  <p className="text-sm text-red-500">
+                    {errors?.id_publisher?.message}
+                  </p>
+                ) : (
+                  ""
+                )}
               </FormGroup>
             </div>
           </FormRow>
@@ -301,11 +399,23 @@ const BookAddNew = () => {
                     />
                   )}
                 />
+                {errors?.description ? (
+                  <p className="text-sm text-red-500">
+                    {errors?.description?.message}
+                  </p>
+                ) : (
+                  ""
+                )}
               </FormGroup>
             </div>
           </FormRow>
-          <Button type="submit" kind="primary">
-            Thêm mới sách
+          <Button
+            type="submit"
+            kind="primary"
+            disabled={isSubmitting}
+            className={`${isSubmitting ? "opacity-[0.5]" : ""}`}
+          >
+            {isSubmitting ? <Loading></Loading> : "Thêm mới sách"}
           </Button>
         </form>
       </div>

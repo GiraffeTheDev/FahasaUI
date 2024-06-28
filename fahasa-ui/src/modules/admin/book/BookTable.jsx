@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { getAllBook, getAllBookSearch, removeBook } from "../../../api/product";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
+import Loading from "../../../components/loading/Loading";
 import Table from "../../../components/table/Table";
 import usePagination from "../../../hooks/usePagination";
 import { formatNumber } from "../../../utils/function";
@@ -203,13 +204,13 @@ const BookTable = () => {
             </>
           ) : (
             <div className="flex items-center justify-center h-full">
-              loading...
+              <Loading></Loading>
             </div>
           )}
         </>
       ) : (
         <div className="flex items-center justify-center h-full">
-          Không có dữ liệu
+          <Loading></Loading>
         </div>
       )}
     </>

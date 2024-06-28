@@ -7,6 +7,7 @@ import categorySlice from "./category/slice";
 const authPersistConfig = {
   key: "auth",
   storage,
+ 
 };
 const catePersistConfig = {
   key: "cate",

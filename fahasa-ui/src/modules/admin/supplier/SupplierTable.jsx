@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { getAllSupplier, getAllSupplierSearch } from "../../../api/supplier";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
+import Loading from "../../../components/loading/Loading";
 import Table from "../../../components/table/Table";
 import usePagination from "../../../hooks/usePagination";
 const title = [
@@ -157,13 +158,13 @@ const SupplierTable = () => {
             </>
           ) : (
             <div className="flex items-center justify-center h-full">
-              loading...
+              <Loading></Loading>
             </div>
           )}
         </>
       ) : (
         <div className="flex items-center justify-center h-full">
-          Không có dữ liệu
+          <Loading></Loading>
         </div>
       )}
     </>

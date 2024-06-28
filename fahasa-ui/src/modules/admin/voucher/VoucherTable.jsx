@@ -8,6 +8,7 @@ import {
 } from "../../../api/voucher";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
+import Loading from "../../../components/loading/Loading";
 import Table from "../../../components/table/Table";
 import usePagination from "../../../hooks/usePagination";
 import { convertTime } from "../../../utils/function";
@@ -150,13 +151,13 @@ const VoucherTable = () => {
             </>
           ) : (
             <div className="flex items-center justify-center h-full">
-              loading...
+              <Loading></Loading>
             </div>
           )}
         </>
       ) : (
         <div className="flex items-center justify-center h-full">
-          Không có dữ liệu
+          <Loading></Loading>
         </div>
       )}
     </>

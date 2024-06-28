@@ -9,6 +9,7 @@ import {
 } from "../../../api/author";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
+import Loading from "../../../components/loading/Loading";
 import Table from "../../../components/table/Table";
 import usePagination from "../../../hooks/usePagination";
 const title = [
@@ -158,13 +159,13 @@ const AuthorTable = () => {
             </>
           ) : (
             <div className="flex items-center justify-center h-full">
-              loading...
+              <Loading></Loading>
             </div>
           )}
         </>
       ) : (
         <div className="flex items-center justify-center h-full">
-          Không có dữ liệu
+          <Loading></Loading>
         </div>
       )}
     </>

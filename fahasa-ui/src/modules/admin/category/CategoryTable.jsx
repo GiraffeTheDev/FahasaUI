@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { getAllCateBySearch, getAllCategory } from "../../../api/category";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
+import Loading from "../../../components/loading/Loading";
 import Table from "../../../components/table/Table";
 import usePagination from "../../../hooks/usePagination";
 import { handleDeleteCategory } from "../../../redux/category/handlers";
@@ -159,13 +160,13 @@ const CategoryTable = () => {
             </>
           ) : (
             <div className="flex items-center justify-center h-full">
-              loading...
+              <Loading></Loading>
             </div>
           )}
         </>
       ) : (
-        <div className="flex items-center justify-center h-full">
-          Không có dữ liệu
+        <div className="flex items-center justify-center h-full mt-5">
+          <Loading></Loading>
         </div>
       )}
     </>

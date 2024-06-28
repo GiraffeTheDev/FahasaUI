@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAll } from "../../../api/user";
+import Loading from "../../../components/loading/Loading";
 import Table from "../../../components/table/Table";
 const title = [
   {
@@ -72,7 +73,7 @@ const UserTable = () => {
         </Table>
       ) : (
         <div className="flex items-center justify-center h-full">
-          loading...
+          <Loading></Loading>
         </div>
       )}
     </>
