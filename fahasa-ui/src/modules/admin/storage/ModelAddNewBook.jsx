@@ -86,7 +86,7 @@ const ModelAddNewBook = ({ show, handleClose, id }) => {
             className="w-[300px] rounded-lg h-[200px] object-contain"
           />
         </div>
-        <form onClick={handleSubmit(handleUpdateStock)} className="mt-2">
+        <form onSubmit={handleSubmit(handleUpdateStock)} className="mt-2">
           <Input
             control={control}
             name="stock"

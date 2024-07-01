@@ -68,13 +68,20 @@ const BookDetailPage = () => {
                 className="w-full h-[390px] object-contain"
               />
               <div className="flex items-center mt-5 gap-x-5">
-                <Button type="button" kind={"semi"} onClick={handleAddToCart}>
+                <Button
+                  type="button"
+                  kind={"semi"}
+                  onClick={handleAddToCart}
+                  disabled={book.stock <= 0 ? true : false}
+                  className={`${book.stock <= 0 ? "opacity-[0.5]" : ""}`}
+                >
                   Thêm vào giỏ hàng
                 </Button>
                 <Button
                   type="button"
                   kind={"primary"}
-                  className="flex-1"
+                  disabled={book.stock <= 0 ? true : false}
+                  className={`flex-1 ${book.stock <= 0 ? "opacity-[0.5]" : ""}`}
                   onClick={handleAddToCart}
                 >
                   Mua ngay
@@ -137,24 +144,51 @@ const BookDetailPage = () => {
                   -{discount}%
                 </span>
               </div>
-              <div className="flex items-center mt-2 gap-x-3">
-                <span className="text-lg font-base">Số lượng :</span>
-                <div className="flex items-center px-2 py-1 gap-x-2 max-w-[6rem] justify-center border-gray2 border  rounded-lg ">
-                  <span
-                    onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
-                    className="cursor-pointer "
-                  >
-                    -
-                  </span>
-                  <span className="px-2 select-none">{quantity}</span>
-                  <span
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="cursor-pointer "
-                  >
-                    +
-                  </span>
+              {book?.stock > 0 ? (
+                <div className="flex items-center mt-2 gap-x-3">
+                  <span className="text-lg font-base">Số lượng :</span>
+                  <div className="flex items-center px-2 py-1 gap-x-2 max-w-[6rem] justify-center border-gray2 border  rounded-lg ">
+                    <span
+                      onClick={() =>
+                        setQuantity(quantity > 1 ? quantity - 1 : 1)
+                      }
+                      className="cursor-pointer "
+                    >
+                      -
+                    </span>
+                    <span className="px-2 select-none">{quantity}</span>
+                    <span
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="cursor-pointer "
+                    >
+                      +
+                    </span>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <h1 className="flex items-center px-2 py-1 mt-2 bg-primary rounded-lg gap-x-2 max-w-[150px] text-white">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z"
+                    />
+                  </svg>
+                  Sold Out
+                </h1>
+              )}
             </div>
           </div>
           <div className="px-5 py-5 mt-5 bg-white rounded-lg">

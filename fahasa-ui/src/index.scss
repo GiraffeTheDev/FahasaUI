@@ -278,3 +278,12 @@ li.previous a {
   padding: 10px;
   cursor: pointer;
 }
+
+.truncated-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 10; /* Số dòng tối đa trước khi hiển thị dấu chấm lửng */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 500px; /* Chiều cao tối đa */
+}

@@ -248,29 +248,20 @@ const navi = [
 ];
 const naviOrder = [
   {
-    id: 1,
-    title: "Tất cả",
-    to: "/account-order",
-  },
-  {
     id: 2,
     title: "Chờ xác nhận",
-    to: "/pending-confirm",
   },
   {
     id: 3,
-    title: "Chờ lấy hàng",
-    to: "/pending-product",
+    title: "Đã xác nhận",
   },
   {
     id: 4,
-    title: "Chờ giao hàng",
-    to: "/confirm-order",
+    title: "Đang vận chuyển",
   },
   {
     id: 5,
     title: "Đã giao",
-    to: "/fullfil-order",
   },
   {
     id: 6,

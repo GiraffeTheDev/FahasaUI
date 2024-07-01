@@ -44,14 +44,14 @@ const BookCard = ({ book, isCard, className = "" }) => {
         <h3 className="mb-2 text-sm line-through">
           {formatNumber(book?.price)} đ
         </h3>
-        {book?.stock ? (
+        {book?.sold ? (
           <div className="relative h-4 mt-2 text-center bg-red-200 rounded-full dark:bg-gray-700">
             <div
               className="absolute inset-0 h-full bg-red-500 rounded-full z-5"
-              style={{ width: "45%" }}
+              style={{ width: (book?.sold / book?.stock) * 100 }}
             />{" "}
             <h3 className="absolute w-full text-sm text-center text-white z-9">
-              Đã bán 5
+              Đã bán {book?.stock === 0 ? "Bán hết" : book?.sold}
             </h3>
           </div>
         ) : (

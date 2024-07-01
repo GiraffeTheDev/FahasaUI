@@ -23,9 +23,16 @@ const getOrderByQuery = async (query) => {
     query
   );
 };
+const getAllOrderStatusForUser = async (query) => {
+  return instance.get(
+    `http://localhost:8008/api/v1/order-query-user?user_id=${query.user_id}&order_status=${query.order_status}`,
+    query
+  );
+};
 export {
   createNewOrder,
   getAllOrder,
+  getAllOrderStatusForUser,
   getCountRevenue,
   getOneOrder,
   getOrderByQuery,

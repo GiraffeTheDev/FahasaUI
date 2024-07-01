@@ -39,11 +39,14 @@ import BookPageEN from "./pages/BookPageEN";
 import BookPageVI from "./pages/BookPageVI";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
+import ConfirmPaypal from "./pages/ConfirmPaypal";
 import FlashSalePage from "./pages/FlashSalePage";
 import ForgetPasswordPage from "./pages/ForgetPasswordPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import OrderSuccessPage from "./pages/OrderSuccessPage";
+import PayPalSuccess from "./pages/PayPalSuccess";
+import PaypalFailed from "./pages/PaypalFailed";
 import RegisterPage from "./pages/RegisterPage";
 
 function App() {
@@ -107,6 +110,18 @@ function App() {
           <Route
             path="/checkout"
             element={<CheckoutPage></CheckoutPage>}
+          ></Route>
+          <Route
+            element={<PayPalSuccess></PayPalSuccess>}
+            path="/paypal-success"
+          ></Route>
+          <Route
+            element={<PaypalFailed></PaypalFailed>}
+            path="/paypal-fail"
+          ></Route>
+          <Route
+            element={<ConfirmPaypal></ConfirmPaypal>}
+            path="/paypal-confirm"
           ></Route>
         </Route>
         <Route element={<LayoutAdmin></LayoutAdmin>}>
@@ -218,6 +233,7 @@ function App() {
             element={<GenresAddNew></GenresAddNew>}
             path="/manage/add-genres"
           ></Route>
+
           <Route element={<Dashboard></Dashboard>} path="/dashboard"></Route>
         </Route>
       </Routes>

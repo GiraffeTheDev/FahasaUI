@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid";
 import { createNewOrder } from "../api/order";
+import { createPayment } from "../api/paypal";
 import { getUserInfor } from "../api/userinfor";
 import Button from "../components/button/Button";
 import Checkbox from "../components/checkbox/Checkbox";
@@ -25,7 +26,7 @@ const CheckoutPage = () => {
   const shippingFee = 32000; // Example shipping fee
   const totalPrice = total + shippingFee;
   const [infor, setInfor] = useState([]);
-
+  console.log(totalPrice);
   const navigate = useNavigate();
   useEffect(() => {
     if (items.length <= 0) {
@@ -63,20 +64,62 @@ const CheckoutPage = () => {
     fetch();
   }, [infor.id, totalPrice, setValue, items, user.id]);
   const handleCheckout = async (value) => {
-    try {
-      const response = await createNewOrder(value);
-      if (!response.data.error) {
-        Swal.fire({
-          title: "Thanh toán thành công",
-          icon: "success",
-        });
-        dispatch(clearCart());
-      }
-    } catch (error) {
+    if (payment === "banking") {
       Swal.fire({
-        title: "Thanh toán thất bại",
-        icon: "success",
+        title: "Xác nhận thanh toán",
+        text: "Bạn có chắc chắn muốn thanh toán với Paypal",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#C40C0C",
+        cancelButtonColor: "#7EA1FF",
+        cancelButtonText: "Hủy",
+        confirmButtonText: "Xác nhận",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const response = await createPayment({
+            total: total,
+            orderDetails: items.map((item) => ({
+              book_id: item.id,
+              quantity: item.quantity,
+              price: item.price,
+              discount: item.discount,
+            })),
+          });
+          console.log("ré", response);
+          const data = response.data?.forwardLink;
+          window.location.href = data;
+        }
       });
+    } else {
+      try {
+        Swal.fire({
+          title: "Xác nhận thanh toán",
+          text: "Bạn có chắc chắn muốn thanh toán đơn hàng này",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#C40C0C",
+          cancelButtonColor: "#7EA1FF",
+          cancelButtonText: "Hủy",
+          confirmButtonText: "Xác nhận",
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            const response = await createNewOrder(value);
+
+            if (!response.data.error) {
+              Swal.fire({
+                title: "Thanh toán thành công",
+                icon: "success",
+              });
+              dispatch(clearCart());
+            }
+          }
+        });
+      } catch (error) {
+        Swal.fire({
+          title: "Thanh toán thất bại",
+          icon: "error",
+        });
+      }
     }
   };
 
@@ -140,11 +183,11 @@ const CheckoutPage = () => {
               value={"banking"}
             >
               <img
-                src="https://vnpay.vn/s1/statics.vnpay.vn/2023/6/0oxhzjmxbksr1686814746087.png"
+                src="https://www.paypalobjects.com/digitalassets/c/website/logo/full-text/pp_fc_hl.svg"
                 alt=""
-                className="w-[50px] h-[50px]"
+                className="w-[80px] h-[50px]"
               />{" "}
-              Thanh toán bằng VNPay
+              Thanh toán bằng Paypal
             </Radio>
             <Radio
               control={control}
@@ -158,7 +201,7 @@ const CheckoutPage = () => {
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 stroke="currentColor"
-                className="w-[50px] h-[40px]"
+                className="w-[80px] h-[40px]"
               >
                 <path
                   strokeLinecap="round"
