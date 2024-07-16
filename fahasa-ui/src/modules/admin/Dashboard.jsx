@@ -80,11 +80,134 @@ const Dashboard = () => {
   return (
     <div className="h-[500px] mt-5">
       <div className="h-full p-5 rounded-lg ">
-        <h1 className="text-2xl select-none">Doanh thu</h1>
-        <div className="flex items-start justify-between mt-5">
+        <div className="flex items-start justify-between gap-x-3">
+          <Link to={"/manage/order"}>
+            <div className="flex items-center gap-x-2">
+              <div className="text-white rounded-lg p-9 bg-yellow1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"
+                  />
+                </svg>
+              </div>
+              <div className="flex flex-col items-center gap-y-2">
+                <span>Số đơn hàng</span>
+                <span>{order.total_order}</span>
+              </div>
+            </div>
+          </Link>
+          <div className="flex items-center gap-x-3">
+            <div className="text-white rounded-lg p-9 bg-primary">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"
+                />
+              </svg>
+            </div>
+            <div className="flex flex-col items-center gap-y-2">
+              <span>Tổng doanh thu</span>
+              <span>
+                {order.total_revenue === undefined
+                  ? "NaN"
+                  : formatNumber(order.total_revenue)}{" "}
+                đ
+              </span>
+            </div>
+          </div>
+          <Link to={"/manage/book"}>
+            <div className="flex items-center gap-x-3">
+              <div className="text-white rounded-lg p-9 bg-success">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
+                  />
+                </svg>
+              </div>
+              <div className="flex flex-col items-center gap-y-2">
+                <span>Số đầu sách</span>
+                <span>{order.total_book} </span>
+              </div>
+            </div>
+          </Link>
+          <Link to={"/manage/storage"}>
+            <div className="flex items-center gap-x-3">
+              <div className="text-white rounded-lg p-9 bg-gray2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
+                  />
+                </svg>
+              </div>
+              <div className="flex flex-col items-center gap-y-2">
+                <span>Kho</span>
+              </div>
+            </div>
+          </Link>
+          <Link to={"/manage/news"}>
+            <div className="flex items-center gap-x-3">
+              <div className="text-white rounded-lg p-9 bg-[#EB5B00]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z"
+                  />
+                </svg>
+              </div>
+              <div className="flex flex-col items-center gap-y-2">
+                <span>Tin tức</span>
+              </div>
+            </div>
+          </Link>
+        </div>
+        <h1 className="mt-2 text-2xl select-none">Doanh thu</h1>
+        <div className="flex items-start justify-between w-full mt-5">
           <div className="basis-[70%] border rounded-lg px-5 py-5 border-gray2">
             <Bar
-              className="!flex-shrink-0 "
+              className="!flex-shrink-0 w-full"
               data={{
                 labels: revenue.map((data) => data.month),
                 datasets: [
@@ -104,107 +227,6 @@ const Dashboard = () => {
                 },
               }}
             />
-          </div>
-
-          <div className="flex flex-col items-start gap-y-3">
-            <Link to={"/manage/order"}>
-              <div className="flex items-center gap-x-2">
-                <div className="text-white rounded-lg p-9 bg-yellow1">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"
-                    />
-                  </svg>
-                </div>
-                <div className="flex flex-col items-center gap-y-2">
-                  <span>Số đơn hàng</span>
-                  <span>{order.total_order}</span>
-                </div>
-              </div>
-            </Link>
-            <div className="flex items-center gap-x-3">
-              <div className="text-white rounded-lg p-9 bg-primary">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"
-                  />
-                </svg>
-              </div>
-              <div className="flex flex-col items-center gap-y-2">
-                <span>Tổng doanh thu</span>
-                <span>
-                  {order.total_revenue === undefined
-                    ? "NaN"
-                    : formatNumber(order.total_revenue)}{" "}
-                  đ
-                </span>
-              </div>
-            </div>
-            <Link to={"/manage/book"}>
-              <div className="flex items-center gap-x-3">
-                <div className="text-white rounded-lg p-9 bg-success">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"
-                    />
-                  </svg>
-                </div>
-                <div className="flex flex-col items-center gap-y-2">
-                  <span>Số đầu sách</span>
-                  <span>{order.total_book} </span>
-                </div>
-              </div>
-            </Link>
-            <Link to={"/manage/storage"}>
-              <div className="flex items-center gap-x-3">
-                <div className="text-white rounded-lg p-9 bg-gray2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125"
-                    />
-                  </svg>
-                </div>
-                <div className="flex flex-col items-center gap-y-2">
-                  <span>Kho</span>
-                </div>
-              </div>
-            </Link>
           </div>
         </div>
         <div className="p-5 mt-5 border rounded-lg border-gray2">

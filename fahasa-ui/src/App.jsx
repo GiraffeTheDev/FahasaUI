@@ -12,9 +12,13 @@ import CategoryAddNew from "./modules/admin/category/CategoryAddNew";
 import CategoryUpdate from "./modules/admin/category/CategoryUpdate";
 import ManageCategory from "./modules/admin/category/ManageCategory";
 import ManageComment from "./modules/admin/comment/ManageComment";
+import ViewBookComment from "./modules/admin/comment/ViewBookComment";
 import GenresAddNew from "./modules/admin/genres/GenresAddNew";
 import GenresUpdate from "./modules/admin/genres/GenresUpdate";
 import ManageGenres from "./modules/admin/genres/ManageGenres";
+import ManageNews from "./modules/admin/news/ManageNews";
+import NewsAddNew from "./modules/admin/news/NewsAddNew";
+import NewsUpdate from "./modules/admin/news/NewsUpdate";
 import ManageOrder from "./modules/admin/order/ManageOrder";
 import OrderDetail from "./modules/admin/order/OrderDetail";
 import ManagePublisher from "./modules/admin/publisher/ManagePublisher";
@@ -34,6 +38,7 @@ import AccountInfo from "./modules/client/AccountInfo";
 import AccountOrder from "./modules/client/AccountOrder";
 import AddAccountAddress from "./modules/client/AddAccountAddress";
 import DashBoardClient from "./modules/client/DashBoardClient";
+import Notification from "./modules/client/Notification";
 import BookDetailPage from "./pages/BookDetailPage";
 import BookPageEN from "./pages/BookPageEN";
 import BookPageVI from "./pages/BookPageVI";
@@ -82,6 +87,10 @@ function App() {
               element={<AccountInfo></AccountInfo>}
             ></Route>
             <Route
+              path="/account-notification"
+              element={<Notification></Notification>}
+            ></Route>
+            <Route
               path="/new/account-address"
               element={<AddAccountAddress></AddAccountAddress>}
             ></Route>
@@ -95,6 +104,7 @@ function App() {
             ></Route>
           </Route>
           <Route path="/cart" element={<CartPage></CartPage>}></Route>
+
           <Route
             path="/flash-sale"
             element={<FlashSalePage></FlashSalePage>}
@@ -132,6 +142,18 @@ function App() {
           <Route
             element={<BookAddNew></BookAddNew>}
             path="/manage/add-book"
+          ></Route>
+          <Route
+            path="/manage/add-news"
+            element={<NewsAddNew></NewsAddNew>}
+          ></Route>
+          <Route
+            path="/manage/news"
+            element={<ManageNews></ManageNews>}
+          ></Route>
+          <Route
+            path="/manage/update-news"
+            element={<NewsUpdate></NewsUpdate>}
           ></Route>
           <Route
             element={<BookUpdate></BookUpdate>}
@@ -228,6 +250,10 @@ function App() {
           <Route
             element={<ManageComment></ManageComment>}
             path="/manage/comment"
+          ></Route>
+          <Route
+            element={<ViewBookComment></ViewBookComment>}
+            path="/manage/comment-book"
           ></Route>
           <Route
             element={<GenresAddNew></GenresAddNew>}

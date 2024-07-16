@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { addToCart } from "../../redux/cart/slice";
 import { formatNumber } from "../../utils/function";
 import Button from "../button/Button";
-const BookCard = ({ book, isCard, className = "" }) => {
+const BookCard = ({ book, isCard, isSold = false, className = "" }) => {
   const dispatch = useDispatch();
   const handleAddtoCart = () => {
     dispatch(addToCart({ ...book, quantity: 1 }));
@@ -44,8 +44,8 @@ const BookCard = ({ book, isCard, className = "" }) => {
         <h3 className="mb-2 text-sm line-through">
           {formatNumber(book?.price)} đ
         </h3>
-        {book?.sold ? (
-          <div className="relative h-4 mt-2 text-center bg-red-200 rounded-full dark:bg-gray-700">
+        {isSold ? (
+          <div className="relative hidden h-4 mt-2 mb-2 text-center bg-red-200 rounded-full lg:block dark:bg-gray-700">
             <div
               className="absolute inset-0 h-full bg-red-500 rounded-full z-5"
               style={{ width: (book?.sold / book?.stock) * 100 }}

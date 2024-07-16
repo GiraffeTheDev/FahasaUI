@@ -4,7 +4,13 @@ import EyeCloseIcon from "../icon/EyeCloseIcon";
 import EyeIcon from "../icon/EyeIcon";
 import Input from "./Input";
 
-const InputPassword = ({ control, error, name = "password", className }) => {
+const InputPassword = ({
+  control,
+  error,
+  name = "password",
+  className,
+  disabled,
+}) => {
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -15,6 +21,7 @@ const InputPassword = ({ control, error, name = "password", className }) => {
       control={control}
       error={error}
       className={className}
+      disabled={disabled}
     >
       {toggle ? (
         <EyeIcon onClick={() => setToggle(false)}></EyeIcon>

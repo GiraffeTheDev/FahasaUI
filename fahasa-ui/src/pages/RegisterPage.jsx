@@ -99,7 +99,7 @@ const RegisterPage = () => {
   const handleVerifyOTP = async (values) => {
     try {
       const response = await verifyOTP(values);
-      console.log(response);
+
       if (!response.data.error) {
         setStep(3);
         setButtonDisabled(false);
@@ -131,7 +131,7 @@ const RegisterPage = () => {
   }, [watchOTP, handleSubmit]);
   return (
     <div className="w-full py-10 mt-5 bg-white rounded-lg">
-      <div className="max-w-[400px] mx-auto">
+      <div className="max-w-[300px] md:max-w-[400px] mx-auto">
         <NavigationBar menu={navi} className="max-w-[300px]"></NavigationBar>
         <form
           onSubmit={handleSubmit(
@@ -192,7 +192,9 @@ const RegisterPage = () => {
           <Button
             type="submit"
             kind={"primary"}
-            className={`w-full ${buttonDisabled ? "opacity-[0.5]" : ""}`}
+            className={`md:w-full w-[80%] mx-auto ${
+              buttonDisabled ? "opacity-[0.5]" : ""
+            }`}
             disabled={buttonDisabled}
           >
             Đăng kí

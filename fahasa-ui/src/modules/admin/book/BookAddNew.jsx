@@ -30,13 +30,12 @@ const schema = yup.object({
   price: yup.string().required("Nhập vào giá sản phẩm"),
   discount: yup.string().required("Nhập vào phần trăm giảm giá"),
   page: yup.string().required("Nhập vào số trang sách"),
-  chapter: yup.string().required("Nhập vào số chương"),
   image: yup.string().required("Chọn hình ảnh cho sản phẩm"),
-  id_category: yup.string().required("Nhập vào danh mục"),
-  id_supplier: yup.string().required("Nhập vào nhà cung cấp"),
-  id_author: yup.string().required("Nhập vào tác giả"),
-  id_genres: yup.string().required("Nhập vào thể loại"),
-  id_publisher: yup.string().required("Nhập vào nhà xuất bản"),
+  category_id: yup.number().required("Nhập vào danh mục"),
+  supplier_id: yup.number().required("Nhập vào nhà cung cấp"),
+  author_id: yup.number().required("Nhập vào tác giả"),
+  genres_id: yup.number().required("Nhập vào thể loại"),
+  publisher_id: yup.number().required("Nhập vào nhà xuất bản"),
   description: yup.string().required("Nhập vào mô tả sản phẩm"),
 });
 const BookAddNew = () => {
@@ -64,9 +63,10 @@ const BookAddNew = () => {
   const { handleSelectImage, image } = useImageUpload(setValue);
   const navigate = useNavigate();
   const handleAddBook = async (value) => {
-    setIsSubmitting(true);
     try {
+      setIsSubmitting(true);
       const response = await create(value);
+      console.log(response);
       if (!response.data.error) {
         setIsSubmitting(false);
         Swal.fire({
@@ -119,7 +119,7 @@ const BookAddNew = () => {
     setValue("publisher_id", item.id);
     setSelectPublisher(item.name);
   };
-  console.log(errors);
+
   return (
     <>
       <div className="max-w-2xl px-4 py-8 mx-auto lg:py-16">
@@ -198,13 +198,6 @@ const BookAddNew = () => {
                 control={control}
                 placeholder="Nhập vào số chương"
               ></Input>
-              {errors?.chapter ? (
-                <p className="text-sm text-red-500">
-                  {errors?.chapter?.message}
-                </p>
-              ) : (
-                ""
-              )}
             </FormGroup>
             <FormGroup>
               <Label htmlFor="sale">Giảm giá</Label>
@@ -236,9 +229,9 @@ const BookAddNew = () => {
                       ))}
                   </List>
                 </DropDown>
-                {errors?.id_category ? (
+                {errors?.category_id ? (
                   <p className="text-sm text-red-500">
-                    {errors?.id_category?.message}
+                    {errors?.category_id?.message}
                   </p>
                 ) : (
                   ""
@@ -264,9 +257,9 @@ const BookAddNew = () => {
                       ))}
                   </List>
                 </DropDown>
-                {errors?.id_author ? (
+                {errors?.author_id ? (
                   <p className="text-sm text-red-500">
-                    {errors?.id_author?.message}
+                    {errors?.author_id?.message}
                   </p>
                 ) : (
                   ""
@@ -294,9 +287,9 @@ const BookAddNew = () => {
                       ))}
                   </List>
                 </DropDown>
-                {errors?.id_genres ? (
+                {errors?.genres_id ? (
                   <p className="text-sm text-red-500">
-                    {errors?.id_genres?.message}
+                    {errors?.genres_id?.message}
                   </p>
                 ) : (
                   ""
@@ -323,9 +316,9 @@ const BookAddNew = () => {
                       ))}
                   </List>
                 </DropDown>
-                {errors?.id_supplier ? (
+                {errors?.supplier_id ? (
                   <p className="text-sm text-red-500">
-                    {errors?.id_supplier?.message}
+                    {errors?.supplier_id?.message}
                   </p>
                 ) : (
                   ""
@@ -357,9 +350,9 @@ const BookAddNew = () => {
                       ))}
                   </List>
                 </DropDown>
-                {errors?.id_publisher ? (
+                {errors?.publisher_id ? (
                   <p className="text-sm text-red-500">
-                    {errors?.id_publisher?.message}
+                    {errors?.publisher_id?.message}
                   </p>
                 ) : (
                   ""

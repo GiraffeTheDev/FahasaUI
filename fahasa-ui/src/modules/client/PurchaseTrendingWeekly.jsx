@@ -22,8 +22,8 @@ const PurchaseTrendingWeekly = () => {
       <div className="px-5 py-5 text-white bg-black rounded-tl-lg rounded-tr-lg">
         <h1>Bảng xếp hạng bán chạy tuần</h1>
       </div>
-      <div className="flex items-start py-5 bg-white rounded-bl-lg rounded-br-lg">
-        <div className="flex flex-col pr-3 basis-[40%] gap-y-5">
+      <div className="flex flex-col items-start py-5 bg-white rounded-bl-lg rounded-br-lg lg:flex-row">
+        <div className="flex flex-col pr-3 w-full md:basis-[40%] gap-y-5">
           {book.length > 0 &&
             book.slice(0, 5).map((item) => (
               <div
@@ -51,8 +51,9 @@ const PurchaseTrendingWeekly = () => {
               </div>
             ))}
         </div>
-        <div className="w-[1px] h-[600px] bg-gray3 basis-[2px]"></div>
-        <div className="basis-59% flex-shrink-0">
+        <div className="hidden lg:block w-[1px] md:h-[600px] bg-gray3 basis-[2px]"></div>
+        <div className="h-[1px] bg-gray w-full mt-5 mb-5 lg:hidden"></div>
+        <div className="hidden md:block basis-[59%] flex-shrink-0 pr-5">
           {hoveredBook && (
             <>
               <div className="flex items-start gap-x-2">
@@ -92,7 +93,7 @@ const PurchaseTrendingWeekly = () => {
                     ? hoveredBook.Book.description
                     : "",
                 }}
-                className="truncated-text px-5 mt-5 text-sm max-w-[800px]"
+                className="truncated-text px-5 mt-5 text-sm max-w-[800px] text-justify"
               ></div>
             </>
           )}

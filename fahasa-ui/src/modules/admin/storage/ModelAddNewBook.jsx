@@ -15,6 +15,7 @@ const ModelAddNewBook = ({ show, handleClose, id }) => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -30,7 +31,6 @@ const ModelAddNewBook = ({ show, handleClose, id }) => {
   }, [id]);
   const handleUpdateStock = async (value) => {
     try {
-      console.log(value);
       const response = await updateStockBook({ ...value, id: id });
       if (!response.data.error) {
         Swal.fire({

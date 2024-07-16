@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 import { getAllBook, getAllBookSearch, removeBook } from "../../../api/product";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
@@ -38,13 +39,30 @@ const BookTable = () => {
 
   const handleRemove = async (id) => {
     try {
-      const response = await removeBook(id);
-      if (!response.data.error) {
-        toast(response.data.message);
-        const books = await getAllBook();
-        setBooks(books.data.data);
-      }
+      Swal.fire({
+        title: "Xác nhận thanh toán",
+        text: "Bạn có chắc chắn muốn thanh toán với Paypal",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#C40C0C",
+        cancelButtonColor: "#7EA1FF",
+        cancelButtonText: "Hủy",
+        confirmButtonText: "Xác nhận",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const response = await removeBook(id);
+          if (!response.data.error) {
+            toast(response.data.message);
+            const books = await getAllBook();
+            setBooks(books.data.data);
+          }
+        }
+      });
     } catch (error) {
+      Swal.fire({
+        title: "Xóa thất bại",
+        icon: "error",
+      });
       console.log(error);
     }
   };

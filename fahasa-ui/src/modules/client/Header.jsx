@@ -1,9 +1,9 @@
-import MenuIcon from "@mui/icons-material/Menu";
-
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getAllCategoryEn, getAllCategoryVi } from "../../api/category";
+import Button from "../../components/button/Button";
+import Menu from "../../components/icon/Menu";
 import Search from "../../components/input/Search";
 import { headerIconUser, headerIcons } from "../../utils/common";
 const title = [
@@ -38,24 +38,24 @@ const Header = () => {
     };
     fetchCategories();
   }, []);
+  const { items } = useSelector((state) => state.cart);
   return (
     <div className="relative w-full bg-white">
-      <div className="w-[1250px] mx-auto flex items-center py-2 bg-white gap-x-5">
-        <Link to={"/"}>
-          <img
-            src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/fahasa-logo.png"
-            alt="logo"
-            className="w-[250px] h-12"
-          />
-        </Link>
-
-        <MenuIcon onMouseEnter={handleHover} />
-
+      <div className="lg:w-[1250px] w-full mx-auto items-start flex flex-col lg:flex-row lg:items-center py-2 bg-primary lg:bg-white gap-x-5">
+        <div className="flex items-center justify-center w-full lg:w-[250px] lg:block">
+          <Link to={"/"}>
+            <img
+              src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/fahasa-logo.png"
+              alt="logo"
+              className="lg:w-[250px] h-12 w-[150px] object-contain"
+            />
+          </Link>
+        </div>
         {hover && (
           <div
             onMouseEnter={handleHover}
             onMouseLeave={handleUnHover}
-            className="transition-all flex items-start fixed z-50 bg-white rounded-lg shadow-md h-[400px] w-[1250px] top-[120px] px-5 py-3"
+            className="transition-all flex items-start fixed z-50 bg-white rounded-lg shadow-md mx-auto h-[400px] w-[1250px] top-[120px] px-5 py-3"
           >
             <div className="basis-[23%]">
               <span className="text-2xl font-semibold text-gray2">
@@ -66,7 +66,6 @@ const Header = () => {
                   <Link
                     key={item.id}
                     onMouseEnter={() => setHoveredItem(item.id)}
-                    // onMouseLeave={() => setHoveredItem(null)}
                     className={`px-3 py-2 rounded-lg ${
                       hoveredItem === item.id ? "bg-gray4" : ""
                     }`}
@@ -76,7 +75,7 @@ const Header = () => {
                   </Link>
                 ))}
                 <h1
-                  onMouseEnter={() => setHoveredItem(null)}
+                  onMouseEnter={() => setHoveredItem(1)}
                   className="opacity-0"
                 >
                   vanh
@@ -176,18 +175,42 @@ const Header = () => {
             </div>
           </div>
         )}
+        <div className="flex items-center pb-3 gap-x-5 lg:pb-0">
+          <div onMouseEnter={handleHover}>
+            <Menu />
+          </div>
 
-        <Search />
+          <div className="flex items-center gap-x-5">
+            <Search />
 
-        <div className="flex items-center justify-end flex-1 gap-x-8">
-          {menu.map((item) => (
-            <Link key={item.id} to={item.to}>
-              <div className="flex flex-col items-center">
-                {item.icon}
-                <span>{item.title}</span>
+            {user?.isAdmin === 1 ? (
+              <Button href="/dashboard" kind="semi" type="button">
+                Đi tới trang quản lý
+              </Button>
+            ) : (
+              <div className="flex items-center justify-end flex-1 gap-x-2 md:gap-x-8">
+                {menu.map((item, index) => (
+                  <Link key={item.id} to={item.to}>
+                    <div
+                      className={`flex flex-col items-center ${
+                        index === 0 ? "hidden lg:flex" : ""
+                      } ${index === 1 ? "relative" : ""}`}
+                    >
+                      {item.icon}
+                      <span className="hidden lg:block">{item.title}</span>
+                      {index === 1 ? (
+                        <span className="absolute top-0 right-0 lg:right-[22px] flex items-center justify-center w-3 h-3 p-1 text-xs text-white translate-x-1/2 rounded-lg bg-success">
+                          {items.length}
+                        </span>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </Link>
+                ))}
               </div>
-            </Link>
-          ))}
+            )}
+          </div>
         </div>
       </div>
     </div>

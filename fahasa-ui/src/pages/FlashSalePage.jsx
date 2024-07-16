@@ -7,12 +7,8 @@ import { getAllBookFlashSale } from "../api/product";
 import BookCard from "../components/bookcard/BookCard";
 import usePagination from "../hooks/usePagination";
 import { cateFlashSale } from "../utils/common";
-const itemsPerPage = 10;
 const FlashSalePage = () => {
   const { control, handleSubmit } = useForm({ mode: "onChange" });
-  const handleChangeCate = (value) => {
-    console.log(value);
-  };
   const [book, setBook] = useState([]);
   const { pageCount, handlePageClick, currentItems } = usePagination(book, 30);
   useEffect(() => {
@@ -24,7 +20,7 @@ const FlashSalePage = () => {
   }, []);
   return (
     <div>
-      <nav className="flex mt-5" aria-label="Breadcrumb">
+      <nav className="hidden mt-5 lg:flex" aria-label="Breadcrumb">
         <ol className="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
           <Link className="inline-flex items-center" to={"/"}>
             <a
@@ -71,18 +67,24 @@ const FlashSalePage = () => {
         </ol>
       </nav>
 
-      <div className="mt-5 rounded-lg">
+      <div className="hidden mt-5 rounded-lg md:block">
         <img
           src="https://cdn0.fahasa.com/media/wysiwyg/Thang-05-2024/FlashSale_SieeuSale_Week2_T524_Web_1920x400.jpg"
           alt=""
           className="object-cover w-full h-full rounded-lg"
         />
       </div>
+      <div className="mt-5 md:hidden">
+        <img
+          src="https://cdn0.fahasa.com/media/wysiwyg/Thang-07-2024/flashsalenho072024.jpg"
+          alt=""
+        />
+      </div>
       <div
         style={{
           background: `url("https://cdn0.fahasa.com/media/fahasa_web_image/banner.jpg")`,
         }}
-        className="flex items-center justify-center w-full h-full py-5 mt-5 !rounded-lg"
+        className="flex items-center justify-center w-full h-full py-5 mt-2 md:mt-5 !rounded-lg"
       >
         <img
           src="https://cdn0.fahasa.com/media/fahasa_web_image/thunder.jpg"
@@ -92,8 +94,13 @@ const FlashSalePage = () => {
       </div>
       <form action="" onSubmit={handleSubmit(handleChangeCate)}>
         <div className="flex items-center justify-between mt-5">
-          {cateFlashSale.map((item) => (
-            <div key={item.id} className="w-[120px] h-[120px] rounded-lg">
+          {cateFlashSale.map((item, index) => (
+            <div
+              key={item.id}
+              className={`w-[120px] h-[120px] rounded-lg block ${
+                index >= 3 && "hidden"
+              } md:block md:${index >= 6 && "hidden"} lg:block`}
+            >
               <div className="flex flex-col items-center h-full py-3 text-center bg-white rounded-lg">
                 <img
                   src={item.url}
@@ -106,7 +113,7 @@ const FlashSalePage = () => {
           ))}
         </div>
       </form>
-      <div className="grid grid-cols-5 gap-5 mt-5">
+      <div className="grid grid-cols-2 gap-2 mt-5 md:gap-5 md:grid-cols-4 lg:grid-cols-5">
         {currentItems.map((item) => (
           <BookCard key={uuidv4()} isCard={true} book={item}></BookCard>
         ))}

@@ -8,13 +8,11 @@ const Footer = () => {
   const { control, handleSubmit } = useForm({
     mode: "onSubmit",
   });
-  const handleSendMail = (value) => {
-    console.log(value);
-  };
+  const handleSendMail = (value) => {};
   return (
     <div>
-      <div className="rounded-tl-lg rounded-tr-lg bg-[#9fa7ab]">
-        <div className="flex items-center py-5 max-w-[900px] mx-auto justify-between gap-x-5">
+      <div className="lg:rounded-tl-lg lg:rounded-tr-lg bg-[#9fa7ab] hidden md:block">
+        <div className="ml-5 items-start flex-col gap-y-1 flex lg:flex lg:flex-row lg:items-center py-5 lg:max-w-[900px] mx-auto justify-between gap-x-5">
           <div className="flex items-center gap-x-5">
             <span>
               <svg
@@ -61,8 +59,8 @@ const Footer = () => {
         </div>
       </div>
       <div className="px-5 py-10 bg-white">
-        <div className="flex items-start ">
-          <div className="max-w-[400px]">
+        <div className="flex flex-col items-start lg:flex gap-y-5 lg:flex-row">
+          <div className="lg:max-w-[400px] w-full">
             <div>
               <img
                 src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/logo.png"
@@ -231,7 +229,7 @@ const Footer = () => {
                 </ul>
               </div>
             </div>
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-4 gap-6 mt-5">
               {suppliers.map((item) => (
                 <div
                   key={item.id}

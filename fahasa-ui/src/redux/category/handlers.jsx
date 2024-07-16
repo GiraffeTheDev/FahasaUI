@@ -20,7 +20,7 @@ export const handleGetAllCategory = createAsyncThunk(
   "getAllCategory",
   async (value) => {
     const response = await getAllCategory(value);
-    console.log("resss", response);
+
     if (response.data.data) {
       toast(response.data.message);
     }

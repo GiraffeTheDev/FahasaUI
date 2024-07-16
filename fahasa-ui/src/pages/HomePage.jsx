@@ -25,32 +25,19 @@ const suppliers = [
 ];
 const suppliers1 = [
   {
+    id: 3,
+    name: "Đinh Tị",
+  },
+  {
     id: 1,
-    name: "Cty TNHH More Production Vietnam",
+    name: "MCBooks",
   },
   {
     id: 2,
     name: "AZ Việt Nam",
   },
-  {
-    id: 3,
-    name: "Penguin Books",
-  },
 ];
-const suppliers2 = [
-  {
-    id: 1,
-    name: "Penguin Books",
-  },
-  {
-    id: 2,
-    name: "FIRST NEWS",
-  },
-  {
-    id: 3,
-    name: "SkyBooks",
-  },
-];
+
 const cateforeign = [
   {
     id: 9,
@@ -67,7 +54,6 @@ const cateforeign = [
 ];
 const HomePage = () => {
   const [books, setBooks] = useState([]);
-
   useEffect(() => {
     const fetch = async () => {
       const response = await getBookFlashSaleHightLight();
@@ -78,28 +64,28 @@ const HomePage = () => {
 
   return (
     <div className="mt-4">
-      <div className="flex w-full  gap-x-5 h-[350px]">
-        <div className="w-[800px] h-full">
+      <div className="flex w-full  gap-x-5 lg:h-[350px] h-[190px]">
+        <div className="lg:max-w-[850px] lg:h-[350px] h-[190px] w-full lg:basis-[70%] md:h-[250px] md:block">
           <BannerSwipper></BannerSwipper>
         </div>
-        <div className="flex flex-col w-full h-full gap-y-2">
+        <div className="flex-col hidden w-full lg:h-[350px] lg:flex justify-between lg:basis-[30%] ">
           <div className="w-full rounded-lg">
             <img
-              src="https://cdn0.fahasa.com/media/wysiwyg/Thang-06-2024/Doitac_0624_Sub_392x156.jpg"
+              src="https://cdn0.fahasa.com/media/wysiwyg/Thang-07-2024/DoiTac_SubBanner_392x156.jpg"
               alt=""
-              className="w-full rounded-lg"
+              className="w-full h-[166px] rounded-lg"
             />
           </div>
           <div className="w-full rounded-lg">
             <img
-              src="https://cdn0.fahasa.com/media/wysiwyg/Thang-06-2024/Sub_392x156.jpg"
+              src="https://cdn0.fahasa.com/media/wysiwyg/Thang-07-2024/Trangthanhtoankhongtienmat_0724_Subbanner_392x156.png"
               alt=""
-              className="w-full rounded-lg"
+              className="w-full h-[166px] rounded-lg"
             />
           </div>
         </div>
       </div>
-      <div className="flex items-center mt-5 gap-x-2">
+      <div className="items-center hidden w-full mt-5 md:flex gap-x-2 md:mt-[70px] lg:mt-5">
         {bannerSmall.length > 0 &&
           bannerSmall.map((item) => (
             <Link key={item.id} className="rounded-lg">
@@ -116,7 +102,7 @@ const HomePage = () => {
           backgroundImage:
             'url("https://cdn0.fahasa.com/media/fahasa_web_image/flash_sale_background_image.jpg")',
         }}
-        className="p-5 mt-5 rounded-xl"
+        className="p-5 mt-2 md:mt-5 rounded-xl"
       >
         <div className="flex justify-between px-2 py-5 bg-white rounded-lg">
           <img
@@ -128,10 +114,16 @@ const HomePage = () => {
             Xem tất cả {">"}
           </Link>
         </div>
-        <div className="grid grid-cols-5 mt-5 gap-x-5">
-          {books.map((item) => (
-            <Link key={item.id} to={`/detail-book?id=${item.id}`}>
-              <BookCard book={item}></BookCard>
+        <div className="grid grid-cols-2 mt-5 gap-x-5 md:grid-cols-4 lg:grid-cols-5">
+          {books.slice(0, 5).map((item, index) => (
+            <Link
+              key={item.id}
+              to={`/detail-book?id=${item.id}`}
+              className={`block ${index >= 2 ? "hidden" : ""} md:block ${
+                index >= 4 ? "md:hidden" : ""
+              } lg:block`}
+            >
+              <BookCard book={item} isSold={true}></BookCard>
             </Link>
           ))}
         </div>
@@ -152,9 +144,7 @@ const HomePage = () => {
       <div>
         <BrandHightlight header={false} title={suppliers1}></BrandHightlight>
       </div>
-      <div>
-        <BrandHightlight header={false} title={suppliers2}></BrandHightlight>
-      </div>
+
       <div>
         <ForeignBook title={cateforeign}></ForeignBook>
       </div>

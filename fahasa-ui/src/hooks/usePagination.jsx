@@ -8,6 +8,7 @@ export default function usePagination(inputData = [], itemsPerPage = 0) {
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % inputData.length;
     setItemOffset(newOffset);
+    window.scroll(0, 50);
   };
   return {
     pageCount,

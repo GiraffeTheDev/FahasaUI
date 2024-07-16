@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { getAllOrderStatusForUser, updateOrderStatus } from "../../api/order";
 import Button from "../../components/button/Button";
+import Comment from "../../components/icon/Comment";
 import { naviOrder } from "../../utils/constant";
 import { formatNumber } from "../../utils/function";
 
@@ -15,29 +17,23 @@ const AccountOrder = () => {
     setActive(item);
     setQuery(item);
   };
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        const response = await getAllOrderStatusForUser({
-          order_status: "Chờ xác nhận",
-          user_id: user.id,
-        });
 
-        setOrder(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetch();
-  }, [user.id]);
   useEffect(() => {
     const fetch = async () => {
       try {
-        const response = await getAllOrderStatusForUser({
-          order_status: query,
-          user_id: user.id,
-        });
-        setOrder(response.data.data);
+        if (!query) {
+          const response = await getAllOrderStatusForUser({
+            order_status: "Chờ xác nhận",
+            user_id: user.id,
+          });
+          setOrder(response.data.data);
+        } else {
+          const response = await getAllOrderStatusForUser({
+            order_status: query,
+            user_id: user.id,
+          });
+          setOrder(response.data.data);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -69,6 +65,7 @@ const AccountOrder = () => {
       console.log(error);
     }
   };
+
   return (
     <div className="w-full min-h-[500px]">
       <ul className="flex items-center justify-between gap-x-5">
@@ -108,8 +105,18 @@ const AccountOrder = () => {
                           className="object-contain w-full h-full"
                         />
                       </div>
-                      <h1>{detail?.Book?.name}</h1>
+                      <h1 className="basis-[50%]">{detail?.Book?.name}</h1>
                       <span>{`x${detail.quantity}`}</span>
+                      {item.order_status === "Đã giao" ? (
+                        <Link
+                          to={`/detail-book?id=${detail.book_id}`}
+                          className="flex justify-end pb-5 mt-2"
+                        >
+                          <Comment></Comment>
+                        </Link>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   ))}
               </div>

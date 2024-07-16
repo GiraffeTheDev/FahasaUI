@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { v4 as uuidv4 } from "uuid";
+
+import { deleteComment, getAllCommentWithProduct } from "../api/comment";
+import { getPurchasedBook } from "../api/order";
 import { getBooksWithCategoryVi, getOne } from "../api/product";
-import BookCard from "../components/bookcard/BookCard";
 import Button from "../components/button/Button";
+import Like from "../components/icon/Like";
+import Pen from "../components/icon/Pen";
+import Warning from "../components/icon/Warning";
+import StarComponent from "../components/star/StarComponent";
+import useToggleValue from "../hooks/useToggleValue";
+import BookDescription from "../modules/client/book/BookDescription";
+import BookRecommend from "../modules/client/book/BookRecommend";
+import SoldOut from "../modules/client/book/SoldOut";
+import Breadcrumb from "../modules/client/Breadcrumb";
+import ModelComment from "../modules/client/ModelComment";
 import { addToCart } from "../redux/cart/slice";
-import { formatNumber } from "../utils/function";
+import { formartTime, formatNumber } from "../utils/function";
 const BookDetailPage = () => {
   const [book, setBook] = useState({});
   const [params] = useSearchParams();
@@ -16,6 +26,24 @@ const BookDetailPage = () => {
   const [sameBook, setSameBook] = useState([]);
   const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
+  const [comment, setComment] = useState([]);
+  const { user } = useSelector((state) => state.auth);
+  const { value, handleToggleValue } = useToggleValue();
+  const [purchased, setPurchased] = useState(null);
+  const handleDeleteComment = async (id) => {
+    try {
+      const response = await deleteComment(id);
+      if (!response.data.error) {
+        const comment = await getAllCommentWithProduct(id);
+        Swal.fire({
+          title: "Xóa thành công",
+        });
+        setComment(comment.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     const fetch = async () => {
       const response = await getOne(id);
@@ -23,12 +51,22 @@ const BookDetailPage = () => {
       const bookCateogory = await getBooksWithCategoryVi(
         book.category_id ? book.category_id : book.category_id
       );
+      const commentData = await getAllCommentWithProduct(id);
+      const data = {
+        user_id: user?.id,
+        book_id: id,
+      };
+      const purbook = await getPurchasedBook(data);
+      setPurchased(purbook?.data?.purchased);
+      setComment(commentData.data.data);
       setSameBook(bookCateogory.data.data);
     };
     fetch();
-  }, [id, book.category_id]);
+  }, [id, book.category_id, value, user?.id]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = book.name;
   }, [book]);
   const handleAddToCart = () => {
     if (dispatch(addToCart({ ...book, quantity }))) {
@@ -39,9 +77,7 @@ const BookDetailPage = () => {
       });
     }
   };
-  useEffect(() => {
-    document.title = book.name;
-  }, [book]);
+
   if (!book) return null;
   const {
     image,
@@ -53,21 +89,67 @@ const BookDetailPage = () => {
     Author,
     Supplier,
     Publisher,
+    Category,
+    Genres,
   } = book;
-
   return (
     <>
       {book ? (
-        <>
-          {" "}
-          <div className="flex px-5 py-3 mt-5 bg-white rounded-lg gap-x-[80px]">
-            <div className=" w-[400px]">
+        <div className="relative">
+          <div className="fixed bottom-0 z-50 flex items-center justify-center w-full lg:hidden">
+            <div className="px-5 flex items-center w-full md:w-[70%] py-5 mx-auto bg-white shadow-xl">
+              <div className="flex items-center px-2 py-2 gap-x-2 max-w-[6rem] justify-center border-gray2 border ">
+                <span
+                  onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
+                  className="cursor-pointer "
+                >
+                  -
+                </span>
+                <span className="px-2 select-none">{quantity}</span>
+                <span
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="cursor-pointer "
+                >
+                  +
+                </span>
+              </div>
+              <Button
+                type="button"
+                kind={"semi"}
+                onClick={handleAddToCart}
+                disabled={book.stock <= 0 ? true : false}
+                className={`rounded-none flex-shrink-0 ${
+                  book.stock <= 0 ? "opacity-[0.5]" : ""
+                }`}
+              >
+                Thêm vào giỏ hàng
+              </Button>
+              <Button
+                type="button"
+                kind={"primary"}
+                disabled={book.stock <= 0 ? true : false}
+                className={`flex-1 rounded-none flex-shrink-0 ${
+                  book.stock <= 0 ? "opacity-[0.5]" : ""
+                }`}
+                onClick={handleAddToCart}
+              >
+                Mua
+              </Button>
+            </div>
+          </div>
+          <Breadcrumb
+            type={Category?.type}
+            category={Category?.name}
+            genres={Genres?.name}
+          ></Breadcrumb>
+          <div className="flex lg:flex-row flex-col px-5 py-3 mt-5 bg-white rounded-lg gap-x-[80px]">
+            <div className="w-full flex justify-center lg:w-[400px]">
               <img
                 src={image}
                 alt=""
                 className="w-full h-[390px] object-contain"
               />
-              <div className="flex items-center mt-5 gap-x-5">
+              <div className="items-center hidden mt-5 lg:flex gap-x-5">
                 <Button
                   type="button"
                   kind={"semi"}
@@ -88,50 +170,24 @@ const BookDetailPage = () => {
                 </Button>
               </div>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 mt-5 lg:mt-0">
               <h3 className="text-xl font-base">{name}</h3>
-              <div className="flex items-center justify-between max-w-[70%] mt-5">
-                <span>
-                  Nhà cung cấp:{" "}
-                  <span className="text-blue1">{Supplier?.name}</span>
+              <div className="flex items-center justify-between mt-5">
+                <span className="max-w-[70%]">
+                  Nhà cung cấp: {Supplier?.name}
                 </span>
-                <span>
-                  Tác giả: <span className="font-semibold">{Author?.name}</span>
-                </span>
+                <span>Tác giả:{Author?.name}</span>
               </div>
-              <div className="flex items-center max-w-[70%] mt-2 justify-between">
-                <span>
+              <div className="flex items-center justify-between mt-2">
+                <span className="max-w-[70%]">
                   Nhà xuất bản:
-                  <span className="font-semibold">{Publisher?.name}</span>
+                  {Publisher?.name}
                 </span>
-                <span>
-                  Hình thức bìa: <span className="font-semibold">Bìa Mềm</span>
-                </span>
+                <span>Hình thức bìa: Bìa Mềm</span>
               </div>
-              <div className="flex items-center mt-2 gap-x-1">
-                {Array(5)
-                  .fill(0)
-                  .map(() => (
-                    <span key={uuidv4()}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        className="w-4 h-4"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"
-                        />
-                      </svg>
-                    </span>
-                  ))}
-              </div>
+              <StarComponent></StarComponent>
               <div className="flex items-center mt-5 gap-x-3">
-                <span className="text-4xl font-bold text-primary">
+                <span className="text-4xl font-semibold text-primary">
                   {price === undefined
                     ? "un"
                     : formatNumber(price - (price * discount) / 100)}{" "}
@@ -145,7 +201,7 @@ const BookDetailPage = () => {
                 </span>
               </div>
               {book?.stock > 0 ? (
-                <div className="flex items-center mt-2 gap-x-3">
+                <div className="items-center hidden mt-2 lg:flex gap-x-3">
                   <span className="text-lg font-base">Số lượng :</span>
                   <div className="flex items-center px-2 py-1 gap-x-2 max-w-[6rem] justify-center border-gray2 border  rounded-lg ">
                     <span
@@ -166,153 +222,80 @@ const BookDetailPage = () => {
                   </div>
                 </div>
               ) : (
-                <h1 className="flex items-center px-2 py-1 mt-2 bg-primary rounded-lg gap-x-2 max-w-[150px] text-white">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z"
-                    />
-                  </svg>
-                  Sold Out
-                </h1>
+                <SoldOut></SoldOut>
               )}
             </div>
           </div>
-          <div className="px-5 py-5 mt-5 bg-white rounded-lg">
-            <h3 className="mb-5 text-xl font-semibold">Fahasa giới thiệu</h3>
-            <Swiper
-              spaceBetween={10}
-              slidesPerView={5}
-              autoplay
-              className="w-full h-full"
-            >
-              {sameBook.length > 0 &&
-                sameBook.map((item) => (
-                  <SwiperSlide key={uuidv4()} className="rounded-xl">
-                    <Link to={`/detail-book?id=${item.id}`}>
-                      {" "}
-                      <BookCard book={item}></BookCard>
-                    </Link>
-                  </SwiperSlide>
-                ))}
-            </Swiper>
+          <BookRecommend data={sameBook}></BookRecommend>
+          <BookDescription
+            Author={Author}
+            description={description}
+            book={book}
+            page={page}
+            Supplier={Supplier}
+            Publisher={Publisher}
+          ></BookDescription>
+          <div className="flex items-center justify-center p-5 mt-5 bg-white rounded-tl-lg rounded-tr-lg">
+            {purchased ? (
+              <Button
+                kind="semi"
+                type="button"
+                className="flex items-center gap-x-2"
+                onClick={handleToggleValue}
+              >
+                <Pen></Pen>
+                Viết đánh giá
+              </Button>
+            ) : (
+              ""
+            )}
+            <ModelComment
+              show={value}
+              handleClose={handleToggleValue}
+              id={id}
+              user_id={user?.id}
+            ></ModelComment>
           </div>
-          <div className="px-5 py-5 mt-5 bg-white rounded-lg">
-            <h3 className="mb-5 text-xl font-semibold">Thông tin sản phẩm</h3>
-            <div className="">
-              <div className="relative overflow-x-auto">
-                <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" className="px-6 py-3 rounded-s-lg">
-                        Mã hàng
-                      </th>
-                      <td scope="col" className="px-6 py-3">
-                        {book.id}
-                      </td>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="bg-white dark:bg-gray-800">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        Tên nhà cung cấp
-                      </th>
-                      <td className="px-6 py-4"> {Supplier?.name}</td>
-                    </tr>
-                    <tr className="bg-white dark:bg-gray-800">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        Tác giả
-                      </th>
-                      <td className="px-6 py-4">{Author?.name}</td>
-                    </tr>
-                    <tr className="bg-white dark:bg-gray-800">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        NXB
-                      </th>
-                      <td className="px-6 py-4"> NXB Thanh Niên</td>
-                    </tr>
-                    <tr className="bg-white dark:bg-gray-800">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        Trọng lượng
-                      </th>
-                      <td className="px-6 py-4"> 300</td>
-                    </tr>
-                    <tr className="bg-white dark:bg-gray-800">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        Kích Thước Bao Bì
-                      </th>
-                      <td className="px-6 py-4"> 24 x 16 x 0.5 cm</td>
-                    </tr>
-                    <tr className="bg-white dark:bg-gray-800">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        Số trang
-                      </th>
-                      <td className="px-6 py-4">{page}</td>
-                    </tr>
-                    <tr className="bg-white dark:bg-gray-800">
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        Hình thức
-                      </th>
-                      <td className="px-6 py-4"> Bìa mềm</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <p>
-                Giá sản phẩm trên Fahasa.com đã bao gồm thuế theo luật hiện
-                hành. Bên cạnh đó, tuỳ vào loại sản phẩm, hình thức và địa chỉ
-                giao hàng mà có thể phát sinh thêm chi phí khác như Phụ phí đóng
-                gói, phí vận chuyển, phụ phí hàng cồng kềnh,...
-              </p>
-              <span className="text-primary">
-                Chính sách khuyến mãi trên Fahasa.com không áp dụng cho Hệ thống
-                Nhà sách Fahasa trên toàn quốc
-              </span>
-            </div>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: description ? description : "",
-              }}
-              className="mt-5 text-sm"
-            ></div>
+          <div className="h-[1px] w-full bg-gray1"></div>
+          <div className="flex flex-col p-5 bg-white rounded-bl-lg rounded-br-lg gap-y-3">
+            {comment.length > 0
+              ? comment.map((item) => (
+                  <div key={item.id} className="flex gap-x-3">
+                    <div className="basis-[20%]">
+                      <h1>{item?.user_id === user?.id ? "Tôi" : item?.name}</h1>
+                      <span className="text-xs">
+                        {formartTime(item?.createdAt)}
+                      </span>
+                    </div>
+                    <div className="flex-1">
+                      <StarComponent></StarComponent>
+                      <p className="mt-2 text-base">{item?.content}</p>
+                      <div className="flex items-center mt-5 text-xs gap-x-5">
+                        <div className="flex items-center gap-x-2">
+                          <Like></Like>
+                          <span>Thích (7)</span>
+                        </div>
+                        <div className="flex items-center gap-x-2">
+                          <Warning></Warning>
+                          <span>Báo cáo</span>
+                        </div>
+                        <span
+                          className="cursor-pointer text-primary"
+                          onClick={() => handleDeleteComment(item.id)}
+                        >
+                          {item.user_id === user?.id
+                            ? "Xóa bình luận của bạn"
+                            : ""}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              : "Chưa có bình luận nào về sản phẩm này"}
           </div>
-        </>
+        </div>
       ) : (
-        "khong co du lieu"
+        "Không có dữ liệu"
       )}
     </>
   );

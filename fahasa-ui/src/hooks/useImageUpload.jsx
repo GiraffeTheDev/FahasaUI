@@ -16,14 +16,13 @@ export function useImageUpload(setValue) {
     uploadTask.on(
       "state_changed",
       (snapshot) => {
-        console.log("oke");
+        console.log();
       },
       (error) => {
-        console.log(error);
+        console.log();
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log("File available at", downloadURL);
           setImage(downloadURL);
           setValue("image", downloadURL);
         });

@@ -62,7 +62,7 @@ const LoginPage = () => {
   }, [errors]);
   return (
     <div className="w-full py-10 mt-5 bg-white rounded-lg">
-      <div className="max-w-[400px] mx-auto">
+      <div className="max-w-[300px] md:max-w-[400px] mx-auto">
         <NavigationBar menu={navi} className="max-w-[300px]"></NavigationBar>
         <form onSubmit={handleSubmit(handleLogin)} autoComplete="off">
           <FormGroup>
@@ -98,7 +98,9 @@ const LoginPage = () => {
           <Button
             type="submit"
             kind={"primary"}
-            className={`w-full ${isSubmitting ? "opacity-[0.5]" : ""}`}
+            className={`md:w-full mx-auto w-[80%] ${
+              isSubmitting ? "opacity-[0.5]" : ""
+            }`}
             disabled={isSubmitting || isSubmitted}
           >
             {isSubmitting ? <DotSpinner></DotSpinner> : "Đăng nhập"}

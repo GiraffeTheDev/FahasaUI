@@ -70,18 +70,18 @@ const ForeignBook = ({ header = true, title = [] }) => {
             ))}
         </ul>
       </div>
-      <div className="grid grid-cols-5 gap-2 px-5 mt-2">
-        {book &&
-          book.length > 0 &&
-          book.map((item) => (
-            <Link to={`/detail-book?id=${item.id}`} key={item.id}>
-              <BookCard
-                book={item}
-                key={item.id}
-                className="transition-all hover:shadow-lg"
-              ></BookCard>
-            </Link>
-          ))}
+      <div className="grid grid-cols-2 mt-5 gap-x-5 md:grid-cols-4 lg:grid-cols-5">
+        {book.slice(0, 10).map((item, index) => (
+          <Link
+            key={item.id}
+            to={`/detail-book?id=${item.id}`}
+            className={`block ${index >= 2 && "hidden"} md:block md:${
+              index >= 4 && "hidden"
+            } lg:block`}
+          >
+            <BookCard book={item} isSold={false}></BookCard>
+          </Link>
+        ))}
       </div>
       <div className="flex items-center justify-center mt-5">
         <Button type="button" kind={"semi"}>

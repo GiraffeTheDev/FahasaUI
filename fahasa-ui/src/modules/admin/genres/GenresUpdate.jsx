@@ -43,7 +43,6 @@ const GenresUpdate = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await getOne(id);
-      console.log(response);
       reset(response.data.data);
       setSelectCate(
         response.data.data

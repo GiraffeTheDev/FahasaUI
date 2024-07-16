@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAll } from "../../../api/user";
+import ActionView from "../../../components/action/ActionView";
 import Loading from "../../../components/loading/Loading";
 import Table from "../../../components/table/Table";
 const title = [
@@ -19,6 +20,10 @@ const title = [
   {
     id: 4,
     name: "Chức danh",
+  },
+  {
+    id: 5,
+    name: "Hành động",
   },
 ];
 const UserTable = () => {
@@ -53,20 +58,13 @@ const UserTable = () => {
                   <td>{item.email}</td>
                   <td>{item.phone ? item.phone : "Chưa cập nhật"}</td>
                   <td>{item.isAdmin === 0 ? "Người dùng" : "Quản trị"}</td>
-                  {/* <td className="">
-                    <div className="flex items-center gap-x-3">
-                      <ActionEdit
-                        onClick={() =>
-                          navigate(`/manage/update-user?id=${item.id}`)
-                        }
-                      ></ActionEdit>
-                      <ActionDelete
-                        onClick={() => {
-                          console.log("de");
-                        }}
-                      ></ActionDelete>
-                    </div>
-                  </td> */}
+                  <td className="flex justify-center">
+                    <ActionView
+                      onClick={() =>
+                        navigate(`/manage/update-user?id=${item.id}`)
+                      }
+                    ></ActionView>
+                  </td>
                 </tr>
               ))}
           </tbody>

@@ -1,9 +1,11 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid";
+import * as yup from "yup";
 import { createNewOrder } from "../api/order";
 import { createPayment } from "../api/paypal";
 import { getUserInfor } from "../api/userinfor";
@@ -12,9 +14,20 @@ import Checkbox from "../components/checkbox/Checkbox";
 import Radio from "../components/radio/Radio";
 import { clearCart } from "../redux/cart/slice";
 import { formatNumber } from "../utils/function";
+const schema = yup.object({
+  infor_id: yup.string().required("Chọn địa chỉ nhận hàng"),
+  payment_method: yup.string().required("Chọn phương thức thanh toán"),
+});
 const CheckoutPage = () => {
-  const { control, handleSubmit, watch, setValue } = useForm({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm({
     mode: "onSubmit",
+    resolver: yupResolver(schema),
   });
   const { items } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.auth);
@@ -23,10 +36,9 @@ const CheckoutPage = () => {
       sum + (item.price - (item.price * item.discount) / 100) * item.quantity,
     0
   );
-  const shippingFee = 32000; // Example shipping fee
+  const shippingFee = 32000;
   const totalPrice = total + shippingFee;
   const [infor, setInfor] = useState([]);
-  console.log(totalPrice);
   const navigate = useNavigate();
   useEffect(() => {
     if (items.length <= 0) {
@@ -39,7 +51,7 @@ const CheckoutPage = () => {
   const watchInfor = watch("infor_id");
 
   useEffect(() => {
-    if (user === null) {
+    if (!user) {
       Swal.fire("Bạn phải đăng nhập mới có thể thanh toán đơn hàng");
       navigate("/cart");
     }
@@ -47,11 +59,12 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const response = await getUserInfor(user.id);
+      const response = await getUserInfor(user?.id);
       setInfor(response.data.data);
-      setValue("infor_id", infor.id);
-      setValue("total_price", totalPrice);
+      setValue("infor_id", infor?.id);
+      setValue("total_price", total);
       setValue("shipping_fee", shippingFee);
+      setValue("user_id", user?.id);
       setValue(
         "orderDetails",
         items.map((item) => ({
@@ -62,7 +75,8 @@ const CheckoutPage = () => {
       );
     };
     fetch();
-  }, [infor.id, totalPrice, setValue, items, user.id]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [infor?.id, totalPrice, setValue, items, user?.id]);
   const handleCheckout = async (value) => {
     if (payment === "banking") {
       Swal.fire({
@@ -78,6 +92,7 @@ const CheckoutPage = () => {
         if (result.isConfirmed) {
           const response = await createPayment({
             total: total,
+            user_id: user?.id,
             orderDetails: items.map((item) => ({
               book_id: item.id,
               quantity: item.quantity,
@@ -85,7 +100,7 @@ const CheckoutPage = () => {
               discount: item.discount,
             })),
           });
-          console.log("ré", response);
+
           const data = response.data?.forwardLink;
           window.location.href = data;
         }
@@ -141,6 +156,13 @@ const CheckoutPage = () => {
                 value={item.id}
               >{`${item.user_name} | ${item.address_detail} - Xã ${item.ward} - Huyện ${item.district} - Tỉnh ${item.province}`}</Radio>
             ))}
+            {errors?.infor_id ? (
+              <p className="mt-2 text-sm text-red-500">
+                {errors?.infor_id?.message}
+              </p>
+            ) : (
+              ""
+            )}
             <Link
               to={"/new/account-address"}
               className="flex items-center gap-x-2 "
@@ -211,6 +233,13 @@ const CheckoutPage = () => {
               </svg>
               Thanh toán bằng tiền mặt khi nhận hàng
             </Radio>
+            {errors?.payment_method ? (
+              <p className="mt-2 text-sm text-red-500">
+                {errors?.payment_method?.message}
+              </p>
+            ) : (
+              ""
+            )}
           </div>
         </div>
         <div className="p-5 mt-5 bg-white rounded-lg">
@@ -256,7 +285,7 @@ const CheckoutPage = () => {
             ))}
           </div>
         </div>
-        <div className="p-5 mt-5 bg-white rounded-lg">
+        <div className="fixed bottom-0 z-40 w-[1250px] mx-auto p-5 mt-5 bg-white rounded-lg border border-primary">
           <div className="flex items-center justify-end">
             <div className="flex flex-col items-center gap-y-5">
               <span>Thành tiền : {formatNumber(total)} đ</span>
@@ -275,6 +304,7 @@ const CheckoutPage = () => {
               </span>
             </div>
           </div>
+          <div className="w-full h-[2px] bg-gray3 mt-2"></div>
           <div className="flex items-center justify-between mt-5">
             <div className="flex items-center gap-x-2">
               <Checkbox checked={true} control={control}></Checkbox>

@@ -29,6 +29,12 @@ const getAllOrderStatusForUser = async (query) => {
     query
   );
 };
+const getPurchasedBook = async (data) => {
+  return instance.get(
+    `http://localhost:8008/api/v1/book-purchased?user_id=${data.user_id}&book_id=${data.book_id}`,
+    data
+  );
+};
 export {
   createNewOrder,
   getAllOrder,
@@ -36,6 +42,7 @@ export {
   getCountRevenue,
   getOneOrder,
   getOrderByQuery,
+  getPurchasedBook,
   getRevenuePerMonth,
   updateOrderStatus,
 };

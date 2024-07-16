@@ -17,6 +17,7 @@ const CartPage = () => {
     mode: "onSubmit",
   });
   const { items } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const handleRemove = (id) => {
     dispatch(removeItemFromCart({ id }));
@@ -42,10 +43,30 @@ const CartPage = () => {
   const shippingFee = 32000; // Example shipping fee
   const totalPrice = total + shippingFee;
   return (
-    <div className="mt-5">
-      <h1 className="mb-5 text-xl uppercase">
+    <div className="relative mt-5">
+      <h1 className="mb-2 text-xl uppercase lg:mb-5">
         Giỏ hàng ({items.length} sản phẩm)
       </h1>
+      <div className="fixed bottom-0 z-50 flex items-center justify-center w-full shadow-lg md:shadow-none lg:hidden">
+        <div className="px-5 flex items-center justify-between w-full md:w-[70%] py-5 mx-auto bg-white shadow-xl">
+          <div className="flex flex-col justify-between">
+            <span>Tổng cộng</span>
+            <span className="text-2xl font-semibold text-primary">
+              {formatNumber(totalPrice)} đ
+            </span>
+          </div>
+
+          <Button
+            className={`max-w-[150px] mt-2 ${!user ? "opacity-[0.5]" : ""}`}
+            type="submit"
+            kind={"primary"}
+            href="/checkout"
+            disabled={!user ? true : false}
+          >
+            Thanh toán
+          </Button>
+        </div>
+      </div>
       {items.length <= 0 ? (
         <div className="flex flex-col items-center justify-center w-full px-5 py-5 mt-5 bg-white rounded-lg gap-x-5">
           <img
@@ -63,9 +84,9 @@ const CartPage = () => {
           </Button>
         </div>
       ) : (
-        <div className="flex items-start gap-x-5">
-          <div className="max-w-[63%] flex-grow">
-            <div className="flex items-center justify-between py-2 pl-5 bg-white rounded-lg pr-[100px] ">
+        <div className="flex flex-col-reverse items-start lg:flex-row gap-x-5">
+          <div className="lg:max-w-[63%] flex-grow w-full">
+            <div className="flex items-center justify-between mt-2 lg:mt-0 py-2 pl-5 bg-white rounded-lg pr-[100px] ">
               <Checkbox
                 name="all"
                 checked={check}
@@ -74,7 +95,7 @@ const CartPage = () => {
               >
                 Chọn tất cả ({items.length} sản phẩm)
               </Checkbox>
-              <div className="flex items-center justify-between gap-x-10">
+              <div className="items-center justify-between hidden lg:flex gap-x-10">
                 <div>
                   <span>Số lượng</span>
                 </div>
@@ -83,19 +104,14 @@ const CartPage = () => {
                 </div>
               </div>
             </div>
-            <div className="w-full pl-5 mt-5 bg-white rounded-lg ">
+            <div className="w-full h-full pl-5 mt-2 bg-white rounded-lg md:mt-5">
               {items.map((item) => (
-                <div key={item.id} className="flex items-center py-4">
-                  <div className="basis-[8%]">
-                    <Checkbox
-                      control={control}
-                      checked={check}
-                      onClick={handleCheck}
-                    ></Checkbox>
-                  </div>
-                  <div className="flex items-center flex-shrink-0 overflow-hidden basis-[16%]">
+                <div
+                  key={item.id}
+                  className="flex py-4 lg:items-center gap-x-5 lg:gap-x-0"
+                >
+                  <div className="flex items-center flex-shrink-0 overflow-hidden basis-[32%] md:basis-[16%]">
                     <Link to={`/detail-book?id=${item.id}`}>
-                      {" "}
                       <img
                         src={item.image}
                         alt=""
@@ -103,10 +119,10 @@ const CartPage = () => {
                       />
                     </Link>
                   </div>
-                  <div className="flex items-center basis-[68%]">
-                    <div className="flex flex-col basis-[60%] px-3 justify-between ">
+                  <div className="flex lg:items-center basis-[60%] md:basis-[76%]  flex-col lg:flex-row">
+                    <div className="flex flex-col basis-[60%] lg:px-3 lg:justify-between">
                       <Link to={`/detail-book?id=${item.id}`}>
-                        <span className="pb-[70px] text-sm block">
+                        <span className="lg:pb-[70px] text-sm block custom-line">
                           {item.name}
                         </span>
                       </Link>
@@ -114,7 +130,7 @@ const CartPage = () => {
                         <span className="font-semibold">
                           {formatNumber(
                             item.price - (item.price * item.discount) / 100
-                          )}{" "}
+                          )}
                           đ
                         </span>
                         <span className="text-xs line-through text-gray">
@@ -122,11 +138,11 @@ const CartPage = () => {
                         </span>
                       </div>
                     </div>
-                    <div className="basis-[40%] flex items-center gap-x-10">
+                    <div className="basis-[40%] flex items-center gap-x-10 mt-2 lg:mt-0">
                       <div className="flex items-center gap-x-2 max-w-[6rem] justify-center border-gray2 border  rounded-lg px-2">
                         <span
                           onClick={() => handleDecrease(item.id)}
-                          className="text-xl cursor-pointer text-gray2"
+                          className="cursor-pointer md:text-xl text-gray2"
                         >
                           -
                         </span>
@@ -135,12 +151,12 @@ const CartPage = () => {
                         </span>
                         <span
                           onClick={() => handleIncrease(item.id)}
-                          className="text-xl cursor-pointer text-gray2"
+                          className="cursor-pointer md:text-xl text-gray2"
                         >
                           +
                         </span>
                       </div>
-                      <span className="font-semibold text-primary">
+                      <span className="hidden font-semibold text-primary lg:block">
                         {formatNumber(
                           (item.price - (item.price * item.discount) / 100) *
                             item.quantity
@@ -151,7 +167,7 @@ const CartPage = () => {
                   </div>
                   <div
                     onClick={() => handleRemove(item.id)}
-                    className="basis-[8%] flex items-center justify-center text-[#646464] hover:text-primary"
+                    className="basis-[8%] flex items-center justify-center text-[#646464] hover:text-primary pr-3 md:pr-0"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -172,7 +188,7 @@ const CartPage = () => {
               ))}
             </div>
           </div>
-          <div className="flex-1 ">
+          <div className="w-full lg:flex-1">
             <div className="bg-white rounded-lg ">
               <div className="flex items-center justify-between px-5 py-3 text-blue1 ">
                 <div className="flex items-center gap-x-2">
@@ -194,10 +210,15 @@ const CartPage = () => {
                 </div>
                 <span>Xem thêm</span>
               </div>
-              {Array(3)
+              {Array(2)
                 .fill(0)
-                .map((item) => (
-                  <div className="flex flex-col w-full px-5" key={item}>
+                .map((item, index) => (
+                  <div
+                    className={`flex flex-col w-full px-5 ${
+                      index >= 1 && "hidden"
+                    } md:block md:${index >= 2 && "hidden"} lg:block`}
+                    key={item}
+                  >
                     <div className="w-full h-[1px] bg-gray1"></div>
                     <div className="flex flex-col mt-5">
                       <div className="flex items-center justify-between">
@@ -233,7 +254,7 @@ const CartPage = () => {
                   </div>
                 ))}
             </div>
-            <div className="px-5 py-3 mt-5 bg-white rounded-lg max-h-fit">
+            <div className="hidden px-5 py-3 mt-5 bg-white rounded-lg max-h-fit lg:block">
               <div className="flex items-center justify-between pb-3">
                 <span>Thành tiền</span>
                 <span>{formatNumber(total)} đ</span>
@@ -252,10 +273,11 @@ const CartPage = () => {
                 </span>
               </div>
               <Button
-                className="!w-full mt-2"
+                className={`!w-full mt-2 ${!user ? "opacity-[0.5]" : ""}`}
                 type="submit"
                 kind={"primary"}
                 href="/checkout"
+                disabled={!user ? true : false}
               >
                 Thanh toán
               </Button>

@@ -11,9 +11,12 @@ const LayoutMain = () => {
       navigate("/dashboard");
     }
   }, [user, navigate]);
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
   return (
     <div className="h-full bg-gray1">
-      <div className="h-[60px] w-full ">
+      <div className="h-[60px] w-full hidden lg:block">
         <img
           src="https://cdn0.fahasa.com/media/wysiwyg/Thang-06-2024/NCC_0624_HuyHoang_Header_1263x60.png"
           className="w-full h-full "
@@ -21,10 +24,10 @@ const LayoutMain = () => {
         />
       </div>
       <Header></Header>
-      <div className="w-[1250px] mx-auto">
+      <div className="lg:w-[1250px] mx-auto md:w-[750px] w-full">
         <Outlet></Outlet>
       </div>
-      <div className="w-[1250px] mx-auto mt-5">
+      <div className="lg:w-[1250px] mx-auto mt-5 md:w-[750px] w-full">
         <Footer></Footer>
       </div>
     </div>

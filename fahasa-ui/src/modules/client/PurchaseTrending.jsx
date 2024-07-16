@@ -15,7 +15,6 @@ const PurchaseTrending = () => {
   const [bookDaily, setBookDaily] = useState([]);
   const [bookWeekly, setBookWeekly] = useState([]);
   const handleQueryClick = (query) => {
-    console.log(query);
     setQuery(query.title);
     setActive(query.title);
   };
@@ -29,6 +28,7 @@ const PurchaseTrending = () => {
     };
     fetch();
   }, []);
+
   return (
     <div className="pb-5 mt-5 bg-white rounded-bl-lg rounded-br-lg">
       <div className="flex items-center p-2 bg-red-300 rounded-tl-lg rounded-tr-lg gap-x-5">
@@ -67,18 +67,30 @@ const PurchaseTrending = () => {
             ))}
         </ul>
       </div>
-      <div className="grid grid-cols-5 gap-2 px-5 mt-2">
+      <div className="grid grid-cols-2 gap-2 px-5 mt-2 lg:grid-cols-5 md:grid-cols-4">
         {active === "Xu hướng theo ngày"
-          ? bookDaily.map((item) => (
-              <Link to={`/detail-book?id=${item.id}`} key={item.id}>
+          ? bookDaily.map((item, index) => (
+              <Link
+                to={`/detail-book?id=${item.book_id}`}
+                key={item.id}
+                className={`block ${index >= 2 && "hidden"} md:block  md:${
+                  index >= 4 && "hidden"
+                } lg:block`}
+              >
                 <BookCard
                   book={item.Book}
                   className="transition-all hover:shadow-lg"
                 ></BookCard>
               </Link>
             ))
-          : bookWeekly.map((item) => (
-              <Link to={`/detail-book?id=${item.id}`} key={item.id}>
+          : bookWeekly.map((item, index) => (
+              <Link
+                to={`/detail-book?id=${item.book_id}`}
+                key={item.id}
+                className={`block ${index >= 2 && "hidden"} md:block  md:${
+                  index >= 4 && "hidden"
+                } lg:block`}
+              >
                 <BookCard
                   book={item.Book}
                   className="transition-all hover:shadow-lg"

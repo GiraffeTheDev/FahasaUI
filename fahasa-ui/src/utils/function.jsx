@@ -36,4 +36,5 @@ const formartTime = (timeStr) => {
 
   return formattedTimeStr;
 };
+
 export { convertTime, formartTime, formatNumber };

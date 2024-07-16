@@ -30,7 +30,7 @@ const BookPageVI = () => {
     const fetch = async () => {
       try {
         const response = await getAllBook();
-        console.log(response);
+
         const category = await getAllCategoryVi();
         const sup = await getViSupplier();
         setSupplier(sup.data.data);
@@ -68,7 +68,7 @@ const BookPageVI = () => {
   return (
     <>
       <div className="flex items-start mt-5 gap-x-5">
-        <div className="w-[300px] bg-white min-h-[500px] px-5 py-2">
+        <div className=" hidden lg:block lg:w-[300px] bg-white min-h-[500px] px-5 py-2">
           <div>
             <form onChange={handleSubmit(handleSubmitData)} autoComplete="off">
               <div className="py-3">

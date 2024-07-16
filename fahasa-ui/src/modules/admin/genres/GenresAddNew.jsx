@@ -58,7 +58,6 @@ const GenresAddNew = () => {
     const fetch = async () => {
       try {
         const response = await getAllCategory();
-        console.log(response);
         setCategories(response.data.data);
       } catch (error) {
         console.log(error);

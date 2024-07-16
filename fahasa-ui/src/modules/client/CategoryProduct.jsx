@@ -29,14 +29,16 @@ const CategoryProduct = () => {
         </svg>
         <span className="text-xl font-semibold">Danh mục sản phẩm</span>
       </div>
-      <div className="grid grid-cols-10 p-4">
+      <div className="grid grid-cols-5 mt-5 lg:gap-x-5 md:grid-cols-6 lg:grid-cols-10">
         {category.length > 0 &&
-          category.map((item) => (
+          category.slice(0, 10).map((item, index) => (
             <div
               key={item.id}
-              className="flex flex-col items-center text-center  gap-y-3"
+              className={`flex flex-col items-center text-center gap-y-3  ${
+                index >= 5 && "hidden"
+              } md:flex  md:${index >= 6 && "hidden"} lg:flex`}
             >
-              <div className="h-[100px] w-[100px] rounded-lg shadow-md">
+              <div className="h-[70px] w-[70px] md:h-[100px] md:w-[100px] rounded-lg shadow-md">
                 <img
                   src={item.image}
                   className="object-cover w-full h-full rounded-lg"

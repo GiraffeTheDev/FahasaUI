@@ -22,20 +22,20 @@ const Search = () => {
   }, [filter]);
   const { value: open, handleToggleValue: handleOpen } = useToggleValue();
   return (
-    <div className="w-[700px] relative">
+    <div className="md:w-[600px] relative w-[220px]">
       <div className="px-2 bg-white border rounded-lg border-gray">
         <form className="flex items-center" autoComplete="off">
           <input
             type="search"
             id="default-search"
-            className="block w-full p-3 text-sm text-gray-900 border-none rounded-lg outline-none dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block w-full p-2 text-sm text-gray-900 border-none rounded-lg outline-none md:p-3 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Cặp chống gù Tiger cho bé"
             onChange={handleSearch}
             onClick={handleOpen}
           />
           <button
             type="submit"
-            className="flex items-center justify-center px-4 py-2 bg-red-500 rounded-lg dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="items-center justify-center hidden px-4 py-2 bg-red-500 rounded-lg select-none lg:flex dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             <svg
               className="w-4 h-4 font-bold text-white dark:text-gray-400"
@@ -56,36 +56,42 @@ const Search = () => {
         </form>
       </div>
       {open && (
-        <div className="w-[700px] fixed top-[120px] px-5 pb-10 bg-white rounded-lg shadow-md min-h-[200px] z-50">
-          <div className="flex items-center justify-between px-5 py-2 mt-5 rounded-lg bg-[#E9C46A]">
-            <h1>Summer Fest - Đại tiệc mùa hè</h1>
-            <img
-              src="https://cdn0.fahasa.com/media/catalog/product/b/1/b1.jpeg"
-              alt=""
-              className="w-[50px] h-[30px] object-cover rounded-lg"
-            />
-          </div>
-          <div className="grid grid-cols-3 gap-5 mt-5">
-            {book?.length > 0
-              ? book.map((item) => (
-                  <Link key={item.id} to={`/detail-book?id=${item.id}`}>
-                    <div key={item.id} className="flex gap-x-2">
-                      <div className="w-[150px] h-[80px]">
-                        <img
-                          src={item.image}
-                          alt=""
-                          className="object-cover w-full h-full"
-                        />
+        <>
+          <div className="w-[600px] fixed top-[120px] px-5 pb-10 bg-white rounded-lg shadow-md min-h-[200px] z-50">
+            <div className="flex items-center justify-between px-5 py-2 mt-5 rounded-lg bg-[#E9C46A]">
+              <h1>Summer Fest - Đại tiệc mùa hè</h1>
+              <img
+                src="https://cdn0.fahasa.com/media/catalog/product/b/1/b1.jpeg"
+                alt=""
+                className="w-[50px] h-[30px] object-cover rounded-lg"
+              />
+            </div>
+            <div className="grid grid-cols-3 gap-5 mt-5">
+              {book?.length > 0
+                ? book.map((item) => (
+                    <Link key={item.id} to={`/detail-book?id=${item.id}`}>
+                      <div key={item.id} className="flex gap-x-2">
+                        <div className="w-[150px] h-[80px]">
+                          <img
+                            src={item.image}
+                            alt=""
+                            className="object-cover w-full h-full"
+                          />
+                        </div>
+                        <h1 className="text-sm max-w-[100px] custom-line">
+                          {item.name}
+                        </h1>
                       </div>
-                      <h1 className="text-sm max-w-[100px] custom-line">
-                        {item.name}
-                      </h1>
-                    </div>
-                  </Link>
-                ))
-              : ""}
+                    </Link>
+                  ))
+                : ""}
+            </div>
           </div>
-        </div>
+          <div
+            className="fixed top-[120px] bottom-0 left-0 right-0 z-10 bg-black bg-opacity-50"
+            onClick={handleOpen}
+          ></div>
+        </>
       )}
     </div>
   );

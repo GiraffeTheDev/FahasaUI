@@ -8,6 +8,12 @@ img {
   overflow-clip-margin: content-box;
   overflow: clip;
 }
+textarea::-webkit-input-placeholder {
+  color: #b2b3bd;
+}
+textarea::-moz-input-placeholder {
+  color: #b2b3bd;
+}
 .custom-line {
   width: 100%;
   height: auto;
@@ -76,7 +82,9 @@ li.previous a {
 .swiper-slide {
   height: auto !important;
 }
-
+// .swiper-slide {
+//   width: 100% !important;
+// }
 .pinwheel {
   --uib-size: 35px;
   --uib-speed: 1s;
