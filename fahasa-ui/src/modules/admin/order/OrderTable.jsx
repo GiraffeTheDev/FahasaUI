@@ -7,7 +7,7 @@ import Loading from "../../../components/loading/Loading";
 import LabelStatus from "../../../components/status/LabelStatus";
 import Table from "../../../components/table/Table";
 import usePagination from "../../../hooks/usePagination";
-import { convertTime, formatNumber } from "../../../utils/function";
+import { formartTime, formatNumber } from "../../../utils/function";
 const title = [
   {
     id: 1,
@@ -92,7 +92,7 @@ const OrderTable = () => {
                       )}
                     </td>
                     <td>{formatNumber(item.total_price)}đ</td>
-                    <td>{convertTime(item.createdAt)}</td>
+                    <td>{formartTime(item.createdAt)}</td>
 
                     <td className="">
                       <div className="flex items-center justify-center gap-x-3">

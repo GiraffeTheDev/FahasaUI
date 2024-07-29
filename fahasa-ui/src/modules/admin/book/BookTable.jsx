@@ -29,6 +29,10 @@ const title = [
   },
   {
     id: 5,
+    name: "Deleted",
+  },
+  {
+    id: 5,
     name: "Hành động",
   },
 ];
@@ -40,8 +44,8 @@ const BookTable = () => {
   const handleRemove = async (id) => {
     try {
       Swal.fire({
-        title: "Xác nhận thanh toán",
-        text: "Bạn có chắc chắn muốn thanh toán với Paypal",
+        title: "Xác nhận xóa sản phẩm",
+        text: "Bạn có chắc chắn muốn xóa sản phẩm",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#C40C0C",
@@ -50,7 +54,8 @@ const BookTable = () => {
         confirmButtonText: "Xác nhận",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          const response = await removeBook(id);
+          const response = await removeBook({ id: id, deleted: 1 });
+          console.log(response);
           if (!response.data.error) {
             toast(response.data.message);
             const books = await getAllBook();
@@ -160,6 +165,7 @@ const BookTable = () => {
                             )}
                           </span>
                         </td>
+                        <td>{formatNumber(item.deleted)}</td>
                         <td className="">
                           <div className="flex items-center justify-center gap-x-3">
                             <ActionEdit

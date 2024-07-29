@@ -63,7 +63,7 @@ const AuthorUpdate = () => {
   return (
     <div className="max-w-2xl px-4 py-8 mx-auto lg:py-16">
       <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-        Thêm mới tác giả
+        Cập nhật tác giả
       </h2>
       <form onSubmit={handleSubmit(handleUpdateAuthor)}>
         <FormGroup>
@@ -98,7 +98,7 @@ const AuthorUpdate = () => {
           disabled={isSubmitting}
           className={`${isSubmitting ? "opacity-[0.5]" : ""}`}
         >
-          {isSubmitting ? <DotSpinner></DotSpinner> : "Thêm tác giả"}
+          {isSubmitting ? <DotSpinner></DotSpinner> : "Cập nhật tác giả"}
         </Button>
       </form>
     </div>

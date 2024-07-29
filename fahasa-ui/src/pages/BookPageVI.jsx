@@ -30,7 +30,6 @@ const BookPageVI = () => {
     const fetch = async () => {
       try {
         const response = await getAllBook();
-
         const category = await getAllCategoryVi();
         const sup = await getViSupplier();
         setSupplier(sup.data.data);
@@ -187,12 +186,17 @@ const BookPageVI = () => {
             </div>
           </div>
           <div className="grid grid-cols-4 gap-3 mt-5">
-            {currentItems.length > 0 &&
+            {currentItems.length > 0 ? (
               currentItems.map((item) => (
                 <Link key={item.id} to={`/detail-book?id=${item.id}`}>
                   <BookCard book={item}></BookCard>
                 </Link>
-              ))}
+              ))
+            ) : (
+              <div className="flex items-center justify-center">
+                Không có kết quả
+              </div>
+            )}
           </div>
           <div className="flex items-center justify-center mt-5">
             <ReactPaginate

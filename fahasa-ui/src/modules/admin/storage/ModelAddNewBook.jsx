@@ -37,6 +37,9 @@ const ModelAddNewBook = ({ show, handleClose, id }) => {
           title: "Cập nhật số lượng thành công",
           icon: "success",
         });
+        reset({
+          stock: "",
+        });
         handleClose();
       }
     } catch (error) {

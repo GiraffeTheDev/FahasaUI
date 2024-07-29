@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { useNavigate } from "react-router-dom";
-import { getAllSupplier, getAllSupplierSearch } from "../../../api/supplier";
+import { toast } from "react-toastify";
+import {
+  deleteSupplier,
+  getAllSupplier,
+  getAllSupplierSearch,
+} from "../../../api/supplier";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
 import Loading from "../../../components/loading/Loading";
@@ -25,8 +30,17 @@ const title = [
 const SupplierTable = () => {
   const navigate = useNavigate();
   const [filter, setFilter] = useState("");
-  const handleRemove = (id) => {
-    console.log(id);
+  const handleRemove = async (id) => {
+    try {
+      const response = await deleteSupplier(id);
+      if (!response.data.error) {
+        toast(response.data.message);
+        const responseData = await getAllSupplier();
+        setSupplier(responseData.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   const [supplier, setSupplier] = useState([]);
   useEffect(() => {

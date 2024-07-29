@@ -47,7 +47,7 @@ const BookCard = ({ book, isCard, isSold = false, className = "" }) => {
         {isSold ? (
           <div className="relative hidden h-4 mt-2 mb-2 text-center bg-red-200 rounded-full lg:block dark:bg-gray-700">
             <div
-              className="absolute inset-0 h-full bg-red-500 rounded-full z-5"
+              className="absolute inset-0 min-w-[10px] w-full h-full bg-red-500 rounded-tl-full rounded-bl-full z-5"
               style={{ width: (book?.sold / book?.stock) * 100 }}
             />{" "}
             <h3 className="absolute w-full text-sm text-center text-white z-9">

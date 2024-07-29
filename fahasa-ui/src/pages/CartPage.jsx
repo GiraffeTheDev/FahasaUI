@@ -150,20 +150,29 @@ const CartPage = () => {
                           {item.quantity}
                         </span>
                         <span
-                          onClick={() => handleIncrease(item.id)}
+                          onClick={
+                            item?.quantity > item?.stock
+                              ? ""
+                              : () => handleIncrease(item.id)
+                          }
                           className="cursor-pointer md:text-xl text-gray2"
                         >
                           +
                         </span>
                       </div>
-                      <span className="hidden font-semibold text-primary lg:block">
-                        {formatNumber(
-                          (item.price - (item.price * item.discount) / 100) *
-                            item.quantity
-                        )}{" "}
-                        đ
+                      <span className="text-primary">
+                        {item?.quantity > item?.stock
+                          ? "Số lượng sản phẩm bạn chọn lớn hơn số lượng tồn kho"
+                          : ""}
                       </span>
                     </div>
+                    <span className="hidden font-semibold text-primary lg:block">
+                      {formatNumber(
+                        (item.price - (item.price * item.discount) / 100) *
+                          item.quantity
+                      )}{" "}
+                      đ
+                    </span>
                   </div>
                   <div
                     onClick={() => handleRemove(item.id)}

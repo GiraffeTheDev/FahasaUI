@@ -2,8 +2,8 @@ import { instance } from "../config/axios";
 const create = async (data) => {
   return instance.post(`http://localhost:8008/api/v1/create-book`, data);
 };
-const removeBook = async (id) => {
-  return instance.delete(`http://localhost:8008/api/v1/delete-book/${id}`, id);
+const removeBook = async (data) => {
+  return instance.put(`http://localhost:8008/api/v1/delete-book`, data);
 };
 const update = async (data) => {
   return instance.put(`http://localhost:8008/api/v1/update-book`, data);
@@ -80,13 +80,13 @@ export {
   getBestBookDaily,
   getBestBookWeekly,
   getBookFlashSaleHightLight,
-  getBookWithMultiQuery,
   getBooksEN,
   getBooksVI,
   getBooksWithCategoryEn,
   getBooksWithCategoryVi,
   getBooksWithQuery,
   getBooksWithSupplier,
+  getBookWithMultiQuery,
   getOne,
   removeBook,
   update,

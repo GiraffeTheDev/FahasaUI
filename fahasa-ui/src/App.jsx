@@ -4,6 +4,7 @@ import LayoutAdmin from "./layout/LayoutAdmin";
 import LayoutMain from "./layout/LayoutMain";
 import Dashboard from "./modules/admin/Dashboard";
 import AuthorAddNew from "./modules/admin/author/AuthorAddNew";
+import AuthorUpdate from "./modules/admin/author/AuthorUpdate";
 import ManageAuthor from "./modules/admin/author/ManageAuthor";
 import BookAddNew from "./modules/admin/book/BookAddNew";
 import BookUpdate from "./modules/admin/book/BookUpdate";
@@ -206,6 +207,10 @@ function App() {
           <Route
             element={<AuthorAddNew></AuthorAddNew>}
             path="/manage/add-author"
+          ></Route>
+          <Route
+            element={<AuthorUpdate></AuthorUpdate>}
+            path="/manage/update-author"
           ></Route>
           <Route
             element={<ManageOrder></ManageOrder>}

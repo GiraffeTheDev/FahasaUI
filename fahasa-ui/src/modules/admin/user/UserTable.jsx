@@ -32,7 +32,6 @@ const UserTable = () => {
   useEffect(() => {
     const fetch = async () => {
       const response = await getAll();
-      console.log(response);
       setUser(response.data.data);
     };
     fetch();

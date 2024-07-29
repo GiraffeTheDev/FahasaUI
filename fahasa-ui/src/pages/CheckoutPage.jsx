@@ -122,7 +122,7 @@ const CheckoutPage = () => {
 
             if (!response.data.error) {
               Swal.fire({
-                title: "Thanh toán thành công",
+                title: "Đặt hàng thành công",
                 icon: "success",
               });
               dispatch(clearCart());
@@ -147,15 +147,22 @@ const CheckoutPage = () => {
         <div className="px-5 py-5 bg-white rounded-lg ">
           <h1 className="mb-5 text-2xl font-base">Địa chỉ giao hàng</h1>
           <div className="flex flex-col gap-y-2">
-            {infor.map((item) => (
-              <Radio
-                key={item.id}
-                name={"infor_id"}
-                checked={parseInt(watchInfor) === item.id}
-                control={control}
-                value={item.id}
-              >{`${item.user_name} | ${item.address_detail} - Xã ${item.ward} - Huyện ${item.district} - Tỉnh ${item.province}`}</Radio>
-            ))}
+            {infor.length > 0 ? (
+              infor.map((item) => (
+                <Radio
+                  key={item.id}
+                  name={"infor_id"}
+                  checked={parseInt(watchInfor) === item.id}
+                  control={control}
+                  value={item.id}
+                >{`${item.user_name} | ${item.address_detail} - Xã ${item.ward} - Huyện ${item.district} - Tỉnh ${item.province}`}</Radio>
+              ))
+            ) : (
+              <span className="mt-2 text-sm text-red-500">
+                Bạn chưa thêm địa chỉ di chuyển đến trang địa chỉ để thêm địa
+                chỉ giao hàng
+              </span>
+            )}
             {errors?.infor_id ? (
               <p className="mt-2 text-sm text-red-500">
                 {errors?.infor_id?.message}

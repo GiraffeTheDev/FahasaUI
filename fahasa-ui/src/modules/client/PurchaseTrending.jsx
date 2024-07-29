@@ -58,7 +58,7 @@ const PurchaseTrending = () => {
               <li
                 key={item.id}
                 onClick={() => handleQueryClick(item)}
-                className={`cursor-pointer ${
+                className={`cursor-pointer select-none ${
                   item.title === active ? "text-primary" : ""
                 }`}
               >
@@ -79,6 +79,7 @@ const PurchaseTrending = () => {
               >
                 <BookCard
                   book={item.Book}
+                  //isSold={true}
                   className="transition-all hover:shadow-lg"
                 ></BookCard>
               </Link>
@@ -93,6 +94,7 @@ const PurchaseTrending = () => {
               >
                 <BookCard
                   book={item.Book}
+                  //isSold={true}
                   className="transition-all hover:shadow-lg"
                 ></BookCard>
               </Link>

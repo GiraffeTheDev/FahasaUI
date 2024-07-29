@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 import { deleteComment, getAllCommentWithProduct } from "../api/comment";
@@ -30,6 +30,7 @@ const BookDetailPage = () => {
   const { user } = useSelector((state) => state.auth);
   const { value, handleToggleValue } = useToggleValue();
   const [purchased, setPurchased] = useState(null);
+  const navigate = useNavigate();
   const handleDeleteComment = async (id) => {
     try {
       const response = await deleteComment(id);
@@ -77,7 +78,16 @@ const BookDetailPage = () => {
       });
     }
   };
-
+  const handleAddToCartNow = () => {
+    if (dispatch(addToCart({ ...book, quantity }))) {
+      Swal.fire({
+        title: "Thêm vào giỏ hàng thành công",
+        icon: "success",
+        confirmButtonColor: "#C40C0C",
+      });
+      navigate("/cart");
+    }
+  };
   if (!book) return null;
   const {
     image,
@@ -96,9 +106,9 @@ const BookDetailPage = () => {
     <>
       {book ? (
         <div className="relative">
-          <div className="fixed bottom-0 z-50 flex items-center justify-center w-full lg:hidden">
-            <div className="px-5 flex items-center w-full md:w-[70%] py-5 mx-auto bg-white shadow-xl">
-              <div className="flex items-center px-2 py-2 gap-x-2 max-w-[6rem] justify-center border-gray2 border ">
+          <div className="fixed bottom-0 z-50 flex items-center w-[390px] justify-center md:w-[750px] py-5 mx-auto bg-white shadow-xl lg:hidden">
+            <div className="flex mx-auto md:w-[700px] w-[350px]">
+              <div className="flex items-center rounded-lg px-2 py-2 gap-x-2 max-w-[6rem] justify-center border-gray2 border ">
                 <span
                   onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
                   className="cursor-pointer "
@@ -143,7 +153,7 @@ const BookDetailPage = () => {
             genres={Genres?.name}
           ></Breadcrumb>
           <div className="flex lg:flex-row flex-col px-5 py-3 mt-5 bg-white rounded-lg gap-x-[80px]">
-            <div className="w-full flex justify-center lg:w-[400px]">
+            <div className="w-full flex justify-center flex-col lg:w-[400px]">
               <img
                 src={image}
                 alt=""
@@ -164,7 +174,7 @@ const BookDetailPage = () => {
                   kind={"primary"}
                   disabled={book.stock <= 0 ? true : false}
                   className={`flex-1 ${book.stock <= 0 ? "opacity-[0.5]" : ""}`}
-                  onClick={handleAddToCart}
+                  onClick={handleAddToCartNow}
                 >
                   Mua ngay
                 </Button>
@@ -173,13 +183,11 @@ const BookDetailPage = () => {
             <div className="flex-1 mt-5 lg:mt-0">
               <h3 className="text-xl font-base">{name}</h3>
               <div className="flex items-center justify-between mt-5">
-                <span className="max-w-[70%]">
-                  Nhà cung cấp: {Supplier?.name}
-                </span>
+                <span className="">Nhà cung cấp: {Supplier?.name}</span>
                 <span>Tác giả:{Author?.name}</span>
               </div>
               <div className="flex items-center justify-between mt-2">
-                <span className="max-w-[70%]">
+                <span className="">
                   Nhà xuất bản:
                   {Publisher?.name}
                 </span>
@@ -214,15 +222,53 @@ const BookDetailPage = () => {
                     </span>
                     <span className="px-2 select-none">{quantity}</span>
                     <span
-                      onClick={() => setQuantity(quantity + 1)}
+                      onClick={
+                        quantity > book?.stock
+                          ? ""
+                          : () => setQuantity(quantity + 1)
+                      }
                       className="cursor-pointer "
                     >
                       +
                     </span>
                   </div>
+                  <span className="text-primary">
+                    {quantity > book?.stock
+                      ? "Số lượng sản phẩm bạn chọn lớn hơn số lượng tồn kho"
+                      : ""}
+                  </span>
                 </div>
               ) : (
                 <SoldOut></SoldOut>
+              )}
+              {book.discount >= 30 && book?.sold > 0 ? (
+                <div
+                  className="relative w-[400px] flex items-center gap-x-5 h-[50px] rounded-lg mt-5 px-5"
+                  style={{
+                    background: `url("https://cdn0.fahasa.com/media/fahasa_web_image/banner.jpg")`,
+                  }}
+                >
+                  <img
+                    src="https://cdn0.fahasa.com/media/fahasa_web_image/thunder.jpg"
+                    alt=""
+                    className="w-[180px] object-cover"
+                  />
+                  {book?.sold > 0 ? (
+                    <div className="relative w-[300px] h-4 text-center bg-red-200 rounded-full">
+                      <div
+                        className="absolute inset-0 h-full bg-white rounded-full z-5"
+                        style={{ width: (book?.sold / book?.stock) * 100 }}
+                      />{" "}
+                      <h3 className="absolute w-full text-sm text-center text-white z-9">
+                        Đã bán {book?.stock === 0 ? "Bán hết" : book?.sold}
+                      </h3>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              ) : (
+                ""
               )}
             </div>
           </div>

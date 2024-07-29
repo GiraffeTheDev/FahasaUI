@@ -30,7 +30,7 @@ const TableGenres = () => {
   const handleRemove = async (id) => {
     try {
       const response = await deleteGenres(id);
-      if (response.status === 200) {
+      if (!response.data.error) {
         toast(response.data.message);
         const responseData = await getAllGenres();
         setGenres(responseData.data.data);

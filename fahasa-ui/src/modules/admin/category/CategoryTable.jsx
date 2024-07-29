@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getAllCateBySearch, getAllCategory } from "../../../api/category";
+import { toast } from "react-toastify";
+import {
+  deleteCategory,
+  getAllCateBySearch,
+  getAllCategory,
+} from "../../../api/category";
 import ActionDelete from "../../../components/action/ActionDelete";
 import ActionEdit from "../../../components/action/ActionEdit";
 import Loading from "../../../components/loading/Loading";
 import Table from "../../../components/table/Table";
 import usePagination from "../../../hooks/usePagination";
-import { handleDeleteCategory } from "../../../redux/category/handlers";
 const title = [
   {
     id: 1,
@@ -30,12 +33,21 @@ const title = [
 
 const CategoryTable = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [filter, setFilter] = useState("");
-  const handleRemove = (id) => {
-    dispatch(handleDeleteCategory(id));
-  };
   const [category, setCategory] = useState([]);
+  const handleRemove = async (id) => {
+    try {
+      const response = await deleteCategory(id);
+      if (!response.data.error) {
+        toast(response.data.message);
+        const responseData = await getAllCategory();
+        setCategory(responseData.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const { pageCount, handlePageClick, currentItems } = usePagination(
     category,
     4

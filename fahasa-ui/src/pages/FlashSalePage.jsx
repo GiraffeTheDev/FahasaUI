@@ -92,7 +92,7 @@ const FlashSalePage = () => {
           className="w-[180px] object-cover"
         />
       </div>
-      <form action="" onSubmit={handleSubmit(handleChangeCate)}>
+      <form action="">
         <div className="flex items-center justify-between mt-5">
           {cateFlashSale.map((item, index) => (
             <div

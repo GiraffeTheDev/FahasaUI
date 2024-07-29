@@ -1,7 +1,9 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import * as yup from "yup";
 import { getOne, updateRole } from "../../../api/user";
 import Button from "../../../components/button/Button";
 import GapRow from "../../../components/common/GapRow";
@@ -9,18 +11,27 @@ import FormGroup from "../../../components/form/FormGroup";
 import Input from "../../../components/input/Input";
 import { Label } from "../../../components/label";
 import Radio from "../../../components/radio/Radio";
-
+const schema = yup.object({
+  isAdmin: yup.string().required("Cung cấp vai trò cho người dùng"),
+});
 const UpdateUser = () => {
-  const { control, handleSubmit, reset, watch } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm({
     mode: "onSubmit",
+    resolver: yupResolver(schema),
   });
   const [params] = useSearchParams();
   const id = params.get("id");
   const watchRole = watch("isAdmin");
+  const navigate = useNavigate();
   useEffect(() => {
     const fetch = async () => {
       const response = await getOne(id);
-      console.log(response);
       if (!response.data.error) {
         reset(response.data.data);
       }
@@ -28,15 +39,20 @@ const UpdateUser = () => {
     fetch();
   }, [id, reset]);
   const handleUpdateRole = async (value) => {
-    console.log(value);
     try {
       const response = await updateRole({
         id: value.id,
         isAdmin: value.isAdmin,
       });
-      toast(response.data.message);
+      if (!response.data.error) {
+        toast(response.data.message);
+        navigate("/manage/users");
+      } else {
+        toast("Có lỗi xảy ra vui lòng thử lại");
+      }
     } catch (error) {
       console.log(error);
+      toast("Có lỗi xảy ra vui lòng thử lại");
     }
   };
 
@@ -89,11 +105,18 @@ const UpdateUser = () => {
                 <span className="text-sm">Người dùng</span>
               </Radio>
             </div>
+            {errors?.original ? (
+              <p className="text-sm text-red-500">
+                {errors?.original?.message}
+              </p>
+            ) : (
+              ""
+            )}
           </FormGroup>
           <GapRow></GapRow>
           <div className="flex items-center gap-x-5">
             <Button type="submit" kind="primary">
-              Cập nhật vai trò cua người dùng
+              Cập nhật vai trò của người dùng
             </Button>
             <Button type="submit" kind="semi" href="/manage/users">
               Quay lại

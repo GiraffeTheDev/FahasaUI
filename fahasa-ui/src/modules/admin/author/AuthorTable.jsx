@@ -102,7 +102,7 @@ const AuthorTable = () => {
                           <div className="flex items-center justify-center gap-x-3">
                             <ActionEdit
                               onClick={() =>
-                                navigate(`/manage/update-book?id=${item.id}`)
+                                navigate(`/manage/update-author?id=${item.id}`)
                               }
                             ></ActionEdit>
                             <ActionDelete
